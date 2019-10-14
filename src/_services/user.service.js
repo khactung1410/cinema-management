@@ -21,6 +21,7 @@ function login(username, password) {
     return fetch(`http://localhost:9000/api/user/login`, requestOptions)
         .then(handleResponse)
         .then(user => {
+            console.log(user)
             // store user details and jwt token in local storage to keep user logged in between page refreshes
             localStorage.setItem('user', JSON.stringify(user));
             return user;
@@ -83,7 +84,9 @@ function _delete(id) {
 function handleResponse(response) {
     console.log(response)
     return response.text().then(text => {
+        console.log("text: ",text)
         const data = text && JSON.parse(text);
+        console.log('data: ',data)
         if (!response.ok) {
             if (response.status === 401) {
                 // auto logout if 401 response returned from api
@@ -93,7 +96,6 @@ function handleResponse(response) {
             const error = (data && data.message) || response.statusText;
             return Promise.reject(error);
         }
-
         return data;
     });
 }
