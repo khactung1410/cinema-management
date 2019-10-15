@@ -1,8 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-
 import { userActions } from '../_actions';
+import '../style.css'
 
 class Home extends React.Component {
     componentDidMount() {
@@ -18,14 +18,14 @@ class Home extends React.Component {
         return (
             <div className="d-flex" id="wrapper">
                 <div className="bg-light border-right" id="sidebar-wrapper">
-                    <div className="sidebar-heading">Start Bootstrap </div>
+                    <div className="sidebar-heading">CINEMA MANAGEMENT</div>
                     <div className="list-group list-group-flush">
-                        <a href="#" className="list-group-item list-group-item-action bg-light">Dashboard</a>
-                        <a href="#" className="list-group-item list-group-item-action bg-light">Shortcuts</a>
-                        <a href="#" className="list-group-item list-group-item-action bg-light">Overview</a>
-                        <a href="#" className="list-group-item list-group-item-action bg-light">Events</a>
-                        <a href="#" className="list-group-item list-group-item-action bg-light">Profile</a>
-                        <a href="#" className="list-group-item list-group-item-action bg-light">Status</a>
+                        <a href="#" className="list-group-item list-group-item-action bg-light">Movie Management</a>
+                        <a href="#" className="list-group-item list-group-item-action bg-light">Movie Schedule</a>
+                        <a href="#" className="list-group-item list-group-item-action bg-light">Edit Movie Schedule</a>
+                        <a href="#" className="list-group-item list-group-item-action bg-light">Sell Ticket</a>
+                        <a href="#" className="list-group-item list-group-item-action bg-light">Return ticket</a>
+                        <a href="#" className="list-group-item list-group-item-action bg-light">Statistics</a>
                     </div>
                 </div>
                 <div id="page-content-wrapper">
@@ -61,9 +61,8 @@ class Home extends React.Component {
                     </nav>
 
                     <div className="container-fluid">
-                        <h1 className="mt-4">Simple Sidebar</h1>
-                        <p>The starting state of the menu will appear collapsed on smaller screens, and will appear non-collapsed on larger screens. When toggled using the button below, the menu will change.</p>
-                        <p>Make sure to keep all page content within the <code>#page-content-wrapper</code>. The top navbar is optional, and just for demonstration. Just create an element with the <code>#menu-toggle</code> ID which will toggle the menu when clicked.</p>
+                        <h1 className="mt-4">Our services make you satisfied!</h1>
+                        <img src="../_helpers/images/FAVORITE-FILM-1440x810.jpg" alt="picture film"/>
                     </div>
                 </div>
             </div>

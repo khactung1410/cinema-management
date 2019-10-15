@@ -18,7 +18,7 @@ function login(username, password) {
         body: JSON.stringify({ username, password })
     };
 
-    return fetch(`http://localhost:9000/api/user/login`, requestOptions)
+    return fetch(`${config.apiUrl}/user/login`, requestOptions)
         .then(handleResponse)
         .then(user => {
             console.log(user)
@@ -58,7 +58,7 @@ function register(user) {
         body: JSON.stringify(user)
     };
 
-    return fetch(`${config.apiUrl}/users/register`, requestOptions).then(handleResponse);
+    return fetch(`${config.apiUrl}/user/register`, requestOptions).then(handleResponse);
 }
 
 function update(user) {

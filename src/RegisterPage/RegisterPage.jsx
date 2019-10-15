@@ -10,19 +10,17 @@ class RegisterPage extends React.Component {
 
         this.state = {
             user: {
-                firstName: '',
-                lastName: '',
+                fullname: '',
+                address: '',
+                phone: '',
                 username: '',
                 password: ''
             },
             submitted: false
         };
-
-        this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    handleChange(event) {
+    handleChange = event => {
         const { name, value } = event.target;
         const { user } = this.state;
         this.setState({
@@ -33,12 +31,12 @@ class RegisterPage extends React.Component {
         });
     }
 
-    handleSubmit(event) {
+    handleSubmit = event => {
         event.preventDefault();
 
         this.setState({ submitted: true });
         const { user } = this.state;
-        if (user.firstName && user.lastName && user.username && user.password) {
+        if (user.fullname && user.address && user.phone && user.username && user.password) {
             this.props.register(user);
         }
     }
@@ -50,18 +48,25 @@ class RegisterPage extends React.Component {
             <div className="col-md-6 col-md-offset-3">
                 <h2>Register</h2>
                 <form name="form" onSubmit={this.handleSubmit}>
-                    <div className={'form-group' + (submitted && !user.firstName ? ' has-error' : '')}>
-                        <label htmlFor="firstName">First Name</label>
-                        <input type="text" className="form-control" name="firstName" value={user.firstName} onChange={this.handleChange} />
-                        {submitted && !user.firstName &&
-                            <div className="help-block">First Name is required</div>
+                    <div className={'form-group' + (submitted && !user.fullname ? ' has-error' : '')}>
+                        <label htmlFor="fullname">Full Name</label>
+                        <input type="text" className="form-control" name="fullname" value={user.fullname} onChange={this.handleChange} />
+                        {submitted && !user.fullname &&
+                            <div className="help-block">Full Name is required</div>
                         }
                     </div>
-                    <div className={'form-group' + (submitted && !user.lastName ? ' has-error' : '')}>
-                        <label htmlFor="lastName">Last Name</label>
-                        <input type="text" className="form-control" name="lastName" value={user.lastName} onChange={this.handleChange} />
-                        {submitted && !user.lastName &&
-                            <div className="help-block">Last Name is required</div>
+                    <div className={'form-group' + (submitted && !user.address ? ' has-error' : '')}>
+                        <label htmlFor="address">Address</label>
+                        <input type="text" className="form-control" name="address" value={user.address} onChange={this.handleChange} />
+                        {submitted && !user.address &&
+                            <div className="help-block">Address is required</div>
+                        }
+                    </div>
+                    <div className={'form-group' + (submitted && !user.phone ? ' has-error' : '')}>
+                        <label htmlFor="phone">Phone</label>
+                        <input type="text" className="form-control" name="phone" value={user.phone} onChange={this.handleChange} />
+                        {submitted && !user.phone &&
+                            <div className="help-block">Phone is required</div>
                         }
                     </div>
                     <div className={'form-group' + (submitted && !user.username ? ' has-error' : '')}>
