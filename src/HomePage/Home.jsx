@@ -3,8 +3,16 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { userActions } from '../_actions';
 import '../style.css'
+import { HomePage } from './HomePage';
 
 class Home extends React.Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            showMenu: false
+        }
+    }
+
     componentDidMount() {
         // this.props.getUsers();
     }
@@ -13,10 +21,17 @@ class Home extends React.Component {
         // return (e) => this.props.deleteUser(id);
     }
 
+    toggleMenu = () => {
+        this.setState({
+            showMenu: !this.state.showMenu
+        })
+    }
+
     render() {
         const { user, users } = this.props;
+        const show = (this.state.showMenu) ? "toggled" : "";
         return (
-            <div className="d-flex" id="wrapper">
+            <div className={"d-flex " + show} id="wrapper">
                 <div className="bg-light border-right" id="sidebar-wrapper">
                     <div className="sidebar-heading">CINEMA MANAGEMENT</div>
                     <div className="list-group list-group-flush">
@@ -31,13 +46,13 @@ class Home extends React.Component {
                 <div id="page-content-wrapper">
 
                     <nav className="navbar navbar-expand-lg navbar-light bg-light border-bottom">
-                        <button className="btn btn-primary" id="menu-toggle">Toggle Menu</button>
+                        <button className="btn btn-info" id="menu-toggle" onClick={this.toggleMenu}>☰</button>
 
                         <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span className="navbar-toggler-icon"></span>
                         </button>
 
-                        <div className="collapse navbar-collapse" id="navbarSupportedContent">
+                        <div className="collapse navbar-collapse " id="navbarSupportedContent">
                         <ul className="navbar-nav ml-auto mt-2 mt-lg-0">
                             <li className="nav-item active">
                             <a className="nav-link" href="#">Home <span className="sr-only">(current)</span></a>
@@ -59,10 +74,8 @@ class Home extends React.Component {
                         </ul>
                         </div>
                     </nav>
-
                     <div className="container-fluid">
                         <h1 className="mt-4">Our services make you satisfied!</h1>
-                        <img src="../_helpers/images/FAVORITE-FILM-1440x810.jpg" alt="picture film"/>
                     </div>
                 </div>
             </div>
