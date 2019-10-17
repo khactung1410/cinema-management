@@ -41,4 +41,9 @@
     #wrapper.toggled #sidebar-wrapper {
       margin-left: -15rem;
     }
+    .center-all {
+      text-align: justify;
+      margin-left: 40%;
+      margin-right: 40%;
+    }
   }

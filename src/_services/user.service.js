@@ -84,7 +84,7 @@ function _delete(id) {
 function handleResponse(response) {
     console.log(response)
     return response.text().then(text => {
-        console.log("text: ",text)
+        console.log("texttt: ",text)
         const data = text && JSON.parse(text);
         console.log('data: ',data)
         if (!response.ok) {
@@ -93,6 +93,7 @@ function handleResponse(response) {
                 logout();
                 location.reload(true);
             }
+            console.log("AAAA")
             const error = (data && data.message) || response.statusText;
             return Promise.reject(error);
         }

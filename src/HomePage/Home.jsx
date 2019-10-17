@@ -5,6 +5,12 @@ import { userActions } from '../_actions';
 import '../style.css'
 
 class Home extends React.Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            showMenu: true
+        }
+    }
     componentDidMount() {
         // this.props.getUsers();
     }
@@ -12,11 +18,18 @@ class Home extends React.Component {
     handleDeleteUser(id) {
         // return (e) => this.props.deleteUser(id);
     }
+    
+    handleToggleMenu = () => {
+        this.setState({
+            showMenu: !this.state.showMenu
+        })
+    }
 
     render() {
         const { user, users } = this.props;
+        const showMenu = this.state.showMenu ? "" : "toggled"
         return (
-            <div className="d-flex" id="wrapper">
+            <div className={"d-flex " + showMenu} id="wrapper">
                 <div className="bg-light border-right" id="sidebar-wrapper">
                     <div className="sidebar-heading">CINEMA MANAGEMENT</div>
                     <div className="list-group list-group-flush">
@@ -31,7 +44,7 @@ class Home extends React.Component {
                 <div id="page-content-wrapper">
 
                     <nav className="navbar navbar-expand-lg navbar-light bg-light border-bottom">
-                        <button className="btn btn-primary" id="menu-toggle">Toggle Menu</button>
+                        <button className="btn btn-info" id="menu-toggle" onClick={this.handleToggleMenu}><span class="navbar-toggler-icon"></span></button>
 
                         <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span className="navbar-toggler-icon"></span>
@@ -62,7 +75,6 @@ class Home extends React.Component {
 
                     <div className="container-fluid">
                         <h1 className="mt-4">Our services make you satisfied!</h1>
-                        <img src="../_helpers/images/FAVORITE-FILM-1440x810.jpg" alt="picture film"/>
                     </div>
                 </div>
             </div>

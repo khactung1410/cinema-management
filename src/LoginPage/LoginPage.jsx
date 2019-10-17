@@ -40,7 +40,7 @@ class LoginPage extends React.Component {
         const { loggingIn } = this.props;
         const { username, password, submitted } = this.state;
         return (
-            <div className="col-md-3 col-md-offset-3">
+            <div className="col-md-offset-3 center-all">
                 <div>
                     <h2>Cinema Management</h2>
                 </div>

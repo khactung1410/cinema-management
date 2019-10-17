@@ -25,6 +25,7 @@ function login(username, password) {
                 error => {
                     dispatch(failure(error.toString()));
                     dispatch(alertActions.error(error.toString()));
+                    setTimeout(() => dispatch(alertActions.clear()),2000); //delete alert
                 }
             );
     };
@@ -48,10 +49,12 @@ function register(user) {
                     dispatch(success());
                     history.push('/login');
                     dispatch(alertActions.success('Registration successful'));
+                    setTimeout(() => dispatch(alertActions.clear()),2000); //delete alert
                 },
                 error => {
                     dispatch(failure(error.toString()));
                     dispatch(alertActions.error(error.toString()));
+                    setTimeout(() => dispatch(alertActions.clear()),2000); //delete alert
                 }
             );
     };
