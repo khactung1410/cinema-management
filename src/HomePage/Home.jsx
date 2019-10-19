@@ -33,7 +33,7 @@ class Home extends React.Component {
                 <div className="bg-light border-right" id="sidebar-wrapper">
                     <div className="sidebar-heading">CINEMA MANAGEMENT</div>
                     <div className="list-group list-group-flush">
-                        <a href="#" className="list-group-item list-group-item-action bg-light">Movie Management</a>
+                        <a href="MovieManagement" className="list-group-item list-group-item-action bg-light">Movie Management</a>
                         <a href="#" className="list-group-item list-group-item-action bg-light">Movie Schedule</a>
                         <a href="#" className="list-group-item list-group-item-action bg-light">Edit Movie Schedule</a>
                         <a href="#" className="list-group-item list-group-item-action bg-light">Sell Ticket</a>
@@ -42,9 +42,8 @@ class Home extends React.Component {
                     </div>
                 </div>
                 <div id="page-content-wrapper">
-
                     <nav className="navbar navbar-expand-lg navbar-light bg-light border-bottom">
-                        <button className="btn btn-info" id="menu-toggle" onClick={this.handleToggleMenu}><span class="navbar-toggler-icon"></span></button>
+                        <button className="btn btn-primary" id="menu-toggle" onClick={this.handleToggleMenu}><span class="navbar-toggler-icon"></span></button>
 
                         <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span className="navbar-toggler-icon"></span>
@@ -72,7 +71,6 @@ class Home extends React.Component {
                         </ul>
                         </div>
                     </nav>
-
                     <div className="container-fluid">
                         <h1 className="mt-4">Our services make you satisfied!</h1>
                     </div>
@@ -94,5 +92,5 @@ const actionCreators = {
     // deleteUser: userActions.delete
 }
 
-const connectedHomePage = connect(mapState, actionCreators)(Home);
-export { connectedHomePage as Home };
+const connectedHome = connect(mapState, actionCreators)(Home);
+export { connectedHome as Home };

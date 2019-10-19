@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import { history } from '../_helpers';
 import { alertActions } from '../_actions';
-import { PrivateRoute } from '../_components';
+import { PrivateRoute, ManageMovie } from '../_components';
 import { HomePage } from '../HomePage';
 import { Home } from '../HomePage';
 import { LoginPage } from '../LoginPage';
@@ -50,6 +50,7 @@ class App extends React.Component {
                             <PrivateRoute exact path="/" component={Home} />
                             <Route path="/login" component={LoginPage} />
                             <Route path="/register" component={RegisterPage} />
+                            <Route path="/MovieManagement" component={ManageMovie} />
                         </div>
                     </Router>
                 </div>
