@@ -1,2 +1,2 @@
 export * from './PrivateRoute';
-export * from './ManageMovie';
+export * from './content/ManageMovie';
