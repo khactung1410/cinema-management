@@ -30,11 +30,11 @@ class LeftMenu extends React.Component {
                 <div className="sidebar-heading">CINEMA MANAGEMENT</div>
                 <div className="list-group list-group-flush">
                     <a href="MovieManagement" className="list-group-item list-group-item-action bg-light">Movie Management</a>
-                    <a href="#" className="list-group-item list-group-item-action bg-light">Movie Schedule</a>
-                    <a href="#" className="list-group-item list-group-item-action bg-light">Edit Movie Schedule</a>
-                    <a href="#" className="list-group-item list-group-item-action bg-light">Sell Ticket</a>
-                    <a href="#" className="list-group-item list-group-item-action bg-light">Return ticket</a>
-                    <a href="#" className="list-group-item list-group-item-action bg-light">Statistics</a>
+                    <a href="MovieSchedule" className="list-group-item list-group-item-action bg-light">Movie Schedule</a>
+                    <a href="EditMovieSchedule" className="list-group-item list-group-item-action bg-light">Edit Movie Schedule</a>
+                    <a href="SellTicket" className="list-group-item list-group-item-action bg-light">Sell Ticket</a>
+                    <a href="ReturnTicket" className="list-group-item list-group-item-action bg-light">Return ticket</a>
+                    <a href="Statics" className="list-group-item list-group-item-action bg-light">Statistics</a>
                 </div>
             </div>
         );

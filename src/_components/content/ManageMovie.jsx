@@ -8,6 +8,16 @@ class ManageMovie extends React.Component {
         this.modalAdd = React.createRef();
         this.modalDeleteMultiple = React.createRef();
         this.modalDeleteSingle = React.createRef();
+
+        this.state = {
+            movie: {
+                name: "",
+                genre: "",
+                director: "",
+                publicYear: "",
+                description: ""
+            }
+        }
     }
     componentDidMount() {
         // this.props.getUsers();
@@ -25,6 +35,22 @@ class ManageMovie extends React.Component {
         return () => modal.current.handleClose()
     }
 
+    addMovie = (event) => {
+        event.preventDefault();
+        const {movie} = this.state
+    }
+
+    handleChange = (e) => {
+        const {name, value} = e.target;
+        const {movie} = this.state
+        this.setState({
+            movie: {
+                ...movie,
+                [name]: value
+            }
+        })
+    }
+
     render() {
         return (
             <React.Fragment>
@@ -37,28 +63,58 @@ class ManageMovie extends React.Component {
                         <div className="modal-body">					
                         <div className="form-group">
                             <label>Name</label>
-                            <input type="text" className="form-control" required />
+                            <input
+                                type="text"
+                                className="form-control" 
+                                required
+                                onChange={this.handleChange}
+                                name="name"
+                            />
                         </div>
                         <div className="form-group">
                             <label>Genre</label>
-                            <input type="email" className="form-control" required />
+                            <input 
+                                type="text" 
+                                className="form-control" 
+                                required 
+                                onChange={this.handleChange}
+                                name="genre"
+                            />
                         </div>
                         <div className="form-group">
                             <label>Director</label>
-                            <input type="email" className="form-control" required />
+                            <input 
+                                type="text" 
+                                className="form-control" 
+                                required 
+                                onChange={this.handleChange}
+                                name="director"
+                            />
                         </div>
                         <div className="form-group">
                             <label>Public Year</label>
-                            <input type="email" className="form-control" required />
+                            <input 
+                                type="number" 
+                                className="form-control" 
+                                required 
+                                onChange={this.handleChange}
+                                name= "publicYear"
+                            />
                         </div>
                         <div className="form-group">
                             <label>Description</label>
-                            <textarea className="form-control" required defaultValue={""} />
+                            <textarea 
+                                className="form-control" 
+                                required 
+                                defaultValue={""} 
+                                onChange={this.handleChange}
+                                name="description"
+                            />
                         </div>				
                         </div>
                         <div className="modal-footer">
-                        <input type="button" className="btn btn-default" defaultValue="Cancel" onClick={this.handleClose(this.modalAdd)} />
-                        <input type="submit" className="btn btn-success" value="Add" />
+                            <input type="button" className="btn btn-default" defaultValue="Cancel" onClick={this.handleClose(this.modalAdd)} />
+                            <input type="submit" className="btn btn-success" value="Add" onClick={this.addMovie}/>
                         </div>
                     </form>
                 </CommonModal>
@@ -96,7 +152,7 @@ class ManageMovie extends React.Component {
                 </CommonModal>
 
 
-                <div class="col-sm-12">
+                <div className="col-sm-12">
                     <h3 className="center-text">Movie Management</h3>
                 </div>
                 <div className="table-wrapper">
