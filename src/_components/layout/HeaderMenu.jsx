@@ -11,7 +11,7 @@ class HeaderMenu extends React.Component {
     render() {
         return (
             <nav className="navbar navbar-expand-lg navbar-light bg-light border-bottom">
-                <button className="btn btn-info" id="menu-toggle" onClick={this.props.handleToggleMenu}>
+                <button className="btn btn-primary" id="menu-toggle" onClick={this.props.handleToggleMenu}>
                     <span className="navbar-toggler-icon"></span>
                 </button>
                 

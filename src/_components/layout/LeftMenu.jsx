@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { userActions } from '../../_actions';
 
@@ -29,12 +29,12 @@ class LeftMenu extends React.Component {
             <div className="bg-light border-right" id="sidebar-wrapper">
                 <div className="sidebar-heading">CINEMA MANAGEMENT</div>
                 <div className="list-group list-group-flush">
-                    <a href="MovieManagement" className="list-group-item list-group-item-action bg-light">Movie Management</a>
-                    <a href="MovieSchedule" className="list-group-item list-group-item-action bg-light">Movie Schedule</a>
-                    <a href="EditMovieSchedule" className="list-group-item list-group-item-action bg-light">Edit Movie Schedule</a>
-                    <a href="SellTicket" className="list-group-item list-group-item-action bg-light">Sell Ticket</a>
-                    <a href="ReturnTicket" className="list-group-item list-group-item-action bg-light">Return ticket</a>
-                    <a href="Statics" className="list-group-item list-group-item-action bg-light">Statistics</a>
+                    <NavLink to="/MovieManagement" className="list-group-item list-group-item-action">Movie Management</NavLink>
+                    <NavLink to="/MovieSchedule" className="list-group-item list-group-item-action">Movie Schedule</NavLink>
+                    <NavLink to="/EditMovieSchedule" className="list-group-item list-group-item-action">Edit Movie Schedule</NavLink>
+                    <NavLink to="/SellTicket" className="list-group-item list-group-item-action">Sell Ticket</NavLink>
+                    <NavLink to="/ReturnTicket" className="list-group-item list-group-item-action">Return ticket</NavLink>
+                    <NavLink to="/Statics" className="list-group-item list-group-item-action">Statistics</NavLink>
                 </div>
             </div>
         );

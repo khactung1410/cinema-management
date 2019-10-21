@@ -1,0 +1,5 @@
+export const movieConstants = {
+    ADD_REQUEST: 'MOVIE_ADD_REQUEST',
+    ADD_SUCCESS: 'MOVIE_ADD_SUCCESS',
+    ADD_FAILURE: 'MOVIE_ADD_FAILURE',
+}

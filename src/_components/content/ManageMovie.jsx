@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { CommonModal } from '../modal/modal';
+import {movieActions} from '../../_actions'
 
 class ManageMovie extends React.Component {
     constructor(props) {
@@ -11,11 +12,11 @@ class ManageMovie extends React.Component {
 
         this.state = {
             movie: {
-                name: "",
-                genre: "",
-                director: "",
-                publicYear: "",
-                description: ""
+                name: '',
+                genre: '',
+                director: '',
+                publicYear: '',
+                description: ''
             }
         }
     }
@@ -38,6 +39,7 @@ class ManageMovie extends React.Component {
     addMovie = (event) => {
         event.preventDefault();
         const {movie} = this.state
+        this.props.addMovie(movie)
     }
 
     handleChange = (e) => {
@@ -339,7 +341,7 @@ function mapState(state) {
 }
 
 const actionCreators = {
-    // getUsers: userActions.getAll,
+    addMovie: movieActions.add
     // deleteUser: userActions.delete
 }
 
