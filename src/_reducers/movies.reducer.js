@@ -14,8 +14,7 @@ export function movies(state = {}, action) {
         };
     case movieConstants.GETALL_SUCCESS:
         return {
-            ...state,
-            items: action.movies
+            items: action.data
         }
     case movieConstants.GETALL_FAILURE:
         return { 

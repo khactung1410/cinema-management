@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { CommonModal } from '../modal/modal';
 import {ModalAdd} from '../modal/ModalAdd'
 import {movieActions} from '../../_actions'
+import _ from 'lodash'
 
 class ManageMovie extends React.Component {
     constructor(props) {
@@ -10,10 +11,14 @@ class ManageMovie extends React.Component {
         this.modalAdd = React.createRef();
         this.modalDeleteMultiple = React.createRef();
         this.modalDeleteSingle = React.createRef();
+
+        this.state = {
+            page: 1
+        }
     }
 
     componentDidMount() {
-        this.props.getMovies()
+        this.props.getMovies(1)
     };
 
     handleShow = (modal) => {
@@ -22,6 +27,14 @@ class ManageMovie extends React.Component {
 
     handleClose = (modal) => {
         return () => modal.current.handleClose()
+    }
+
+    changePage = (page) => {
+        // this.setState({page: page})
+        return (e) => {
+            e.preventDefault()
+            this.props.getMovies(page)
+        }
     }
 
     render() {
@@ -92,18 +105,18 @@ class ManageMovie extends React.Component {
                             <label htmlFor="selectAll" />
                             </span>
                         </th>
-                        <th>Name</th>
-                        <th>Genre</th>
-                        <th>Director</th>
-                        <th>Public Year</th>
-                        <th>Description</th>
-                        <th>Actions</th>
+                        <th style={{width: 15 + '%'}}>Name</th>
+                        <th style={{width: 15 + '%'}}>Genre</th>
+                        <th style={{width: 15 + '%'}}>Director</th>
+                        <th style={{width: 15 + '%'}}>Public Year</th>
+                        <th style={{width: 15 + '%'}}>Description</th>
+                        <th >Actions</th>
                         </tr>
                     </thead>
                     {
-                        movies.items.movies &&
-                            movies.items.movies.map(movie => {
-                                <tbody>
+                        movies.items &&
+                            movies.items.movies.map((movie,key) => (
+                                <tbody key={key}>
                                 <tr>
                                 <td>
                                     <span className="custom-checkbox">
@@ -111,33 +124,32 @@ class ManageMovie extends React.Component {
                                     <label htmlFor="checkbox1" />
                                     </span>
                                 </td>
-                                <td>{movie.name}</td>
-                                <td>{movie.genre}</td>
-                                <td>{movie.director}</td>
-                                <td>{movie.publicYear}</td>
-                                <td>{movie.description}</td>
+                                <td style={{width: 15 + '%'}}>{movie.name}</td>
+                                <td style={{width: 15 + '%'}}>{movie.genre}</td>
+                                <td style={{width: 15 + '%'}}>{movie.director}</td>
+                                <td style={{width: 15 + '%'}}>{movie.publicYear}</td>
+                                <td style={{width: 15 + '%'}}>{movie.description}</td>
                                 <td>
                                     <a className="edit" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Edit"></i></a>
                                     <a className="delete" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Delete" onClick={this.handleShow(this.modalDeleteSingle)}></i></a>
                                 </td>
                                 </tr>
                             </tbody>
-                            })
+                            ))
                     }
-                    
                     </table>
-                    <div className="clearfix">
-                    <div className="hint-text">Showing <b>5</b> out of <b>25</b> entries</div>
-                    <ul className="pagination">
-                        <li className="page-item disabled"><a href="#">Previous</a></li>
-                        <li className="page-item"><a href="#" className="page-link">1</a></li>
-                        <li className="page-item"><a href="#" className="page-link">2</a></li>
-                        <li className="page-item active"><a href="#" className="page-link">3</a></li>
-                        <li className="page-item"><a href="#" className="page-link">4</a></li>
-                        <li className="page-item"><a href="#" className="page-link">5</a></li>
-                        <li className="page-item"><a href="#" className="page-link">Next</a></li>
-                    </ul>
-                    </div>
+                    {movies.items &&
+                        <div className="clearfix">
+                        <div className="hint-text">Showing <b>{movies.items.per_page}</b> out of <b>{movies.items.total}</b> entries</div>
+                        <ul className="pagination">
+                            <li className="page-item" onClick={this.changePage(movies.items.current_page-1)}><a href="#" className="page-link">Previous</a></li>
+                            {
+                                _.times(movies.items.total_page, (key) => (<li key={key} className={(movies.items.current_page == key+1)?"page-item active":"page-item"} onClick={this.changePage(key+1)}><a href="#" className="page-link">{key+1}</a></li>))
+                            }
+                            <li className="page-item" onClick={this.changePage(movies.items.current_page+1)}><a href="#" className="page-link" disabled={false}>Next</a></li>
+                        </ul>
+                        </div>
+                    }
                 </div>
                 {/* Edit Modal HTML */}
                 <div id="editEmployeeModal" className="modal fade">

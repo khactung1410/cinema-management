@@ -32,18 +32,18 @@ function add(movie) {
     function failure(error) { return { type: movieConstants.ADD_FAILURE, error } }
 }
 
-function getAll() {
+function getAll(page) {
     return dispatch => {
         dispatch(request());
 
-        movieService.getAll()
+        movieService.getAll(page)
             .then(
-                movies => dispatch(success(movies)),
+                data => dispatch(success(data)),
                 error => dispatch(failure(error.toString()))
             );
     };
 
     function request() { return { type: movieConstants.GETALL_REQUEST } }
-    function success(movies) { return { type: movieConstants.GETALL_SUCCESS, movies } }
+    function success(data) { return { type: movieConstants.GETALL_SUCCESS, data } }
     function failure(error) { return { type: movieConstants.GETALL_FAILURE, error } }
 }

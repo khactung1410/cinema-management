@@ -16,13 +16,13 @@ function add(movie) {
     return fetch(`${config.apiUrl}/movie/add`, requestOptions).then(handleResponse);
 }
 
-function getAll() {
+function getAll(page) {
     const requestOptions = {
         method: 'GET',
         headers: authHeader()
     };
 
-    return fetch(`${config.apiUrl}/movies`, requestOptions).then(handleResponse);
+    return fetch(`${config.apiUrl}/movies?page=${page}`, requestOptions).then(handleResponse);
 }
 
 function handleResponse(response) {
