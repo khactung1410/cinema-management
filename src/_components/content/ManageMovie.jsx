@@ -13,9 +13,8 @@ class ManageMovie extends React.Component {
     }
 
     componentDidMount() {
-        this.props.getMovies();
-
-    }
+        this.props.getMovies()
+    };
 
     handleShow = (modal) => {
         return () => modal.current.handleShow()
@@ -26,8 +25,7 @@ class ManageMovie extends React.Component {
     }
 
     render() {
-        const arrayMovies = this.props.movies.movies
-        console.log("Tung444: ",arrayMovies)
+        const {movies} = this.props
         return (
             <React.Fragment>
                 <ModalAdd modalAdd = {this.modalAdd}/>
@@ -102,27 +100,30 @@ class ManageMovie extends React.Component {
                         <th>Actions</th>
                         </tr>
                     </thead>
-                    {/* {arrayMovies.map(movie => {
-                        <tbody>
-                        <tr>
-                        <td>
-                            <span className="custom-checkbox">
-                            <input type="checkbox" id="checkbox1" name="options[]" defaultValue={1} />
-                            <label htmlFor="checkbox1" />
-                            </span>
-                        </td>
-                        <td>{movie.name}</td>
-                        <td>{movie.genre}</td>
-                        <td>{movie.director}</td>
-                        <td>{movie.publicYear}</td>
-                        <td>{movie.description}</td>
-                        <td>
-                            <a className="edit" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Edit"></i></a>
-                            <a className="delete" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Delete" onClick={this.handleShow(this.modalDeleteSingle)}></i></a>
-                        </td>
-                        </tr>
-                    </tbody>
-                    })} */}
+                    {
+                        movies.items.movies &&
+                            movies.items.movies.map(movie => {
+                                <tbody>
+                                <tr>
+                                <td>
+                                    <span className="custom-checkbox">
+                                    <input type="checkbox" id="checkbox1" name="options[]" defaultValue={1} />
+                                    <label htmlFor="checkbox1" />
+                                    </span>
+                                </td>
+                                <td>{movie.name}</td>
+                                <td>{movie.genre}</td>
+                                <td>{movie.director}</td>
+                                <td>{movie.publicYear}</td>
+                                <td>{movie.description}</td>
+                                <td>
+                                    <a className="edit" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Edit"></i></a>
+                                    <a className="delete" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Delete" onClick={this.handleShow(this.modalDeleteSingle)}></i></a>
+                                </td>
+                                </tr>
+                            </tbody>
+                            })
+                    }
                     
                     </table>
                     <div className="clearfix">

@@ -28,7 +28,6 @@ function getAll() {
 function handleResponse(response) {
     console.log(response)
     return response.text().then(text => {
-        console.log("texttt: ",text)
         const data = text && JSON.parse(text);
         console.log('data: ',data)
         if (!response.ok) {

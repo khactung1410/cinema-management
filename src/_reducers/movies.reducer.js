@@ -13,7 +13,10 @@ export function movies(state = {}, action) {
             loading: true
         };
     case movieConstants.GETALL_SUCCESS:
-        return action.movies
+        return {
+            ...state,
+            items: action.movies
+        }
     case movieConstants.GETALL_FAILURE:
         return { 
             error: action.error
