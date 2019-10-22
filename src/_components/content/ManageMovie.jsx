@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { CommonModal } from '../modal/modal';
+import {ModalAdd} from '../modal/ModalAdd'
 import {movieActions} from '../../_actions'
 
 class ManageMovie extends React.Component {
@@ -29,6 +30,7 @@ class ManageMovie extends React.Component {
     }
 
     handleShow = (modal) => {
+        console.log(this.state)
         return () => modal.current.handleShow()
     }
 
@@ -56,6 +58,7 @@ class ManageMovie extends React.Component {
     render() {
         return (
             <React.Fragment>
+                {/* <ModalAdd modalAdd = {this.modalAdd}/> */}
                 <CommonModal ref={this.modalAdd}>
                     <form>
                         <div className="modal-header">						
@@ -184,10 +187,10 @@ class ManageMovie extends React.Component {
                             </span>
                         </th>
                         <th>Name</th>
-                        <th>Email</th>
-                        <th>Address</th>
-                        <th>Phone</th>
-                        <th>Actions</th>
+                        <th>Genre</th>
+                        <th>Director</th>
+                        <th>Public Year</th>
+                        <th>Description</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -207,70 +210,6 @@ class ManageMovie extends React.Component {
                             <a className="delete" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Delete" onClick={this.handleShow(this.modalDeleteSingle)}></i></a>
                         </td>
                         </tr>
-                        <tr>
-                        <td>
-                            <span className="custom-checkbox">
-                            <input type="checkbox" id="checkbox2" name="options[]" defaultValue={1} />
-                            <label htmlFor="checkbox2" />
-                            </span>
-                        </td>
-                        <td>Dominique Perrier</td>
-                        <td>dominiqueperrier@mail.com</td>
-                        <td>Obere Str. 57, Berlin, Germany</td>
-                        <td>(313) 555-5735</td>
-                        <td>
-                            <a href="#editEmployeeModal" className="edit" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Edit"></i></a>
-                            <a href="#deleteEmployeeModal" className="delete" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Delete"></i></a>
-                        </td>
-                        </tr>
-                        <tr>
-                        <td>
-                            <span className="custom-checkbox">
-                            <input type="checkbox" id="checkbox3" name="options[]" defaultValue={1} />
-                            <label htmlFor="checkbox3" />
-                            </span>
-                        </td>
-                        <td>Maria Anders</td>
-                        <td>mariaanders@mail.com</td>
-                        <td>25, rue Lauriston, Paris, France</td>
-                        <td>(503) 555-9931</td>
-                        <td>
-                            <a href="#editEmployeeModal" className="edit" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Edit"></i></a>
-                            <a href="#deleteEmployeeModal" className="delete" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Delete"></i></a>
-                        </td>
-                        </tr>
-                        <tr>
-                        <td>
-                            <span className="custom-checkbox">
-                            <input type="checkbox" id="checkbox4" name="options[]" defaultValue={1} />
-                            <label htmlFor="checkbox4" />
-                            </span>
-                        </td>
-                        <td>Fran Wilson</td>
-                        <td>franwilson@mail.com</td>
-                        <td>C/ Araquil, 67, Madrid, Spain</td>
-                        <td>(204) 619-5731</td>
-                        <td>
-                            <a href="#editEmployeeModal" className="edit" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Edit"></i></a>
-                            <a href="#deleteEmployeeModal" className="delete" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Delete"></i></a>
-                        </td>
-                        </tr>					
-                        <tr>
-                        <td>
-                            <span className="custom-checkbox">
-                            <input type="checkbox" id="checkbox5" name="options[]" defaultValue={1} />
-                            <label htmlFor="checkbox5" />
-                            </span>
-                        </td>
-                        <td>Martin Blank</td>
-                        <td>martinblank@mail.com</td>
-                        <td>Via Monte Bianco 34, Turin, Italy</td>
-                        <td>(480) 631-2097</td>
-                        <td>
-                            <a href="#editEmployeeModal" className="edit" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Edit"></i></a>
-                            <a href="#deleteEmployeeModal" className="delete" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Delete"></i></a>
-                        </td>
-                        </tr> 
                     </tbody>
                     </table>
                     <div className="clearfix">
@@ -290,6 +229,7 @@ class ManageMovie extends React.Component {
                 <div id="editEmployeeModal" className="modal fade">
                 <div className="modal-dialog">
                     <div className="modal-content">
+                        
                     <form>
                         <div className="modal-header">						
                         <h4 className="modal-title">Edit Employee</h4>
