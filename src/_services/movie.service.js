@@ -1,7 +1,9 @@
 import config from 'config';
+import { authHeader } from '../_helpers';
 
 export const movieService = {
-    add
+    add,
+    getAll
 };
 
 function add(movie) {
@@ -12,6 +14,15 @@ function add(movie) {
         body: JSON.stringify(movie)
     };
     return fetch(`${config.apiUrl}/movie/add`, requestOptions).then(handleResponse);
+}
+
+function getAll() {
+    const requestOptions = {
+        method: 'GET',
+        headers: authHeader()
+    };
+
+    return fetch(`${config.apiUrl}/movies`, requestOptions).then(handleResponse);
 }
 
 function handleResponse(response) {
@@ -26,7 +37,6 @@ function handleResponse(response) {
                 logout();
                 location.reload(true);
             }
-            console.log("AAAA")
             const error = (data && data.message) || response.statusText;
             return Promise.reject(error);
         }

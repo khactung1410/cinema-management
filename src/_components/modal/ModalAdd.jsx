@@ -45,7 +45,7 @@ class ModalAdd extends React.Component {
     render() {
         return (
             <CommonModal ref={this.modalAdd}>
-                    <form>
+                    <form onSubmit={this.addMovie}>
                         <div className="modal-header">						
                         <h4 className="modal-title">Add Movie</h4>
                         <button type="button" className="close" onClick={this.handleClose(this.modalAdd)}>×</button>
@@ -104,19 +104,16 @@ class ModalAdd extends React.Component {
                         </div>
                         <div className="modal-footer">
                             <input type="button" className="btn btn-default" defaultValue="Cancel" onClick={this.handleClose(this.modalAdd)} />
-                            <input type="submit" className="btn btn-success" value="Add" onClick={this.addMovie}/>
+                            <input type="submit" className="btn btn-success" value="Add"/>
                         </div>
                     </form>
-                </CommonModal>
-                
+                </CommonModal> 
         );
     }
 }
 
 function mapState(state) {
-    // const { users, authentication } = state;
-    // const { user } = authentication;
-    // return { user, users };
+
 }
 const actionCreators = {
     addMovie: movieActions.add

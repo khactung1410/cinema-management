@@ -10,27 +10,14 @@ class ManageMovie extends React.Component {
         this.modalAdd = React.createRef();
         this.modalDeleteMultiple = React.createRef();
         this.modalDeleteSingle = React.createRef();
-
-        this.state = {
-            movie: {
-                name: '',
-                genre: '',
-                director: '',
-                publicYear: '',
-                description: ''
-            }
-        }
     }
+
     componentDidMount() {
-        // this.props.getUsers();
-    }
+        this.props.getMovies();
 
-    handleDeleteUser(id) {
-        // return (e) => this.props.deleteUser(id);
     }
 
     handleShow = (modal) => {
-        console.log(this.state)
         return () => modal.current.handleShow()
     }
 
@@ -38,91 +25,12 @@ class ManageMovie extends React.Component {
         return () => modal.current.handleClose()
     }
 
-    addMovie = (event) => {
-        event.preventDefault();
-        const {movie} = this.state
-        this.props.addMovie(movie)
-    }
-
-    handleChange = (e) => {
-        const {name, value} = e.target;
-        const {movie} = this.state
-        this.setState({
-            movie: {
-                ...movie,
-                [name]: value
-            }
-        })
-    }
-
     render() {
+        const arrayMovies = this.props.movies.movies
+        console.log("Tung444: ",arrayMovies)
         return (
             <React.Fragment>
-                {/* <ModalAdd modalAdd = {this.modalAdd}/> */}
-                <CommonModal ref={this.modalAdd}>
-                    <form>
-                        <div className="modal-header">						
-                        <h4 className="modal-title">Add Movie</h4>
-                        <button type="button" className="close" onClick={this.handleClose(this.modalAdd)}>×</button>
-                        </div>
-                        <div className="modal-body">					
-                        <div className="form-group">
-                            <label>Name</label>
-                            <input
-                                type="text"
-                                className="form-control" 
-                                required
-                                onChange={this.handleChange}
-                                name="name"
-                            />
-                        </div>
-                        <div className="form-group">
-                            <label>Genre</label>
-                            <input 
-                                type="text" 
-                                className="form-control" 
-                                required 
-                                onChange={this.handleChange}
-                                name="genre"
-                            />
-                        </div>
-                        <div className="form-group">
-                            <label>Director</label>
-                            <input 
-                                type="text" 
-                                className="form-control" 
-                                required 
-                                onChange={this.handleChange}
-                                name="director"
-                            />
-                        </div>
-                        <div className="form-group">
-                            <label>Public Year</label>
-                            <input 
-                                type="number" 
-                                className="form-control" 
-                                required 
-                                onChange={this.handleChange}
-                                name= "publicYear"
-                            />
-                        </div>
-                        <div className="form-group">
-                            <label>Description</label>
-                            <textarea 
-                                className="form-control" 
-                                required 
-                                defaultValue={""} 
-                                onChange={this.handleChange}
-                                name="description"
-                            />
-                        </div>				
-                        </div>
-                        <div className="modal-footer">
-                            <input type="button" className="btn btn-default" defaultValue="Cancel" onClick={this.handleClose(this.modalAdd)} />
-                            <input type="submit" className="btn btn-success" value="Add" onClick={this.addMovie}/>
-                        </div>
-                    </form>
-                </CommonModal>
+                <ModalAdd modalAdd = {this.modalAdd}/>
                 <CommonModal ref={this.modalDeleteMultiple}>
                     <form>
                         <div className="modal-header">						
@@ -191,9 +99,11 @@ class ManageMovie extends React.Component {
                         <th>Director</th>
                         <th>Public Year</th>
                         <th>Description</th>
+                        <th>Actions</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    {/* {arrayMovies.map(movie => {
+                        <tbody>
                         <tr>
                         <td>
                             <span className="custom-checkbox">
@@ -201,16 +111,19 @@ class ManageMovie extends React.Component {
                             <label htmlFor="checkbox1" />
                             </span>
                         </td>
-                        <td>Thomas Hardy</td>
-                        <td>thomashardy@mail.com</td>
-                        <td>89 Chiaroscuro Rd, Portland, USA</td>
-                        <td>(171) 555-2222</td>
+                        <td>{movie.name}</td>
+                        <td>{movie.genre}</td>
+                        <td>{movie.director}</td>
+                        <td>{movie.publicYear}</td>
+                        <td>{movie.description}</td>
                         <td>
                             <a className="edit" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Edit"></i></a>
                             <a className="delete" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Delete" onClick={this.handleShow(this.modalDeleteSingle)}></i></a>
                         </td>
                         </tr>
                     </tbody>
+                    })} */}
+                    
                     </table>
                     <div className="clearfix">
                     <div className="hint-text">Showing <b>5</b> out of <b>25</b> entries</div>
@@ -275,14 +188,12 @@ class ManageMovie extends React.Component {
 }
 
 function mapState(state) {
-    // const { users, authentication } = state;
-    // const { user } = authentication;
-    // return { user, users };
+    const {movies}  = state;
+    return {movies};
 }
 
 const actionCreators = {
-    addMovie: movieActions.add
-    // deleteUser: userActions.delete
+    getMovies: movieActions.getAll
 }
 
 const connectedManageMovie = connect(mapState, actionCreators)(ManageMovie);
