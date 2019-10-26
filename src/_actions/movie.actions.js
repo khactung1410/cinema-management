@@ -5,10 +5,10 @@ import { history } from '../_helpers';
 
 export const movieActions = {
     add,
-    getAll
+    getAll,
+    _delete
 };
 function add(movie) {
-    console.log('movie before send: ',movie)
     return dispatch => {
         dispatch(request(movie))
         movieService.add(movie)
@@ -30,6 +30,21 @@ function add(movie) {
     function request(movie) { return { type: movieConstants.ADD_REQUEST, movie } }
     function success(movie) { return { type: movieConstants.ADD_SUCCESS, movie } }
     function failure(error) { return { type: movieConstants.ADD_FAILURE, error } }
+}
+
+function _delete(id) {
+    return dispatch => {
+        dispatch(request(id))
+        movieService._delete(id)
+            .then(
+                movie => dispatch(success(id)),
+                error => dispatch(failure(id, error.toString()))
+            )
+    }
+    
+    function request(id) { return { type: movieConstants.DELETE_REQUEST, id } }
+    function success(id) { return { type: movieConstants.DELETE_SUCCESS, id } }
+    function failure(id,error) { return { type: movieConstants.DELETE_FAILURE, id, error } }
 }
 
 function getAll(page) {

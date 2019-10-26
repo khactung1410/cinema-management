@@ -3,7 +3,8 @@ import { authHeader } from '../_helpers';
 
 export const movieService = {
     add,
-    getAll
+    getAll,
+    _delete
 };
 
 function add(movie) {
@@ -22,7 +23,17 @@ function getAll(page) {
         headers: authHeader()
     };
 
-    return fetch(`${config.apiUrl}/movies?page=${page}`, requestOptions).then(handleResponse);
+    return fetch(`${config.apiUrl}/movie?page=${page}`, requestOptions).then(handleResponse);
+}
+
+function _delete(id) {
+    console.log("gggggg: ",id)
+    const requestOptions = {
+        method: 'GET',
+        headers: authHeader()
+    };
+
+    return fetch(`${config.apiUrl}/movie/delete/${id}`, requestOptions).then(handleResponse);
 }
 
 function handleResponse(response) {

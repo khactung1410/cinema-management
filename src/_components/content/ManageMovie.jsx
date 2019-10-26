@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { CommonModal } from '../modal/modal';
 import {ModalAdd} from '../modal/ModalAdd'
+import {ModalDeleteSingle} from '../modal/ModalDeleteSingle'
 import {movieActions} from '../../_actions'
 import _ from 'lodash'
 
@@ -11,9 +12,8 @@ class ManageMovie extends React.Component {
         this.modalAdd = React.createRef();
         this.modalDeleteMultiple = React.createRef();
         this.modalDeleteSingle = React.createRef();
-
         this.state = {
-            page: 1
+            idDelete: null
         }
     }
 
@@ -21,8 +21,11 @@ class ManageMovie extends React.Component {
         this.props.getMovies(1)
     };
 
-    handleShow = (modal) => {
-        return () => modal.current.handleShow()
+    handleShow = (modal,id) => {
+        return () => {
+            this.setState({idDelete: id})
+            modal.current.handleShow()
+        }
     }
 
     handleClose = (modal) => {
@@ -30,7 +33,6 @@ class ManageMovie extends React.Component {
     }
 
     changePage = (page) => {
-        // this.setState({page: page})
         return (e) => {
             e.preventDefault()
             this.props.getMovies(page)
@@ -58,24 +60,7 @@ class ManageMovie extends React.Component {
                         </div>
                     </form>
                 </CommonModal>
-                <CommonModal ref={this.modalDeleteSingle}>
-                    <form>
-                        <div className="modal-header">						
-                        <h4 className="modal-title">Delete Employee</h4>
-                        <button type="button" className="close" data-dismiss="modal" aria-hidden="true" onClick={this.handleClose(this.modalDeleteSingle)}>×</button>
-                        </div>
-                        <div className="modal-body">					
-                        <p>Are you sure you want to delete these Records?</p>
-                        <p className="text-warning"><small>This action cannot be undone.</small></p>
-                        </div>
-                        <div className="modal-footer">
-                        <input type="button" className="btn btn-default" data-dismiss="modal" defaultValue="Cancel" onClick={this.handleClose(this.modalDeleteSingle)}/>
-                        <input type="submit" className="btn btn-danger" defaultValue="Delete" />
-                        </div>
-                    </form>
-                </CommonModal>
-
-
+                <ModalDeleteSingle modalDeleteSingle = {this.modalDeleteSingle} idDelete={this.state.idDelete}/>
                 <div className="col-sm-12">
                     <h3 className="center-text">Movie Management</h3>
                 </div>
@@ -106,10 +91,10 @@ class ManageMovie extends React.Component {
                             </span>
                         </th>
                         <th style={{width: 15 + '%'}}>Name</th>
-                        <th style={{width: 15 + '%'}}>Genre</th>
-                        <th style={{width: 15 + '%'}}>Director</th>
-                        <th style={{width: 15 + '%'}}>Public Year</th>
-                        <th style={{width: 15 + '%'}}>Description</th>
+                        <th style={{width: 10 + '%'}}>Genre</th>
+                        <th style={{width: 10 + '%'}}>Director</th>
+                        <th style={{width: 10 + '%'}}>Public Year</th>
+                        <th style={{width: 30 + '%'}}>Description</th>
                         <th >Actions</th>
                         </tr>
                     </thead>
@@ -125,13 +110,13 @@ class ManageMovie extends React.Component {
                                     </span>
                                 </td>
                                 <td style={{width: 15 + '%'}}>{movie.name}</td>
-                                <td style={{width: 15 + '%'}}>{movie.genre}</td>
-                                <td style={{width: 15 + '%'}}>{movie.director}</td>
-                                <td style={{width: 15 + '%'}}>{movie.publicYear}</td>
-                                <td style={{width: 15 + '%'}}>{movie.description}</td>
+                                <td style={{width: 10 + '%'}}>{movie.genre}</td>
+                                <td style={{width: 10 + '%'}}>{movie.director}</td>
+                                <td style={{width: 10 + '%'}}>{movie.publicYear}</td>
+                                <td style={{width: 30 + '%'}}>{movie.description}</td>
                                 <td>
                                     <a className="edit" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Edit"></i></a>
-                                    <a className="delete" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Delete" onClick={this.handleShow(this.modalDeleteSingle)}></i></a>
+                                    <a className="delete" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Delete" onClick={this.handleShow(this.modalDeleteSingle, movie.id)}></i></a>
                                 </td>
                                 </tr>
                             </tbody>
@@ -142,11 +127,11 @@ class ManageMovie extends React.Component {
                         <div className="clearfix">
                         <div className="hint-text">Showing <b>{movies.items.per_page}</b> out of <b>{movies.items.total}</b> entries</div>
                         <ul className="pagination">
-                            <li className="page-item" onClick={this.changePage(movies.items.current_page-1)}><a href="#" className="page-link">Previous</a></li>
+                            <li className="page-item" onClick={this.changePage((movies.items.current_page>1)?movies.items.current_page-1:1)}><a href="#" className="page-link">Previous</a></li>
                             {
                                 _.times(movies.items.total_page, (key) => (<li key={key} className={(movies.items.current_page == key+1)?"page-item active":"page-item"} onClick={this.changePage(key+1)}><a href="#" className="page-link">{key+1}</a></li>))
                             }
-                            <li className="page-item" onClick={this.changePage(movies.items.current_page+1)}><a href="#" className="page-link" disabled={false}>Next</a></li>
+                            <li className="page-item" onClick={this.changePage((movies.items.current_page < movies.items.total_page)?movies.items.current_page+1:movies.items.total_page)}><a href="#" className="page-link" disabled={false}>Next</a></li>
                         </ul>
                         </div>
                     }
