@@ -37,7 +37,15 @@ function _delete(id) {
         dispatch(request(id))
         movieService._delete(id)
             .then(
-                movie => dispatch(success(id)),
+                data => {
+                    dispatch(success(id))
+                    dispatch(requestReload())
+                    movieService.getAll(1)
+                        .then(
+                            data => dispatch(successReload(data)),
+                            error => dispatch(failureReload(error.toString()))
+                        );
+                },
                 error => dispatch(failure(id, error.toString()))
             )
     }
@@ -45,6 +53,10 @@ function _delete(id) {
     function request(id) { return { type: movieConstants.DELETE_REQUEST, id } }
     function success(id) { return { type: movieConstants.DELETE_SUCCESS, id } }
     function failure(id,error) { return { type: movieConstants.DELETE_FAILURE, id, error } }
+
+    function requestReload() { return { type: movieConstants.GETALL_REQUEST } }
+    function successReload(data) { return { type: movieConstants.GETALL_SUCCESS, data } }
+    function failureReload(error) { return { type: movieConstants.GETALL_FAILURE, error } }
 }
 
 function getAll(page) {

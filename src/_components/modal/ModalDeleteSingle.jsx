@@ -13,21 +13,25 @@ class ModalDeleteSingle extends React.Component {
     }
 
     handleClose = (modal) => {
-        return () => modal.current.handleClose()
+        return () => {
+            modal.current.handleClose()
+        }
     }
 
-    deleteMovie = (id) => {
+    deleteMovie = (event) => {
+        const id = this.props.idDelete
         if(id) {
             this.props.deleteSingleMovie(id)
         }
+        event.preventDefault()
     }
   
     render() {
         return (
             <CommonModal ref={this.modalDeleteSingle}>
-                <form onSubmit={this.deleteMovie(this.props.idDelete)}>
+                <form onSubmit={this.deleteMovie}>
                     <div className="modal-header">						
-                        <h4 className="modal-title">Delete Movie {this.idDelete}</h4>
+                        <h4 className="modal-title">Delete Movie</h4>
                         <button type="button" className="close" data-dismiss="modal" aria-hidden="true" onClick={this.handleClose(this.modalDeleteSingle)}>×</button>
                     </div>
                     <div className="modal-body">					
@@ -36,7 +40,7 @@ class ModalDeleteSingle extends React.Component {
                     </div>
                     <div className="modal-footer">
                         <input type="button" className="btn btn-default" data-dismiss="modal" defaultValue="Cancel" onClick={this.handleClose(this.modalDeleteSingle)}/>
-                        <input type="submit" className="btn btn-danger" value="Delete" />
+                        <input type="submit" className="btn btn-danger" value="Delete" onClick={this.handleClose(this.modalDeleteSingle)}/>
                     </div>
                 </form>
             </CommonModal>
@@ -48,7 +52,8 @@ function mapState(state) {
 
 }
 const actionCreators = {
-    deleteSingleMovie: movieActions._delete
+    deleteSingleMovie: movieActions._delete,
+    getMovies: movieActions.getAll
 }
 
 const connectedModalDeleteSingle = connect(mapState, actionCreators)(ModalDeleteSingle);

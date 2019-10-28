@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { CommonModal } from '../modal/modal';
 import {ModalAdd} from '../modal/ModalAdd'
 import {ModalDeleteSingle} from '../modal/ModalDeleteSingle'
+import {ModalDeleteMultiple} from '../modal/ModalDeleteMultiple'
 import {movieActions} from '../../_actions'
 import _ from 'lodash'
 
@@ -39,27 +40,16 @@ class ManageMovie extends React.Component {
         }
     }
 
+    handleCheck = (event) => {
+        console.log(event.target.value)
+    }
+
     render() {
         const {movies} = this.props
         return (
             <React.Fragment>
                 <ModalAdd modalAdd = {this.modalAdd}/>
-                <CommonModal ref={this.modalDeleteMultiple}>
-                    <form>
-                        <div className="modal-header">						
-                        <h4 className="modal-title">Delete Employee</h4>
-                        <button type="button" className="close" data-dismiss="modal" aria-hidden="true" onClick={this.handleClose(this.modalDeleteMultiple)}>×</button>
-                        </div>
-                        <div className="modal-body">					
-                        <p>Are you sure you want to delete these Records?</p>
-                        <p className="text-warning"><small>This action cannot be undone.</small></p>
-                        </div>
-                        <div className="modal-footer">
-                        <input type="button" className="btn btn-default" data-dismiss="modal" defaultValue="Cancel" onClick={this.handleClose(this.modalDeleteMultiple)}/>
-                        <input type="submit" className="btn btn-danger" defaultValue="Delete" />
-                        </div>
-                    </form>
-                </CommonModal>
+                <ModalDeleteMultiple modalDeleteMultiple = {this.modalDeleteMultiple}/>
                 <ModalDeleteSingle modalDeleteSingle = {this.modalDeleteSingle} idDelete={this.state.idDelete}/>
                 <div className="col-sm-12">
                     <h3 className="center-text">Movie Management</h3>
@@ -105,7 +95,7 @@ class ManageMovie extends React.Component {
                                 <tr>
                                 <td>
                                     <span className="custom-checkbox">
-                                    <input type="checkbox" id="checkbox1" name="options[]" defaultValue={1} />
+                                    <input type="checkbox" id="checkbox1" name="options[]" defaultValue={1} onClick={this.handleCheck}/>
                                     <label htmlFor="checkbox1" />
                                     </span>
                                 </td>
