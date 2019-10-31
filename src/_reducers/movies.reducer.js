@@ -14,9 +14,24 @@ export function movies(state = {}, action) {
         };
     case movieConstants.GETALL_SUCCESS:
         return {
+            ...state,
             items: action.data
         }
     case movieConstants.GETALL_FAILURE:
+        return { 
+            error: action.error
+        };
+    case movieConstants.GETBYID_REQUEST:
+        return {
+            ...state,
+            loading: true
+        };
+    case movieConstants.GETBYID_SUCCESS:
+        return {
+            ...state,
+            movie: action.data
+        }
+    case movieConstants.GETBYID_FAILURE:
         return { 
             error: action.error
         };

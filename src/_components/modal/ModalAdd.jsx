@@ -21,6 +21,15 @@ class ModalAdd extends React.Component {
         this.modalAdd = this.props.modalAdd
     }
 
+
+    componentDidUpdate(prevProps) {
+        const id = this.props.idEditting
+        if ((this.props.idEditting !== prevProps.idEditting) && id) {
+            this.props.getMovieById(this.props.idEditting)
+        }
+    }
+
+
     handleClose = (modal) => {
         return () => modal.current.handleClose()
     }
@@ -43,12 +52,13 @@ class ModalAdd extends React.Component {
     }
   
     render() {
+        const {movie} = this.props
         return (
             <CommonModal ref={this.modalAdd}>
                     <form onSubmit={this.addMovie}>
                         <div className="modal-header">						
-                        <h4 className="modal-title">Add Movie</h4>
-                        <button type="button" className="close" onClick={this.handleClose(this.modalAdd)}>×</button>
+                            <h4 className="modal-title">{this.props.idEditting?"Edit Movie":"Add Movie"}</h4>
+                            <button type="button" className="close" onClick={this.handleClose(this.modalAdd)}>×</button>
                         </div>
                         <div className="modal-body">					
                         <div className="form-group">
@@ -104,7 +114,7 @@ class ModalAdd extends React.Component {
                         </div>
                         <div className="modal-footer">
                             <input type="button" className="btn btn-default" defaultValue="Cancel" onClick={this.handleClose(this.modalAdd)} />
-                            <input type="submit" className="btn btn-success" value="Add"/>
+                            <input type="submit" className="btn btn-success" value={this.props.idEditting?"Save":"Add"}/>
                         </div>
                     </form>
                 </CommonModal> 
@@ -113,10 +123,11 @@ class ModalAdd extends React.Component {
 }
 
 function mapState(state) {
-
+    const {movie} = state
+    return {movie}
 }
 const actionCreators = {
-    addMovie: movieActions.add
+    getMovieById: movieActions.getById
 }
 
 const connectedModalAdd = connect(mapState, actionCreators)(ModalAdd);

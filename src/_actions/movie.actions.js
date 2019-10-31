@@ -6,6 +6,7 @@ import { history } from '../_helpers';
 export const movieActions = {
     add,
     getAll,
+    getById,
     _delete
 };
 function add(movie) {
@@ -73,4 +74,20 @@ function getAll(page) {
     function request() { return { type: movieConstants.GETALL_REQUEST } }
     function success(data) { return { type: movieConstants.GETALL_SUCCESS, data } }
     function failure(error) { return { type: movieConstants.GETALL_FAILURE, error } }
+}
+
+function getById(id) {
+    return dispatch => {
+        dispatch(request());
+
+        movieService.getById(id)
+            .then(
+                data => dispatch(success(data)),
+                error => dispatch(failure(error.toString()))
+            );
+    };
+
+    function request() { return { type: movieConstants.GETBYID_REQUEST } }
+    function success(data) { return { type: movieConstants.GETBYID_SUCCESS, data } }
+    function failure(error) { return { type: movieConstants.GETBYID_FAILURE, error } }
 }

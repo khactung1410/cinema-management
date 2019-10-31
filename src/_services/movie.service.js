@@ -4,6 +4,7 @@ import { authHeader } from '../_helpers';
 export const movieService = {
     add,
     getAll,
+    getById,
     _delete
 };
 
@@ -26,6 +27,15 @@ function getAll(page) {
     return fetch(`${config.apiUrl}/movie?page=${page}`, requestOptions).then(handleResponse);
 }
 
+function getById(id) {
+    const requestOptions = {
+        method: 'GET',
+        headers: authHeader()
+    };
+
+    return fetch(`${config.apiUrl}/movie/${id}`, requestOptions).then(handleResponse);
+}
+
 function _delete(id) {
     console.log("gggggg: ",id)
     const requestOptions = {
@@ -37,7 +47,6 @@ function _delete(id) {
 }
 
 function handleResponse(response) {
-    console.log(response)
     return response.text().then(text => {
         const data = text && JSON.parse(text);
         console.log('data: ',data)

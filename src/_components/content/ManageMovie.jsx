@@ -14,7 +14,8 @@ class ManageMovie extends React.Component {
         this.modalDeleteMultiple = React.createRef();
         this.modalDeleteSingle = React.createRef();
         this.state = {
-            idDelete: null
+            idDelete: null,
+            idEditting: null
         }
     }
 
@@ -24,7 +25,18 @@ class ManageMovie extends React.Component {
 
     handleShow = (modal,id) => {
         return () => {
-            this.setState({idDelete: id})
+            if(id) this.setState({
+                        idDelete: id
+                    })
+            modal.current.handleShow()
+        }
+    }
+
+    handleShowEdit = (modal,id) => {
+        return () => {
+            if(id) this.setState({
+                        idEditting: id
+                    })
             modal.current.handleShow()
         }
     }
@@ -48,7 +60,7 @@ class ManageMovie extends React.Component {
         const {movies} = this.props
         return (
             <React.Fragment>
-                <ModalAdd modalAdd = {this.modalAdd}/>
+                <ModalAdd modalAdd = {this.modalAdd} idEditting={this.state.idEditting}/>
                 <ModalDeleteMultiple modalDeleteMultiple = {this.modalDeleteMultiple}/>
                 <ModalDeleteSingle modalDeleteSingle = {this.modalDeleteSingle} idDelete={this.state.idDelete}/>
                 <div className="col-sm-12">
@@ -63,8 +75,8 @@ class ManageMovie extends React.Component {
                                     <input type="text" id="search" className="form-control" placeholder="Search by Name" />
                                     <span className="input-group-addon"><i className="material-icons"></i></span>
                                 </div>
-                                </div>
                             </div>
+                        </div>
                         <div className="col-sm-8">
                             <a className="btn btn-success" onClick={this.handleShow(this.modalAdd)}><i className="material-icons"></i> <span>Add New Movie</span></a>
                             <a className="btn btn-danger" onClick={this.handleShow(this.modalDeleteMultiple)}><i className="material-icons"></i> <span>Delete</span></a>						
@@ -105,7 +117,7 @@ class ManageMovie extends React.Component {
                                 <td style={{width: 10 + '%'}}>{movie.publicYear}</td>
                                 <td style={{width: 30 + '%'}}>{movie.description}</td>
                                 <td>
-                                    <a className="edit" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Edit"></i></a>
+                                    <a className="edit" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Edit" onClick={this.handleShowEdit(this.modalAdd, movie.id)}></i></a>
                                     <a className="delete" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Delete" onClick={this.handleShow(this.modalDeleteSingle, movie.id)}></i></a>
                                 </td>
                                 </tr>
