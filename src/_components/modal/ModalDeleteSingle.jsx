@@ -49,7 +49,7 @@ class ModalDeleteSingle extends React.Component {
 }
 
 function mapState(state) {
-
+    return {}
 }
 const actionCreators = {
     deleteSingleMovie: movieActions._delete,

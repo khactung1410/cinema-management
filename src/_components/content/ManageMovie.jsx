@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { CommonModal } from '../modal/modal';
 import {ModalAdd} from '../modal/ModalAdd'
+import {ModalEdit} from '../modal/ModalEdit'
 import {ModalDeleteSingle} from '../modal/ModalDeleteSingle'
 import {ModalDeleteMultiple} from '../modal/ModalDeleteMultiple'
 import {movieActions} from '../../_actions'
@@ -11,6 +12,7 @@ class ManageMovie extends React.Component {
     constructor(props) {
         super(props)
         this.modalAdd = React.createRef();
+        this.modalEdit = React.createRef();
         this.modalDeleteMultiple = React.createRef();
         this.modalDeleteSingle = React.createRef();
         this.state = {
@@ -60,7 +62,8 @@ class ManageMovie extends React.Component {
         const {movies} = this.props
         return (
             <React.Fragment>
-                <ModalAdd modalAdd = {this.modalAdd} idEditting={this.state.idEditting}/>
+                <ModalAdd modalAdd = {this.modalAdd}/>
+                <ModalEdit modalEdit = {this.modalEdit} idEditting={this.state.idEditting}/>
                 <ModalDeleteMultiple modalDeleteMultiple = {this.modalDeleteMultiple}/>
                 <ModalDeleteSingle modalDeleteSingle = {this.modalDeleteSingle} idDelete={this.state.idDelete}/>
                 <div className="col-sm-12">
@@ -117,7 +120,7 @@ class ManageMovie extends React.Component {
                                 <td style={{width: 10 + '%'}}>{movie.publicYear}</td>
                                 <td style={{width: 30 + '%'}}>{movie.description}</td>
                                 <td>
-                                    <a className="edit" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Edit" onClick={this.handleShowEdit(this.modalAdd, movie.id)}></i></a>
+                                    <a className="edit" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Edit" onClick={this.handleShowEdit(this.modalEdit, movie.id)}></i></a>
                                     <a className="delete" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Delete" onClick={this.handleShow(this.modalDeleteSingle, movie.id)}></i></a>
                                 </td>
                                 </tr>

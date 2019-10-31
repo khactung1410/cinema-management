@@ -1,12 +1,11 @@
 import React, { useState } from 'react'
 import { Modal } from 'react-bootstrap'
 import { CommonModal } from './modal';
-import { timingSafeEqual } from 'crypto';
 import {movieActions} from '../../_actions'
 import { connect } from 'react-redux';
 
 
-class ModalAdd extends React.Component {
+class ModalEdit extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -18,38 +17,52 @@ class ModalAdd extends React.Component {
                 description: ''
             }
         }
-        this.modalAdd = this.props.modalAdd
+        this.modalEdit = this.props.modalEdit
+    }
+
+    componentDidUpdate(prevProps) {
+        const id = this.props.idEditting
+        if ((this.props.idEditting !== prevProps.idEditting) && id) {
+            this.props.getMovieById(this.props.idEditting)
+        }
+        setTimeout( () => {
+            const movie = this.props.movies.movie ? this.props.movies.movie[0] : null
+            if(movie) {
+                this.setState({
+                    movie: {
+                        name: movie.name,
+                        genre: movie.genre,
+                        director: movie.director,
+                        publicYear: movie.publicYear,
+                        description: movie.description
+                    }
+                })
+            }
+        },250)
     }
 
     handleClose = (modal) => {
         return () => modal.current.handleClose()
     }
 
-    addMovie = (event) => {
-        event.preventDefault();
-        const {movie} = this.state
-        this.props.addMovie(movie)
-    }
-
     handleChange = (e) => {
+        console.log(this.state.movie.name)
         const {name, value} = e.target;
         const {movie} = this.state
         this.setState({
             movie: {
-                ...movie,
                 [name]: value
             }
         })
     }
   
     render() {
-        const {movie} = this.props
         return (
-            <CommonModal ref={this.modalAdd}>
+            <CommonModal ref={this.modalEdit}>
                     <form onSubmit={this.addMovie}>
                         <div className="modal-header">						
-                            <h4 className="modal-title">Add Movie</h4>
-                            <button type="button" className="close" onClick={this.handleClose(this.modalAdd)}>×</button>
+                            <h4 className="modal-title">Edit Movie</h4>
+                            <button type="button" className="close" onClick={this.handleClose(this.modalEdit)}>×</button>
                         </div>
                         <div className="modal-body">					
                         <div className="form-group">
@@ -60,6 +73,7 @@ class ModalAdd extends React.Component {
                                 required
                                 onChange={this.handleChange}
                                 name="name"
+                                value={this.state.movie.name}
                             />
                         </div>
                         <div className="form-group">
@@ -70,6 +84,7 @@ class ModalAdd extends React.Component {
                                 required 
                                 onChange={this.handleChange}
                                 name="genre"
+                                value={this.state.movie.genre}
                             />
                         </div>
                         <div className="form-group">
@@ -80,6 +95,7 @@ class ModalAdd extends React.Component {
                                 required 
                                 onChange={this.handleChange}
                                 name="director"
+                                value={this.state.movie.director}
                             />
                         </div>
                         <div className="form-group">
@@ -90,6 +106,7 @@ class ModalAdd extends React.Component {
                                 required 
                                 onChange={this.handleChange}
                                 name= "publicYear"
+                                value={this.state.movie.publicYear}
                             />
                         </div>
                         <div className="form-group">
@@ -99,12 +116,13 @@ class ModalAdd extends React.Component {
                                 required 
                                 onChange={this.handleChange}
                                 name="description"
+                                value={this.state.movie.description}
                             />
                         </div>				
                         </div>
                         <div className="modal-footer">
-                            <input type="button" className="btn btn-default" defaultValue="Cancel" onClick={this.handleClose(this.modalAdd)} />
-                            <input type="submit" className="btn btn-success" value="Add"/>
+                            <input type="button" className="btn btn-default" defaultValue="Cancel" onClick={this.handleClose(this.modalEdit)} />
+                            <input type="submit" className="btn btn-success" value="Save" />
                         </div>
                     </form>
                 </CommonModal> 
@@ -117,8 +135,8 @@ function mapState(state) {
     return {movies}
 }
 const actionCreators = {
-    addMovie: movieActions.add
+    getMovieById: movieActions.getById,
 }
 
-const connectedModalAdd = connect(mapState, actionCreators)(ModalAdd);
-export { connectedModalAdd as ModalAdd };
+const connectedModalEdit = connect(mapState, actionCreators)(ModalEdit);
+export { connectedModalEdit as ModalEdit };
