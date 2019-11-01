@@ -7,6 +7,7 @@ import {ModalDeleteSingle} from '../modal/ModalDeleteSingle'
 import {ModalDeleteMultiple} from '../modal/ModalDeleteMultiple'
 import {movieActions} from '../../_actions'
 import _ from 'lodash'
+import { Search } from './Search';
 
 class ManageMovie extends React.Component {
     constructor(props) {
@@ -74,12 +75,7 @@ class ManageMovie extends React.Component {
                     <div className="table-title">
                     <div className="row">
                         <div className="col-sm-4">
-                            <div className="search-box">
-                                <div className="input-group">								
-                                    <input type="text" id="search" className="form-control" placeholder="Search by Name" />
-                                    <span className="input-group-addon"><i className="material-icons"></i></span>
-                                </div>
-                            </div>
+                            <Search />
                         </div>
                         <div className="col-sm-8">
                             <a className="btn btn-success" onClick={this.handleShow(this.modalAdd)}><i className="material-icons"></i> <span>Add New Movie</span></a>

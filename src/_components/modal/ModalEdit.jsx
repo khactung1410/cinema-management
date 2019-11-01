@@ -70,7 +70,11 @@ class ModalEdit extends React.Component {
         event.preventDefault();
         const id = this.props.idEditting
         const {movie} = this.state
-        this.props.editMovie(id, movie)
+        const edittingMovie = {
+            ...movie,
+            id
+        }
+        this.props.editMovie(edittingMovie)
     }
   
     render() {

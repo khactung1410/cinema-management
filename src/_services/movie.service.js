@@ -5,17 +5,27 @@ export const movieService = {
     add,
     getAll,
     getById,
-    _delete
+    _delete,
+    edit,
+    searchByName
 };
 
 function add(movie) {
-    console.log('movie: ',movie)
     const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(movie)
     };
     return fetch(`${config.apiUrl}/movie/add`, requestOptions).then(handleResponse);
+}
+
+function edit(movie) {
+    const requestOptions = {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(movie)
+    };
+    return fetch(`${config.apiUrl}/movie/edit`, requestOptions).then(handleResponse);
 }
 
 function getAll(page) {
@@ -34,6 +44,16 @@ function getById(id) {
     };
 
     return fetch(`${config.apiUrl}/movie/${id}`, requestOptions).then(handleResponse);
+}
+
+function searchByName(name) {
+    const requestOptions = {
+        method: 'POST',
+        headers: authHeader(),
+        body: JSON.stringify({name})
+    };
+
+    return fetch(`${config.apiUrl}/movie/search`, requestOptions).then(handleResponse);
 }
 
 function _delete(id) {
