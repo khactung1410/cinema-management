@@ -36,9 +36,10 @@ class ManageMovie extends React.Component {
 
     handleShowEdit = (modal,id) => {
         return () => {
-            if(id) this.setState({
-                        idEditting: id
-                    })
+            this.props.getMovieById(id)
+            setTimeout(() => this.setState({
+                                idEditting: id
+                    }),300)
             modal.current.handleShow()
         }
     }
@@ -196,7 +197,8 @@ function mapState(state) {
 }
 
 const actionCreators = {
-    getMovies: movieActions.getAll
+    getMovies: movieActions.getAll,
+    getMovieById: movieActions.getById
 }
 
 const connectedManageMovie = connect(mapState, actionCreators)(ManageMovie);

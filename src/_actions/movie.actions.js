@@ -91,3 +91,19 @@ function getById(id) {
     function success(data) { return { type: movieConstants.GETBYID_SUCCESS, data } }
     function failure(error) { return { type: movieConstants.GETBYID_FAILURE, error } }
 }
+
+function edit(id) {
+    return dispatch => {
+        dispatch(request());
+
+        movieService.getById(id)
+            .then(
+                data => dispatch(success(data)),
+                error => dispatch(failure(error.toString()))
+            );
+    };
+
+    function request() { return { type: movieConstants.GETBYID_REQUEST } }
+    function success(data) { return { type: movieConstants.GETBYID_SUCCESS, data } }
+    function failure(error) { return { type: movieConstants.GETBYID_FAILURE, error } }
+}

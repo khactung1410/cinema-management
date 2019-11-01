@@ -22,10 +22,7 @@ class ModalEdit extends React.Component {
 
     componentDidUpdate(prevProps) {
         const id = this.props.idEditting
-        if ((this.props.idEditting !== prevProps.idEditting) && id) {
-            this.props.getMovieById(this.props.idEditting)
-        }
-        setTimeout( () => {
+        if ((id && (id !== prevProps.idEditting))) {
             const movie = this.props.movies.movie ? this.props.movies.movie[0] : null
             if(movie) {
                 this.setState({
@@ -38,28 +35,48 @@ class ModalEdit extends React.Component {
                     }
                 })
             }
-        },250)
+        }
     }
 
     handleClose = (modal) => {
-        return () => modal.current.handleClose()
+        return () => {
+            const movie = this.props.movies.movie ? this.props.movies.movie[0] : null
+            this.setState({
+                movie: {
+                    name: movie.name,
+                    genre: movie.genre,
+                    director: movie.director,
+                    publicYear: movie.publicYear,
+                    description: movie.description
+                }
+            })
+            modal.current.handleClose()
+        }
     }
 
     handleChange = (e) => {
-        console.log(this.state.movie.name)
         const {name, value} = e.target;
         const {movie} = this.state
         this.setState({
             movie: {
+                ...movie,
                 [name]: value
             }
         })
+        setTimeout(()=>{console.log(this.state.movie)},500)
+    }
+
+    editMovie = (event) => {
+        event.preventDefault();
+        const id = this.props.idEditting
+        const {movie} = this.state
+        this.props.editMovie(id, movie)
     }
   
     render() {
         return (
             <CommonModal ref={this.modalEdit}>
-                    <form onSubmit={this.addMovie}>
+                    <form onSubmit={this.editMovie}>
                         <div className="modal-header">						
                             <h4 className="modal-title">Edit Movie</h4>
                             <button type="button" className="close" onClick={this.handleClose(this.modalEdit)}>×</button>
@@ -69,7 +86,7 @@ class ModalEdit extends React.Component {
                             <label>Name</label>
                             <input
                                 type="text"
-                                className="form-control" 
+                                className="form-control"
                                 required
                                 onChange={this.handleChange}
                                 name="name"
@@ -136,6 +153,7 @@ function mapState(state) {
 }
 const actionCreators = {
     getMovieById: movieActions.getById,
+    editMovie: movieActions.edit
 }
 
 const connectedModalEdit = connect(mapState, actionCreators)(ModalEdit);
