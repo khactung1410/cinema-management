@@ -94,11 +94,11 @@ function getById(id) {
     function failure(error) { return { type: movieConstants.GETBYID_FAILURE, error } }
 }
 
-function searchByName(name) {
+function searchByName(name, page) {
     return dispatch => {
         dispatch(request());
 
-        movieService.searchByName(name)
+        movieService.searchByName(name, page)
             .then(
                 data => dispatch(success(data)),
                 error => dispatch(failure(error.toString()))

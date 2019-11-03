@@ -43,7 +43,6 @@ class ModalAdd extends React.Component {
     }
   
     render() {
-        const {movie} = this.props
         return (
             <CommonModal ref={this.modalAdd}>
                     <form onSubmit={this.addMovie}>

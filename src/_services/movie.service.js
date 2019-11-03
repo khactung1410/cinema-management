@@ -46,18 +46,16 @@ function getById(id) {
     return fetch(`${config.apiUrl}/movie/${id}`, requestOptions).then(handleResponse);
 }
 
-function searchByName(name) {
+function searchByName(name, page) {
     const requestOptions = {
-        method: 'POST',
+        method: 'GET',
         headers: authHeader(),
-        body: JSON.stringify({name})
     };
 
-    return fetch(`${config.apiUrl}/movie/search`, requestOptions).then(handleResponse);
+    return fetch(`${config.apiUrl}/movie/search?page=${page}&name=${name}`, requestOptions).then(handleResponse);
 }
 
 function _delete(id) {
-    console.log("gggggg: ",id)
     const requestOptions = {
         method: 'GET',
         headers: authHeader()

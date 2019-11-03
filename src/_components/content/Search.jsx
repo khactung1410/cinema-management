@@ -16,7 +16,7 @@ class Search extends React.Component {
         // this.setState({
         //     [name]: value
         // })
-        this.props.searchMovieByName(value)
+        this.props.searchMovieByName(value, 1)
     } 
 
     render() {

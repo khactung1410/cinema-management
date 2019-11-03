@@ -21,6 +21,20 @@ export function movies(state = {}, action) {
         return { 
             error: action.error
         };
+
+    case movieConstants.SEARCHBYNAME_REQUEST:
+        return {
+            loading: true
+        };
+    case movieConstants.SEARCHBYNAME_SUCCESS:
+        return {
+            ...state,
+            items: action.data,
+        }
+    case movieConstants.SEARCHBYNAME_FAILURE:
+        return { 
+            error: action.error
+        };
     case movieConstants.GETBYID_REQUEST:
         return {
             ...state,

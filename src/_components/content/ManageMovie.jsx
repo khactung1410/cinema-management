@@ -49,10 +49,10 @@ class ManageMovie extends React.Component {
         return () => modal.current.handleClose()
     }
 
-    changePage = (page) => {
+    changePage = (page, searchingName) => {
         return (e) => {
             e.preventDefault()
-            this.props.getMovies(page)
+            searchingName ? this.props.searchMovieByName(searchingName,page) : this.props.getMovies(page)
         }
     }
 
@@ -129,11 +129,11 @@ class ManageMovie extends React.Component {
                         <div className="clearfix">
                         <div className="hint-text">Showing <b>{movies.items.per_page}</b> out of <b>{movies.items.total}</b> entries</div>
                         <ul className="pagination">
-                            <li className="page-item" onClick={this.changePage((movies.items.current_page>1)?movies.items.current_page-1:1)}><a href="#" className="page-link">Previous</a></li>
+                            <li className="page-item" onClick={movies.items.searchingName ? this.changePage((movies.items.current_page>1)?movies.items.current_page-1:1, movies.items.searchingName): this.changePage((movies.items.current_page>1)?movies.items.current_page-1:1)}><a href="#" className="page-link">Previous</a></li>
                             {
-                                _.times(movies.items.total_page, (key) => (<li key={key} className={(movies.items.current_page == key+1)?"page-item active":"page-item"} onClick={this.changePage(key+1)}><a href="#" className="page-link">{key+1}</a></li>))
+                                _.times(movies.items.total_page, (key) => (<li key={key} className={(movies.items.current_page == key+1)?"page-item active":"page-item"} onClick={movies.items.searchingName ? this.changePage(key+1, movies.items.searchingName) : this.changePage(key+1)}><a href="#" className="page-link">{key+1}</a></li>))
                             }
-                            <li className="page-item" onClick={this.changePage((movies.items.current_page < movies.items.total_page)?movies.items.current_page+1:movies.items.total_page)}><a href="#" className="page-link" disabled={false}>Next</a></li>
+                            <li className="page-item" onClick={movies.items.searchingName ? (this.changePage((movies.items.current_page < movies.items.total_page)?movies.items.current_page+1:movies.items.total_page, movies.items.searchingName)) : this.changePage((movies.items.current_page < movies.items.total_page)?movies.items.current_page+1:movies.items.total_page)}><a href="#" className="page-link" disabled={false}>Next</a></li>
                         </ul>
                         </div>
                     }
@@ -194,7 +194,8 @@ function mapState(state) {
 
 const actionCreators = {
     getMovies: movieActions.getAll,
-    getMovieById: movieActions.getById
+    getMovieById: movieActions.getById,
+    searchMovieByName: movieActions.searchByName
 }
 
 const connectedManageMovie = connect(mapState, actionCreators)(ManageMovie);
