@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import { Modal } from 'react-bootstrap'
-import { CommonModal } from './modal';
+import { CommonModal } from '../modal';
 import { timingSafeEqual } from 'crypto';
-import {movieActions} from '../../_actions'
+import {movieActions} from '../../../_actions'
 import { connect } from 'react-redux';
 
 

@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Modal } from 'react-bootstrap'
-import { CommonModal } from './modal';
-import {movieActions} from '../../_actions'
+import { CommonModal } from '../modal';
+import {movieActions} from '../../../_actions'
 import { connect } from 'react-redux';
 
 

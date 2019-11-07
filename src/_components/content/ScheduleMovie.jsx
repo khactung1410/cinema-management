@@ -9,7 +9,7 @@ import {movieActions} from '../../_actions'
 import _ from 'lodash'
 import { Search } from './Search';
 
-class ManageMovie extends React.Component {
+class ScheduleMovie extends React.Component {
     constructor(props) {
         super(props)
         this.modalAdd = React.createRef();
@@ -69,7 +69,7 @@ class ManageMovie extends React.Component {
                 <ModalDeleteMultiple modalDeleteMultiple = {this.modalDeleteMultiple}/>
                 <ModalDeleteSingle modalDeleteSingle = {this.modalDeleteSingle} idDelete={this.state.idDelete}/>
                 <div className="col-sm-12">
-                    <h3 className="center-text">Movie Management</h3>
+                    <h3 className="center-text">Movie Schedule</h3>
                 </div>
                 <div className="table-wrapper">
                     <div className="table-title">
@@ -198,5 +198,5 @@ const actionCreators = {
     searchMovieByName: movieActions.searchByName
 }
 
-const connectedManageMovie = connect(mapState, actionCreators)(ManageMovie);
-export { connectedManageMovie as ManageMovie };
+const connectedScheduleMovie = connect(mapState, actionCreators)(ScheduleMovie);
+export { connectedScheduleMovie as ScheduleMovie };
