@@ -3,9 +3,9 @@ import { connect } from 'react-redux';
 import { CommonModal } from '../modal/modal';
 import {ModalAdd} from '../modal/movie/ModalAdd'
 import {ModalEdit} from '../modal/movie/ModalEdit'
-import {ModalDeleteSingle} from '../modal/movie/ModalDeleteSingle'
+import {ModalDeleteSingle} from '../modal/schedule/ModalDeleteSingle'
 import {ModalDeleteMultiple} from '../modal/movie/ModalDeleteMultiple'
-import {movieActions} from '../../_actions'
+import {scheduleActions} from '../../_actions'
 import _ from 'lodash'
 import { Search } from './Search';
 
@@ -18,12 +18,12 @@ class ScheduleMovie extends React.Component {
         this.modalDeleteSingle = React.createRef();
         this.state = {
             idDelete: null,
-            idEditting: null
+            // idEditting: null
         }
     }
 
     componentDidMount() {
-        this.props.getMovies(1)
+        this.props.getSchedules(1)
     };
 
     handleShow = (modal,id) => {
@@ -36,13 +36,13 @@ class ScheduleMovie extends React.Component {
     }
 
     handleShowEdit = (modal,id) => {
-        return () => {
-            this.props.getMovieById(id)
-            setTimeout(() => this.setState({
-                                idEditting: id
-                    }),300)
-            modal.current.handleShow()
-        }
+        // return () => {
+        //     this.props.getMovieById(id)
+        //     setTimeout(() => this.setState({
+        //                         idEditting: id
+        //             }),300)
+        //     modal.current.handleShow()
+        // }
     }
 
     handleClose = (modal) => {
@@ -52,7 +52,7 @@ class ScheduleMovie extends React.Component {
     changePage = (page, searchingName) => {
         return (e) => {
             e.preventDefault()
-            searchingName ? this.props.searchMovieByName(searchingName,page) : this.props.getMovies(page)
+            searchingName ? this.props.searchScheduleByName(searchingName,page) : this.props.getSchedules(page)
         }
     }
 
@@ -61,7 +61,7 @@ class ScheduleMovie extends React.Component {
     }
 
     render() {
-        const {movies} = this.props
+        const {schedules} = this.props
         return (
             <React.Fragment>
                 <ModalAdd modalAdd = {this.modalAdd}/>
@@ -78,7 +78,7 @@ class ScheduleMovie extends React.Component {
                             <Search />
                         </div>
                         <div className="col-sm-8">
-                            <a className="btn btn-success" onClick={this.handleShow(this.modalAdd)}><i className="material-icons"></i> <span>Add New Movie</span></a>
+                            <a className="btn btn-success" onClick={this.handleShow(this.modalAdd)}><i className="material-icons"></i> <span>Add New Schedule</span></a>
                             <a className="btn btn-danger" onClick={this.handleShow(this.modalDeleteMultiple)}><i className="material-icons"></i> <span>Delete</span></a>						
                         </div>
                     </div>
@@ -92,17 +92,18 @@ class ScheduleMovie extends React.Component {
                             <label htmlFor="selectAll" />
                             </span>
                         </th>
-                        <th style={{width: 15 + '%'}}>Name</th>
-                        <th style={{width: 10 + '%'}}>Genre</th>
-                        <th style={{width: 10 + '%'}}>Director</th>
-                        <th style={{width: 10 + '%'}}>Public Year</th>
-                        <th style={{width: 30 + '%'}}>Description</th>
+                        <th style={{width: 20 + '%'}}>Name</th>
+                        <th style={{width: 15 + '%'}}>Room</th>
+                        <th style={{width: 15 + '%'}}>Start At</th>
+                        <th style={{width: 15 + '%'}}>End At</th>
+                        <th style={{width: 15 + '%'}}>Date</th>
+                        <th style={{width: 20 + '%'}}>Ticket Price</th>
                         <th >Actions</th>
                         </tr>
                     </thead>
                     {
-                        movies.items &&
-                            movies.items.movies.map((movie,key) => (
+                        schedules.items &&
+                        schedules.items.schedules.map((schedule,key) => (
                                 <tbody key={key}>
                                 <tr>
                                 <td>
@@ -111,29 +112,30 @@ class ScheduleMovie extends React.Component {
                                     <label htmlFor="checkbox1" />
                                     </span>
                                 </td>
-                                <td style={{width: 15 + '%'}}>{movie.name}</td>
-                                <td style={{width: 10 + '%'}}>{movie.genre}</td>
-                                <td style={{width: 10 + '%'}}>{movie.director}</td>
-                                <td style={{width: 10 + '%'}}>{movie.publicYear}</td>
-                                <td style={{width: 30 + '%'}}>{movie.description}</td>
+                                <td style={{width: 20 + '%'}}>{schedule.name}</td>
+                                <td style={{width: 15 + '%'}}>{schedule.room}</td>
+                                <td style={{width: 15 + '%'}}>{schedule.startAt}</td>
+                                <td style={{width: 15 + '%'}}>{schedule.endAt}</td>
+                                <td style={{width: 15 + '%'}}>{schedule.date}</td>
+                                <td style={{width: 20 + '%'}}>{schedule.ticketPrice}</td>
                                 <td>
-                                    <a className="edit" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Edit" onClick={this.handleShowEdit(this.modalEdit, movie.id)}></i></a>
-                                    <a className="delete" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Delete" onClick={this.handleShow(this.modalDeleteSingle, movie.id)}></i></a>
+                                    <a className="edit" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Edit" onClick={this.handleShowEdit(this.modalEdit, schedule.id)}></i></a>
+                                    <a className="delete" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Delete" onClick={this.handleShow(this.modalDeleteSingle, schedule.id)}></i></a>
                                 </td>
                                 </tr>
                             </tbody>
                             ))
                     }
                     </table>
-                    {movies.items &&
+                    {schedules.items &&
                         <div className="clearfix">
-                        <div className="hint-text">Showing <b>{movies.items.per_page}</b> out of <b>{movies.items.total}</b> entries</div>
+                        <div className="hint-text">Showing <b>{schedules.items.schedules.length}</b> out of <b>{schedules.items.total}</b> entries</div>
                         <ul className="pagination">
-                            <li className="page-item" onClick={movies.items.searchingName ? this.changePage((movies.items.current_page>1)?movies.items.current_page-1:1, movies.items.searchingName): this.changePage((movies.items.current_page>1)?movies.items.current_page-1:1)}><a href="#" className="page-link">Previous</a></li>
+                            <li className="page-item" onClick={schedules.items.searchingName ? this.changePage((schedules.items.current_page>1)?schedules.items.current_page-1:1, schedules.items.searchingName): this.changePage((schedules.items.current_page>1)?schedules.items.current_page-1:1)}><a href="#" className="page-link">Previous</a></li>
                             {
-                                _.times(movies.items.total_page, (key) => (<li key={key} className={(movies.items.current_page == key+1)?"page-item active":"page-item"} onClick={movies.items.searchingName ? this.changePage(key+1, movies.items.searchingName) : this.changePage(key+1)}><a href="#" className="page-link">{key+1}</a></li>))
+                                _.times(schedules.items.total_page, (key) => (<li key={key} className={(schedules.items.current_page == key+1)?"page-item active":"page-item"} onClick={schedules.items.searchingName ? this.changePage(key+1, schedules.items.searchingName) : this.changePage(key+1)}><a href="#" className="page-link">{key+1}</a></li>))
                             }
-                            <li className="page-item" onClick={movies.items.searchingName ? (this.changePage((movies.items.current_page < movies.items.total_page)?movies.items.current_page+1:movies.items.total_page, movies.items.searchingName)) : this.changePage((movies.items.current_page < movies.items.total_page)?movies.items.current_page+1:movies.items.total_page)}><a href="#" className="page-link" disabled={false}>Next</a></li>
+                            <li className="page-item" onClick={schedules.items.searchingName ? (this.changePage((schedules.items.current_page < schedules.items.total_page)?schedules.items.current_page+1:schedules.items.total_page, schedules.items.searchingName)) : this.changePage((schedules.items.current_page < schedules.items.total_page)?schedules.items.current_page+1:schedules.items.total_page)}><a href="#" className="page-link" disabled={false}>Next</a></li>
                         </ul>
                         </div>
                     }
@@ -188,14 +190,14 @@ class ScheduleMovie extends React.Component {
 }
 
 function mapState(state) {
-    const {movies}  = state;
-    return {movies};
+    const {schedules}  = state;
+    return {schedules};
 }
 
 const actionCreators = {
-    getMovies: movieActions.getAll,
-    getMovieById: movieActions.getById,
-    searchMovieByName: movieActions.searchByName
+    getSchedules: scheduleActions.getAll,
+    getScheduleId: scheduleActions.getById,
+    searchScheduleByName: scheduleActions.searchByName
 }
 
 const connectedScheduleMovie = connect(mapState, actionCreators)(ScheduleMovie);

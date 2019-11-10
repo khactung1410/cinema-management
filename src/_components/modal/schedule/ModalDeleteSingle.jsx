@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Modal } from 'react-bootstrap'
 import { CommonModal } from '../modal';
 import { timingSafeEqual } from 'crypto';
-import {movieActions} from '../../../_actions'
+import {scheduleActions} from '../../../_actions'
 import { connect } from 'react-redux';
 
 
@@ -18,10 +18,10 @@ class ModalDeleteSingle extends React.Component {
         }
     }
 
-    deleteMovie = (event) => {
+    deleteSchedule = (event) => {
         const id = this.props.idDelete
         if(id) {
-            this.props.deleteSingleMovie(id)
+            this.props.deleteSingleSchedule(id)
         }
         event.preventDefault()
     }
@@ -29,13 +29,13 @@ class ModalDeleteSingle extends React.Component {
     render() {
         return (
             <CommonModal ref={this.modalDeleteSingle}>
-                <form onSubmit={this.deleteMovie}>
+                <form onSubmit={this.deleteSchedule}>
                     <div className="modal-header">						
-                        <h4 className="modal-title">Delete Movie</h4>
+                        <h4 className="modal-title">Delete Schedule</h4>
                         <button type="button" className="close" data-dismiss="modal" aria-hidden="true" onClick={this.handleClose(this.modalDeleteSingle)}>×</button>
                     </div>
                     <div className="modal-body">					
-                        <p>Are you sure you want to delete this movie?</p>
+                        <p>Are you sure you want to delete this schedule?</p>
                         <p className="text-warning"><small>This action cannot be undone.</small></p>
                     </div>
                     <div className="modal-footer">
@@ -52,7 +52,7 @@ function mapState(state) {
     return {}
 }
 const actionCreators = {
-    deleteSingleMovie: movieActions._delete,
+    deleteSingleSchedule: scheduleActions._delete,
 }
 
 const connectedModalDeleteSingle = connect(mapState, actionCreators)(ModalDeleteSingle);

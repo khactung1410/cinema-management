@@ -127,7 +127,7 @@ class ManageMovie extends React.Component {
                     </table>
                     {movies.items &&
                         <div className="clearfix">
-                        <div className="hint-text">Showing <b>{movies.items.per_page}</b> out of <b>{movies.items.total}</b> entries</div>
+                        <div className="hint-text">Showing <b>{movies.items.movies.length}</b> out of <b>{movies.items.total}</b> entries</div>
                         <ul className="pagination">
                             <li className="page-item" onClick={movies.items.searchingName ? this.changePage((movies.items.current_page>1)?movies.items.current_page-1:1, movies.items.searchingName): this.changePage((movies.items.current_page>1)?movies.items.current_page-1:1)}><a href="#" className="page-link">Previous</a></li>
                             {
