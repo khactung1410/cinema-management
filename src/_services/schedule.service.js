@@ -3,7 +3,8 @@ import { authHeader } from '../_helpers';
 
 export const scheduleService = {
     getAll,
-    _delete
+    _delete,
+    searchByName
 };
 
 function getAll(page) {
@@ -13,6 +14,14 @@ function getAll(page) {
     };
 
     return fetch(`${config.apiUrl}/schedule?page=${page}`, requestOptions).then(handleResponse);
+}
+function searchByName(name, page) {
+    const requestOptions = {
+        method: 'GET',
+        headers: authHeader(),
+    };
+
+    return fetch(`${config.apiUrl}/schedule/search?page=${page}&name=${name}`, requestOptions).then(handleResponse);
 }
 
 function _delete(id) {

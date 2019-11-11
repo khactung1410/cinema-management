@@ -49,12 +49,6 @@ export function movies(state = {}, action) {
         return { 
             error: action.error
         };
-    case movieConstants.ADD_REQUEST:
-        return { updating: true };
-    case movieConstants.ADD_SUCCESS:
-        return {};
-    case movieConstants.ADD_FAILURE:
-        return {};
     default:
       return state
   }

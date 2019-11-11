@@ -5,7 +5,8 @@ import { history } from '../_helpers';
 
 export const scheduleActions = {
     getAll,
-    _delete
+    _delete,
+    searchByName
 };
 
 function getAll(page) {
@@ -22,6 +23,22 @@ function getAll(page) {
     function request() { return { type: scheduleConstants.GETALL_REQUEST } }
     function success(data) { return { type: scheduleConstants.GETALL_SUCCESS, data } }
     function failure(error) { return { type: scheduleConstants.GETALL_FAILURE, error } }
+}
+
+function searchByName(name, page) {
+    return dispatch => {
+        dispatch(request());
+
+        scheduleService.searchByName(name, page)
+            .then(
+                data => dispatch(success(data)),
+                error => dispatch(failure(error.toString()))
+            );
+    };
+
+    function request() { return { type: scheduleConstants.SEARCHBYNAME_REQUEST } }
+    function success(data) { return { type: scheduleConstants.SEARCHBYNAME_SUCCESS, data } }
+    function failure(error) { return { type: scheduleConstants.SEARCHBYNAME_FAILURE, error } }
 }
 
 function _delete(id) {

@@ -1,13 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { CommonModal } from '../modal/modal';
-import {ModalAdd} from '../modal/movie/ModalAdd'
+import {ModalAdd} from '../modal/schedule/ModalAdd'
 import {ModalEdit} from '../modal/movie/ModalEdit'
 import {ModalDeleteSingle} from '../modal/schedule/ModalDeleteSingle'
 import {ModalDeleteMultiple} from '../modal/movie/ModalDeleteMultiple'
 import {scheduleActions} from '../../_actions'
 import _ from 'lodash'
-import { Search } from './Search';
+import { SearchSchedule } from './SearchSchedule';
 
 class ScheduleMovie extends React.Component {
     constructor(props) {
@@ -75,7 +75,7 @@ class ScheduleMovie extends React.Component {
                     <div className="table-title">
                     <div className="row">
                         <div className="col-sm-4">
-                            <Search />
+                            <SearchSchedule />
                         </div>
                         <div className="col-sm-8">
                             <a className="btn btn-success" onClick={this.handleShow(this.modalAdd)}><i className="material-icons"></i> <span>Add New Schedule</span></a>

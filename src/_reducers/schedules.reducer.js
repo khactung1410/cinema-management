@@ -49,12 +49,6 @@ export function schedules(state = {}, action) {
         return { 
             error: action.error
         };
-    case scheduleConstants.ADD_REQUEST:
-        return { updating: true };
-    case scheduleConstants.ADD_SUCCESS:
-        return {};
-    case scheduleConstants.ADD_FAILURE:
-        return {};
     default:
       return state
   }
