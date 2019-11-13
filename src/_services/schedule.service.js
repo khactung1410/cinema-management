@@ -4,7 +4,8 @@ import { authHeader } from '../_helpers';
 export const scheduleService = {
     getAll,
     _delete,
-    searchByName
+    searchByName,
+    add
 };
 
 function getAll(page) {
@@ -22,6 +23,15 @@ function searchByName(name, page) {
     };
 
     return fetch(`${config.apiUrl}/schedule/search?page=${page}&name=${name}`, requestOptions).then(handleResponse);
+}
+
+function add(schedule) {
+    const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(schedule)
+    };
+    return fetch(`${config.apiUrl}/schedule/add`, requestOptions).then(handleResponse);
 }
 
 function _delete(id) {

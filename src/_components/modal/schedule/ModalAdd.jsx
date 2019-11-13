@@ -6,7 +6,6 @@ import {scheduleActions} from '../../../_actions'
 import { connect } from 'react-redux';
 import TimePicker from 'react-bootstrap-time-picker';
 
-
 class ModalAdd extends React.Component {
     constructor(props) {
         super(props)
@@ -14,23 +13,17 @@ class ModalAdd extends React.Component {
             schedule: {
                 name: '',
                 room: '',
-                startAt: 0,
-                endAt: 0,
                 date: '',
-                price: ''
-            }
+                ticketPrice: ''
+            },
+            startAt: 0,
+            endAt: 0,
         }
         this.modalAdd = this.props.modalAdd
     }
 
     handleClose = (modal) => {
         return () => modal.current.handleClose()
-    }
-
-    addSchedule = (event) => {
-        event.preventDefault();
-        const {schedule} = this.state
-        this.props.addSchedule(schedule)
     }
 
     handleChange = (e) => {
@@ -43,32 +36,47 @@ class ModalAdd extends React.Component {
             }
         })
     }
+    
+    msToTime = (millisec) => {
+        var hour = Math.floor(millisec/3600)
+        console.log(hour)
+        var minute = (millisec - hour*3600)/60
+        var second = millisec - hour*3600 - minute*60
+        return hour + ":" + minute + ":" + second
+    }
 
-    handleStartAtChange(startAt) {
-        console.log(startAt);     // <- prints "3600" if "01:00" is picked
+    handleStartAtChange = (startAt) => {
+        console.log(startAt); 
         this.setState({
-            ...schedule,
-            startAt:  startAt
+            startAt: startAt
         });
     }
 
-    handleEndAtChange(endAt) {
-        console.log(endAt);     // <- prints "3600" if "01:00" is picked
+    handleEndAtChange = (endAt) => {
+        console.log(endAt);
         this.setState({
-            ...schedule,
-             endAt: endAt 
-            });
+            endAt: endAt 
+        });
+    }
+
+    addSchedule = (event) => {
+        event.preventDefault();
+        const {schedule} = this.state
+        schedule.startAt = this.msToTime(this.state.startAt)
+        schedule.endAt = this.msToTime(this.state.endAt)
+        console.log(schedule)
+        this.props.addSchedule(schedule)
     }
   
     render() {
         return (
             <CommonModal ref={this.modalAdd}>
-                    <form onSubmit={this.addMovie}>
-                        <div className="modal-header">						
+                    <form onSubmit={this.addSchedule}>
+                        <div className="modal-header">                      
                             <h4 className="modal-title">Add Schedule</h4>
                             <button type="button" className="close" onClick={this.handleClose(this.modalAdd)}>×</button>
                         </div>
-                        <div className="modal-body">					
+                        <div className="modal-body">                    
                         <div className="form-group">
                             <label>Name</label>
                             <input
@@ -91,11 +99,11 @@ class ModalAdd extends React.Component {
                         </div>
                         <div className="form-group">
                             <label>Start At</label>
-                            <TimePicker onChange={this.handleStartAtChange} value={this.state.startAt}/>
+                            <TimePicker format={24} onChange={this.handleStartAtChange} value={this.state.startAt}/>
                         </div>
                         <div className="form-group">
                             <label>End At</label>
-                            <TimePicker onChange={this.handleEndAtChangele} value={this.state.endAt}/>
+                            <TimePicker format={24}  onChange={this.handleEndAtChange} value={this.state.endAt}/>
                         </div>
                         <div className="form-group">
                             <label>Date</label>
@@ -114,7 +122,7 @@ class ModalAdd extends React.Component {
                                 className="form-control" 
                                 required
                                 onChange={this.handleChange}
-                                name="price"
+                                name="ticketPrice"
                             />
                         </div>
                         </div>

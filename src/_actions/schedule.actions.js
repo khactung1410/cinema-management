@@ -6,7 +6,8 @@ import { history } from '../_helpers';
 export const scheduleActions = {
     getAll,
     _delete,
-    searchByName
+    searchByName,
+    add
 };
 
 function getAll(page) {
@@ -23,6 +24,30 @@ function getAll(page) {
     function request() { return { type: scheduleConstants.GETALL_REQUEST } }
     function success(data) { return { type: scheduleConstants.GETALL_SUCCESS, data } }
     function failure(error) { return { type: scheduleConstants.GETALL_FAILURE, error } }
+}
+
+function add(schedule) {
+    return dispatch => {
+        dispatch(request(schedule))
+        scheduleService.add(schedule)
+            .then(
+                schedule => {
+                    dispatch(success(schedule));
+                    history.push('/MovieSchedule');
+                    dispatch(alertActions.success('add new movie successful'));
+                    setTimeout(() => dispatch(alertActions.clear()),2000); //delete alert
+                },
+                error => {
+                    dispatch(failure(error.toString()));
+                    dispatch(alertActions.error(error.toString()));
+                    setTimeout(() => dispatch(alertActions.clear()),2000); //delete alert
+                }
+            )
+        
+    }
+    function request(schedule) { return { type: scheduleConstants.ADD_REQUEST, schedule } }
+    function success(schedule) { return { type: scheduleConstants.ADD_SUCCESS, schedule } }
+    function failure(error) { return { type: scheduleConstants.ADD_FAILURE, error } }
 }
 
 function searchByName(name, page) {
