@@ -5,6 +5,10 @@ import { timingSafeEqual } from 'crypto';
 import {scheduleActions} from '../../../_actions'
 import { connect } from 'react-redux';
 import TimePicker from 'react-bootstrap-time-picker';
+import DatePicker from 'react-datepicker';
+import moment from 'moment';
+import "react-datepicker/dist/react-datepicker.css";
+import "./customDatePickerWidth.css";
 
 class ModalAdd extends React.Component {
     constructor(props) {
@@ -13,11 +17,11 @@ class ModalAdd extends React.Component {
             schedule: {
                 name: '',
                 room: '',
-                date: '',
                 ticketPrice: ''
             },
             startAt: 0,
             endAt: 0,
+            date: ''
         }
         this.modalAdd = this.props.modalAdd
     }
@@ -36,15 +40,6 @@ class ModalAdd extends React.Component {
             }
         })
     }
-    
-    msToTime = (millisec) => {
-        var hour = Math.floor(millisec/3600)
-        console.log(hour)
-        var minute = (millisec - hour*3600)/60
-        var second = millisec - hour*3600 - minute*60
-        return hour + ":" + minute + ":" + second
-    }
-
     handleStartAtChange = (startAt) => {
         console.log(startAt); 
         this.setState({
@@ -62,10 +57,16 @@ class ModalAdd extends React.Component {
     addSchedule = (event) => {
         event.preventDefault();
         const {schedule} = this.state
-        schedule.startAt = this.msToTime(this.state.startAt)
-        schedule.endAt = this.msToTime(this.state.endAt)
-        console.log(schedule)
+        schedule.startAt = moment(this.state.startAt).format("hh:mm:ss")
+        schedule.endAt = moment(this.state.endAt).format("hh:mm:ss")
+        schedule.date = moment(this.state.date).format("YYYY-MM-DD")
         this.props.addSchedule(schedule)
+    }
+    handleDateChange = (date) => {
+        console.log(date)
+        this.setState({
+            date: date
+        });
     }
   
     render() {
@@ -99,21 +100,44 @@ class ModalAdd extends React.Component {
                         </div>
                         <div className="form-group">
                             <label>Start At</label>
-                            <TimePicker format={24} onChange={this.handleStartAtChange} value={this.state.startAt}/>
+                            <div className="customDatePickerWidth">
+                                <DatePicker
+                                    className="form-control" 
+                                    selected={this.state.startAt}
+                                    onChange={this.handleStartAtChange}
+                                    showTimeSelect
+                                    showTimeSelectOnly
+                                    timeIntervals={15}
+                                    timeCaption="Time"
+                                    dateFormat="h:mm aa"
+                                />
+                            </div>
                         </div>
                         <div className="form-group">
                             <label>End At</label>
-                            <TimePicker format={24}  onChange={this.handleEndAtChange} value={this.state.endAt}/>
+                            <div className="customDatePickerWidth">
+                                <DatePicker
+                                    className="form-control" 
+                                    selected={this.state.endAt}
+                                    onChange={this.handleEndAtChange}
+                                    showTimeSelect
+                                    showTimeSelectOnly
+                                    timeIntervals={15}
+                                    timeCaption="Time"
+                                    dateFormat="h:mm aa"
+                                />
+                            </div>
                         </div>
                         <div className="form-group">
                             <label>Date</label>
-                            <input
-                                type="text"
-                                className="form-control" 
-                                required
-                                onChange={this.handleChange}
-                                name="date"
-                            />
+                            <div className="customDatePickerWidth">
+                                <DatePicker
+                                    className="form-control" 
+                                    onChange={this.handleDateChange} 
+                                    selected={this.state.date} 
+                                    dateFormat="yyyy-MM-dd"
+                                />
+                            </div>
                         </div>
                         <div className="form-group">
                             <label>Price</label>

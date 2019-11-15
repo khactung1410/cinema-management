@@ -129,7 +129,7 @@ class ScheduleMovie extends React.Component {
                     </table>
                     {schedules.items &&
                         <div className="clearfix">
-                        <div className="hint-text">Showing <b>{schedules.items.schedules.length}</b> out of <b>{schedules.items.total}</b> entries</div>
+                        <div className="hint-text">Showing <b>{schedules.items.schedules.length}</b> out of <b>{schedules.items.total}</b> items</div>
                         <ul className="pagination">
                             <li className="page-item" onClick={schedules.items.searchingName ? this.changePage((schedules.items.current_page>1)?schedules.items.current_page-1:1, schedules.items.searchingName): this.changePage((schedules.items.current_page>1)?schedules.items.current_page-1:1)}><a href="#" className="page-link">Previous</a></li>
                             {
