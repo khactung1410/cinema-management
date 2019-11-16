@@ -9,25 +9,32 @@ import DatePicker from 'react-datepicker';
 import moment from 'moment';
 import "react-datepicker/dist/react-datepicker.css";
 import "./customDatePickerWidth.css";
+import Select from 'react-select';
 
 class ModalAdd extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
             schedule: {
-                name: '',
                 room: '',
                 ticketPrice: ''
             },
-            startAt: 0,
-            endAt: 0,
-            date: ''
+            startAt: new Date(),
+            endAt: new Date(),
+            date: new Date(),
+            selectedMovie: '',
+            allMovies: []
         }
         this.modalAdd = this.props.modalAdd
     }
 
+    
+
     handleClose = (modal) => {
-        return () => modal.current.handleClose()
+        return () => {
+            this.setState({selectedMovie: ''})
+            modal.current.handleClose()
+        }
     }
 
     handleChange = (e) => {
@@ -40,19 +47,26 @@ class ModalAdd extends React.Component {
             }
         })
     }
+    handleSelect = (movie) => {
+        console.log("tung", movie)
+        this.setState({
+            selectedMovie: movie
+        })
+    }
     handleStartAtChange = (startAt) => {
-        console.log(startAt); 
+        console.log("start at : ", startAt); 
         this.setState({
             startAt: startAt
         });
     }
 
     handleEndAtChange = (endAt) => {
-        console.log(endAt);
+        console.log("end at : ", endAt);
         this.setState({
             endAt: endAt 
         });
     }
+
 
     addSchedule = (event) => {
         event.preventDefault();
@@ -60,16 +74,71 @@ class ModalAdd extends React.Component {
         schedule.startAt = moment(this.state.startAt).format("hh:mm:ss")
         schedule.endAt = moment(this.state.endAt).format("hh:mm:ss")
         schedule.date = moment(this.state.date).format("YYYY-MM-DD")
+        schedule.name = this.state.selectedMovie.value
+        console.log(schedule)
         this.props.addSchedule(schedule)
     }
     handleDateChange = (date) => {
-        console.log(date)
+        console.log("date  : ",date)
         this.setState({
             date: date
         });
     }
   
     render() {
+        const {movies} = this.state
+        setTimeout(()=> {
+            if(movies) console.log("all : ", movies.items.allMovies)
+            else console.log("khong co gi")
+        },500)
+        
+        const options = [
+            { value: 'chocolate', label: 'Chocolate' },
+            { value: 'strawberry', label: 'Strawberry' },
+            { value: 'vanilla', label: 'Vanilla' },
+            { value: 'chocolate', label: 'Chocolate' },
+            { value: 'strawberry', label: 'Strawberry' },
+            { value: 'vanilla', label: 'Vanilla' },
+            { value: 'chocolate', label: 'Chocolate' },
+            { value: 'strawberry', label: 'Strawberry' },
+            { value: 'vanilla', label: 'Vanilla' },
+            { value: 'chocolate', label: 'Chocolate' },
+            { value: 'strawberry', label: 'Strawberry' },
+            { value: 'vanilla', label: 'Vanilla' },
+            { value: 'chocolate', label: 'Chocolate' },
+            { value: 'strawberry', label: 'Strawberry' },
+            { value: 'vanilla', label: 'Vanilla' },
+            { value: 'chocolate', label: 'Chocolate' },
+            { value: 'strawberry', label: 'Strawberry' },
+            { value: 'vanilla', label: 'Vanilla' },
+            { value: 'chocolate', label: 'Chocolate' },
+            { value: 'strawberry', label: 'Strawberry' },
+            { value: 'vanilla', label: 'Vanilla' },
+            { value: 'chocolate', label: 'Chocolate' },
+            { value: 'strawberry', label: 'Strawberry' },
+            { value: 'vanilla', label: 'Vanilla' },
+            { value: 'chocolate', label: 'Chocolate' },
+            { value: 'strawberry', label: 'Strawberry' },
+            { value: 'vanilla', label: 'Vanilla' },
+            { value: 'chocolate', label: 'Chocolate' },
+            { value: 'strawberry', label: 'Strawberry' },
+            { value: 'vanilla', label: 'Vanilla' },
+            { value: 'chocolate', label: 'Chocolate' },
+            { value: 'strawberry', label: 'Strawberry' },
+            { value: 'vanilla', label: 'Vanilla' },
+            { value: 'chocolate', label: 'Chocolate' },
+            { value: 'strawberry', label: 'Strawberry' },
+            { value: 'vanilla', label: 'Vanilla' },
+            { value: 'chocolate', label: 'Chocolate' },
+            { value: 'strawberry', label: 'Strawberry' },
+            { value: 'vanilla', label: 'Vanilla' },
+            { value: 'chocolate', label: 'Chocolate' },
+            { value: 'strawberry', label: 'Strawberry' },
+            { value: 'vanilla', label: 'Vanilla' },
+            { value: 'chocolate', label: 'Chocolate' },
+            { value: 'strawberry', label: 'Strawberry' },
+            { value: 'vanilla', label: 'Vanilla' },
+          ];
         return (
             <CommonModal ref={this.modalAdd}>
                     <form onSubmit={this.addSchedule}>
@@ -79,13 +148,20 @@ class ModalAdd extends React.Component {
                         </div>
                         <div className="modal-body">                    
                         <div className="form-group">
-                            <label>Name</label>
-                            <input
+                            <label>Name of movie</label>
+                            {/* <input
                                 type="text"
                                 className="form-control" 
                                 required
                                 onChange={this.handleChange}
                                 name="name"
+                            /> */}
+                            <Select
+                                name = "selectedMovie"
+                                value={this.state.selectedMovie}
+                                onChange={this.handleSelect}
+                                options={options}
+                                defaultInputValue={this.state.selectedMovie}
                             />
                         </div>
                         <div className="form-group">
@@ -161,8 +237,11 @@ class ModalAdd extends React.Component {
 }
 
 function mapState(state) {
-    const {schedules} = state
-    return {schedules}
+    const {schedules, movies} = state
+    return {
+        schedules,
+        movies
+    }
 }
 const actionCreators = {
     addSchedule: scheduleActions.add

@@ -62,6 +62,7 @@ class ManageMovie extends React.Component {
 
     render() {
         const {movies} = this.props
+        console.log("movies", movies)
         return (
             <React.Fragment>
                 <ModalAdd modalAdd = {this.modalAdd}/>
