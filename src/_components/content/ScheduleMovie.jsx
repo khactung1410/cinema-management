@@ -190,8 +190,8 @@ class ScheduleMovie extends React.Component {
 }
 
 function mapState(state) {
-    const {schedules}  = state;
-    return {schedules};
+    const {schedules, movies}  = state;
+    return {schedules, movies};
 }
 
 const actionCreators = {

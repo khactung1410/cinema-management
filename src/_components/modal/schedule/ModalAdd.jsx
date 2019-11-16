@@ -28,8 +28,10 @@ class ModalAdd extends React.Component {
         this.modalAdd = this.props.modalAdd
     }
 
+    componentDidMount() {
+        console.log(this.props.movies)
+    }
     
-
     handleClose = (modal) => {
         return () => {
             this.setState({selectedMovie: ''})
@@ -47,12 +49,14 @@ class ModalAdd extends React.Component {
             }
         })
     }
+
     handleSelect = (movie) => {
         console.log("tung", movie)
         this.setState({
             selectedMovie: movie
         })
     }
+
     handleStartAtChange = (startAt) => {
         console.log("start at : ", startAt); 
         this.setState({
@@ -74,10 +78,12 @@ class ModalAdd extends React.Component {
         schedule.startAt = moment(this.state.startAt).format("hh:mm:ss")
         schedule.endAt = moment(this.state.endAt).format("hh:mm:ss")
         schedule.date = moment(this.state.date).format("YYYY-MM-DD")
-        schedule.name = this.state.selectedMovie.value
+        schedule.name = this.state.selectedMovie.label
+        schedule.idMovie = this.state.selectedMovie.value
         console.log(schedule)
         this.props.addSchedule(schedule)
     }
+
     handleDateChange = (date) => {
         console.log("date  : ",date)
         this.setState({
@@ -86,59 +92,14 @@ class ModalAdd extends React.Component {
     }
   
     render() {
-        const {movies} = this.state
-        setTimeout(()=> {
-            if(movies) console.log("all : ", movies.items.allMovies)
-            else console.log("khong co gi")
-        },500)
-        
-        const options = [
-            { value: 'chocolate', label: 'Chocolate' },
-            { value: 'strawberry', label: 'Strawberry' },
-            { value: 'vanilla', label: 'Vanilla' },
-            { value: 'chocolate', label: 'Chocolate' },
-            { value: 'strawberry', label: 'Strawberry' },
-            { value: 'vanilla', label: 'Vanilla' },
-            { value: 'chocolate', label: 'Chocolate' },
-            { value: 'strawberry', label: 'Strawberry' },
-            { value: 'vanilla', label: 'Vanilla' },
-            { value: 'chocolate', label: 'Chocolate' },
-            { value: 'strawberry', label: 'Strawberry' },
-            { value: 'vanilla', label: 'Vanilla' },
-            { value: 'chocolate', label: 'Chocolate' },
-            { value: 'strawberry', label: 'Strawberry' },
-            { value: 'vanilla', label: 'Vanilla' },
-            { value: 'chocolate', label: 'Chocolate' },
-            { value: 'strawberry', label: 'Strawberry' },
-            { value: 'vanilla', label: 'Vanilla' },
-            { value: 'chocolate', label: 'Chocolate' },
-            { value: 'strawberry', label: 'Strawberry' },
-            { value: 'vanilla', label: 'Vanilla' },
-            { value: 'chocolate', label: 'Chocolate' },
-            { value: 'strawberry', label: 'Strawberry' },
-            { value: 'vanilla', label: 'Vanilla' },
-            { value: 'chocolate', label: 'Chocolate' },
-            { value: 'strawberry', label: 'Strawberry' },
-            { value: 'vanilla', label: 'Vanilla' },
-            { value: 'chocolate', label: 'Chocolate' },
-            { value: 'strawberry', label: 'Strawberry' },
-            { value: 'vanilla', label: 'Vanilla' },
-            { value: 'chocolate', label: 'Chocolate' },
-            { value: 'strawberry', label: 'Strawberry' },
-            { value: 'vanilla', label: 'Vanilla' },
-            { value: 'chocolate', label: 'Chocolate' },
-            { value: 'strawberry', label: 'Strawberry' },
-            { value: 'vanilla', label: 'Vanilla' },
-            { value: 'chocolate', label: 'Chocolate' },
-            { value: 'strawberry', label: 'Strawberry' },
-            { value: 'vanilla', label: 'Vanilla' },
-            { value: 'chocolate', label: 'Chocolate' },
-            { value: 'strawberry', label: 'Strawberry' },
-            { value: 'vanilla', label: 'Vanilla' },
-            { value: 'chocolate', label: 'Chocolate' },
-            { value: 'strawberry', label: 'Strawberry' },
-            { value: 'vanilla', label: 'Vanilla' },
-          ];
+        var options = []
+        this.props.movies.items?this.props.movies.items.allMovies.map(movie => {
+            options.push({
+                value: movie.id,
+                label: movie.name
+            })
+        }):""
+        console.log(options)
         return (
             <CommonModal ref={this.modalAdd}>
                     <form onSubmit={this.addSchedule}>
