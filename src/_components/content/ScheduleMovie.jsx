@@ -24,6 +24,7 @@ class ScheduleMovie extends React.Component {
 
     componentDidMount() {
         this.props.getSchedules(1)
+        this.props.getRooms()
     };
 
     handleShow = (modal,id) => {
@@ -191,11 +192,12 @@ class ScheduleMovie extends React.Component {
 
 function mapState(state) {
     const {schedules, movies}  = state;
-    return {schedules, movies};
+    return {schedules, movies, rooms};
 }
 
 const actionCreators = {
     getSchedules: scheduleActions.getAll,
+    getRooms: roomActions.getAll,
     getScheduleId: scheduleActions.getById,
     searchScheduleByName: scheduleActions.searchByName
 }
