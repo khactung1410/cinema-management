@@ -16,13 +16,13 @@ class ModalAdd extends React.Component {
         super(props)
         this.state = {
             schedule: {
-                room: '',
                 ticketPrice: ''
             },
             startAt: new Date(),
             endAt: new Date(),
             date: new Date(),
             selectedMovie: '',
+            selectedRoom: '',
             allMovies: []
         }
         this.modalAdd = this.props.modalAdd
@@ -35,6 +35,7 @@ class ModalAdd extends React.Component {
     handleClose = (modal) => {
         return () => {
             this.setState({selectedMovie: ''})
+            this.setState({selectedRoom: ''})
             modal.current.handleClose()
         }
     }
@@ -50,12 +51,19 @@ class ModalAdd extends React.Component {
         })
     }
 
-    handleSelect = (movie) => {
+    handleSelectMovie = (movie) => {
         console.log("tung", movie)
         this.setState({
             selectedMovie: movie
         })
     }
+    handleSelectRoom = (room) => {
+        console.log("tung", room)
+        this.setState({
+            selectedRoom: room
+        })
+    }
+    
 
     handleStartAtChange = (startAt) => {
         console.log("start at : ", startAt); 
@@ -75,11 +83,13 @@ class ModalAdd extends React.Component {
     addSchedule = (event) => {
         event.preventDefault();
         const {schedule} = this.state
-        schedule.startAt = moment(this.state.startAt).format("hh:mm:ss")
-        schedule.endAt = moment(this.state.endAt).format("hh:mm:ss")
+        schedule.startAt = moment(this.state.startAt).format("HH:mm:ss")
+        schedule.endAt = moment(this.state.endAt).format("HH:mm:ss")
         schedule.date = moment(this.state.date).format("YYYY-MM-DD")
         schedule.name = this.state.selectedMovie.label
         schedule.idMovie = this.state.selectedMovie.value
+        schedule.room = this.state.selectedRoom.label
+        schedule.idRoom = this.state.selectedRoom.value
         console.log(schedule)
         this.props.addSchedule(schedule)
     }
@@ -92,14 +102,22 @@ class ModalAdd extends React.Component {
     }
   
     render() {
-        var options = []
+        var optionsMovie = []
+        var optionsRoom = []
         this.props.movies.items?this.props.movies.items.allMovies.map(movie => {
-            options.push({
+            optionsMovie.push({
                 value: movie.id,
                 label: movie.name
             })
         }):""
-        console.log(options)
+        this.props.rooms.items?this.props.rooms.items.allRoom.map(room => {
+            optionsRoom.push({
+                value: room.id,
+                label: room.name
+            })
+        }):""
+        console.log(optionsMovie)
+        console.log(optionsRoom)
         return (
             <CommonModal ref={this.modalAdd}>
                     <form onSubmit={this.addSchedule}>
@@ -110,29 +128,22 @@ class ModalAdd extends React.Component {
                         <div className="modal-body">                    
                         <div className="form-group">
                             <label>Name of movie</label>
-                            {/* <input
-                                type="text"
-                                className="form-control" 
-                                required
-                                onChange={this.handleChange}
-                                name="name"
-                            /> */}
                             <Select
                                 name = "selectedMovie"
                                 value={this.state.selectedMovie}
-                                onChange={this.handleSelect}
-                                options={options}
+                                onChange={this.handleSelectMovie}
+                                options={optionsMovie}
                                 defaultInputValue={this.state.selectedMovie}
                             />
                         </div>
                         <div className="form-group">
                             <label>Room</label>
-                            <input 
-                                type="text" 
-                                className="form-control" 
-                                required 
-                                onChange={this.handleChange}
-                                name="room"
+                            <Select
+                                name = "selectedRoom"
+                                value={this.state.selectedRoom}
+                                onChange={this.handleSelectRoom}
+                                options={optionsRoom}
+                                defaultInputValue={this.state.selectedRoom}
                             />
                         </div>
                         <div className="form-group">
@@ -198,10 +209,11 @@ class ModalAdd extends React.Component {
 }
 
 function mapState(state) {
-    const {schedules, movies} = state
+    const {schedules, movies, rooms} = state
     return {
         schedules,
-        movies
+        movies,
+        rooms
     }
 }
 const actionCreators = {

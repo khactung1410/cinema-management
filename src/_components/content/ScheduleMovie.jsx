@@ -5,8 +5,10 @@ import {ModalAdd} from '../modal/schedule/ModalAdd'
 import {ModalEdit} from '../modal/movie/ModalEdit'
 import {ModalDeleteSingle} from '../modal/schedule/ModalDeleteSingle'
 import {ModalDeleteMultiple} from '../modal/movie/ModalDeleteMultiple'
-import {scheduleActions} from '../../_actions'
 import _ from 'lodash'
+import {scheduleActions} from '../../_actions'
+import {roomActions} from '../../_actions'
+import {movieActions} from '../../_actions'
 import { SearchSchedule } from './SearchSchedule';
 
 class ScheduleMovie extends React.Component {
@@ -24,6 +26,7 @@ class ScheduleMovie extends React.Component {
 
     componentDidMount() {
         this.props.getSchedules(1)
+        this.props.getMovies(1)
         this.props.getRooms()
     };
 
@@ -191,11 +194,12 @@ class ScheduleMovie extends React.Component {
 }
 
 function mapState(state) {
-    const {schedules, movies}  = state;
+    const {schedules, movies, rooms}  = state;
     return {schedules, movies, rooms};
 }
 
 const actionCreators = {
+    getMovies: movieActions.getAll,
     getSchedules: scheduleActions.getAll,
     getRooms: roomActions.getAll,
     getScheduleId: scheduleActions.getById,
