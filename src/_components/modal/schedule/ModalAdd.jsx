@@ -91,7 +91,12 @@ class ModalAdd extends React.Component {
         schedule.room = this.state.selectedRoom.label
         schedule.idRoom = this.state.selectedRoom.value
         console.log(schedule)
-        this.props.addSchedule(schedule)
+        if(schedule.ticketPrice && schedule.startAt && schedule.endAt && schedule.date && schedule.name && schedule.idMovie && schedule.room && schedule.idRoom) {
+            this.props.addSchedule(schedule)
+        }
+        else{
+            alert("Please fill full infomation!")
+        }
     }
 
     handleDateChange = (date) => {

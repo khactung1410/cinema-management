@@ -1,23 +1,15 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { CommonModal } from '../modal/modal';
-import {ModalAdd} from '../modal/schedule/ModalAdd'
-import {ModalEdit} from '../modal/movie/ModalEdit'
-import {ModalDeleteSingle} from '../modal/schedule/ModalDeleteSingle'
-import {ModalDeleteMultiple} from '../modal/movie/ModalDeleteMultiple'
 import _ from 'lodash'
 import {scheduleActions} from '../../_actions'
 import {roomActions} from '../../_actions'
 import {movieActions} from '../../_actions'
 import { SearchSchedule } from './SearchSchedule';
+import Select from 'react-select';
 
-class ScheduleMovie extends React.Component {
+class SellTicket extends React.Component {
     constructor(props) {
         super(props)
-        this.modalAdd = React.createRef();
-        this.modalEdit = React.createRef();
-        this.modalDeleteMultiple = React.createRef();
-        this.modalDeleteSingle = React.createRef();
         this.state = {
             idDelete: null,
             // idEditting: null
@@ -66,43 +58,49 @@ class ScheduleMovie extends React.Component {
 
     render() {
         const {schedules} = this.props
+        var optionStartTime = []
+        if(schedules.items) {
+            schedules.items.schedules.map(schedule => {
+                optionStartTime.push({
+                    label: schedule.startAt,
+                    value: schedule.startAt
+                })
+            })
+        } 
         return (
             <React.Fragment>
-                <ModalAdd modalAdd = {this.modalAdd}/>
-                <ModalEdit modalEdit = {this.modalEdit} idEditting={this.state.idEditting}/>
-                <ModalDeleteMultiple modalDeleteMultiple = {this.modalDeleteMultiple}/>
-                <ModalDeleteSingle modalDeleteSingle = {this.modalDeleteSingle} idDelete={this.state.idDelete}/>
                 <div className="col-sm-12">
-                    <h3 className="center-text">Movie Schedule</h3>
+                    <h3 className="center-text">Sell Ticket</h3>
                 </div>
-                <div className="table-wrapper">
-                    <div className="table-title">
-                    <div className="row">
-                        <div className="col-sm-4">
-                            <SearchSchedule />
+                <div className="col-sm-3" >
+                    <p>Pick Date Time : </p>
+                            <Select
+                                name = "selectedStartTime"
+                                // value={optionStartTime}
+                                // onChange={this.handleSelectRoom}
+                                options={optionStartTime}
+                                // defaultInputValue={this.state.selectedRoom}
+                            />
                         </div>
-                        <div className="col-sm-8">
-                            <a className="btn btn-success" onClick={this.handleShow(this.modalAdd)}><i className="material-icons"></i> <span>Add New Schedule</span></a>
-                            <a className="btn btn-danger" onClick={this.handleShow(this.modalDeleteMultiple)}><i className="material-icons"></i> <span>Delete</span></a>						
+                <div className="table-wrapper">
+                    <div className="table-title" style={{height: "65px"}}>
+                    <div className="row">
+                        <div className="col-sm-3">
+                            <SearchSchedule />
                         </div>
                     </div>
                     </div>
                     <table className="table table-striped table-hover">
                     <thead>
                         <tr>
-                        <th>
-                            <span className="custom-checkbox">
-                            <input type="checkbox" id="selectAll" />
-                            <label htmlFor="selectAll" />
-                            </span>
-                        </th>
-                        <th style={{width: 20 + '%'}}>Name</th>
-                        <th style={{width: 15 + '%'}}>Room</th>
-                        <th style={{width: 15 + '%'}}>Start At</th>
-                        <th style={{width: 15 + '%'}}>End At</th>
-                        <th style={{width: 15 + '%'}}>Date</th>
-                        <th style={{width: 20 + '%'}}>Ticket Price</th>
-                        <th >Actions</th>
+                            <th style={{width: 15 + '%'}}>Name</th>
+                            <th style={{width: 10 + '%'}}>Room</th>
+                            <th style={{width: 10 + '%'}}>Start At</th>
+                            <th style={{width: 10 + '%'}}>End At</th>
+                            <th style={{width: 10 + '%'}}>Date</th>
+                            <th style={{width: 10 + '%'}}>Ticket Price</th>
+                            <th style={{width: 10 + '%'}}>Remaining Ticket</th>
+                            <th >Actions</th>
                         </tr>
                     </thead>
                     {
@@ -110,22 +108,16 @@ class ScheduleMovie extends React.Component {
                         schedules.items.schedules.map((schedule,key) => (
                                 <tbody key={key}>
                                 <tr>
-                                <td>
-                                    <span className="custom-checkbox">
-                                    <input type="checkbox" id="checkbox1" name="options[]" defaultValue={1} onClick={this.handleCheck}/>
-                                    <label htmlFor="checkbox1" />
-                                    </span>
-                                </td>
-                                <td style={{width: 20 + '%'}}>{schedule.name}</td>
-                                <td style={{width: 15 + '%'}}>{schedule.room}</td>
-                                <td style={{width: 15 + '%'}}>{schedule.startAt}</td>
-                                <td style={{width: 15 + '%'}}>{schedule.endAt}</td>
-                                <td style={{width: 15 + '%'}}>{schedule.date}</td>
-                                <td style={{width: 20 + '%'}}>{schedule.ticketPrice}</td>
-                                <td>
-                                    <a className="edit" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Edit" onClick={this.handleShowEdit(this.modalEdit, schedule.id)}></i></a>
-                                    <a className="delete" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Delete" onClick={this.handleShow(this.modalDeleteSingle, schedule.id)}></i></a>
-                                </td>
+                                    <td style={{width: 15 + '%'}}>{schedule.name}</td>
+                                    <td style={{width: 10 + '%'}}>{schedule.room}</td>
+                                    <td style={{width: 10 + '%'}}>{schedule.startAt}</td>
+                                    <td style={{width: 10 + '%'}}>{schedule.endAt}</td>
+                                    <td style={{width: 10 + '%'}}>{schedule.date}</td>
+                                    <td style={{width: 10 + '%'}}>{schedule.ticketPrice}</td>
+                                    <td style={{width: 10 + '%'}}>{schedule.remainingTicket}/{schedule.remainingTicket}</td>
+                                    <td>
+                                        <button type="button" class="btn btn-outline-success">Sell Ticket</button>
+                                    </td>
                                 </tr>
                             </tbody>
                             ))
@@ -206,5 +198,5 @@ const actionCreators = {
     searchScheduleByName: scheduleActions.searchByName
 }
 
-const connectedScheduleMovie = connect(mapState, actionCreators)(ScheduleMovie);
-export { connectedScheduleMovie as ScheduleMovie };
+const connectedSellTicket = connect(mapState, actionCreators)(SellTicket);
+export { connectedSellTicket as SellTicket };

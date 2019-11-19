@@ -7,7 +7,7 @@ import {ModalDeleteSingle} from '../modal/movie/ModalDeleteSingle'
 import {ModalDeleteMultiple} from '../modal/movie/ModalDeleteMultiple'
 import {movieActions} from '../../_actions'
 import _ from 'lodash'
-import { Search } from './Search';
+import { Search } from './SearchMovie';
 
 class ManageMovie extends React.Component {
     constructor(props) {
@@ -140,7 +140,7 @@ class ManageMovie extends React.Component {
                     }
                 </div>
                 {/* Edit Modal HTML */}
-                <div id="editEmployeeModal" className="modal fade">
+                {/* <div id="editEmployeeModal" className="modal fade">
                 <div className="modal-dialog">
                     <div className="modal-content">
                         
@@ -174,15 +174,15 @@ class ManageMovie extends React.Component {
                     </form>
                     </div>
                 </div>
-                </div>
+                </div> */}
                 {/* Delete Modal HTML */}
-                <div id="deleteEmployeeModal" className="modal fade">
+                {/* <div id="deleteEmployeeModal" className="modal fade">
                 <div className="modal-dialog">
                     <div className="modal-content">
                     
                     </div>
                 </div>
-                </div>
+                </div> */}
             </React.Fragment>
         );
     }
