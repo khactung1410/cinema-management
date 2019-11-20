@@ -6,12 +6,15 @@ import {roomActions} from '../../_actions'
 import {movieActions} from '../../_actions'
 import { SearchSchedule } from './SearchSchedule';
 import Select from 'react-select';
+import { Link, NavLink } from 'react-router-dom';
+import { PickSeat } from './PickSeat';
 
 class SellTicket extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
             idDelete: null,
+            displayPickSeat: false
             // idEditting: null
         }
     }
@@ -56,7 +59,12 @@ class SellTicket extends React.Component {
         console.log(event.target.value)
     }
 
+    displayPickSeat = () => {
+        this.setState({displayPickSeat: true})
+    }
+
     render() {
+        console.log(this.state.displayPickSeat)
         const {schedules} = this.props
         var optionStartTime = []
         if(schedules.items) {
@@ -68,6 +76,9 @@ class SellTicket extends React.Component {
             })
         } 
         return (
+            this.state.displayPickSeat?
+            <PickSeat/>
+            :
             <React.Fragment>
                 <div className="col-sm-12">
                     <h3 className="center-text">Sell Ticket</h3>
@@ -116,7 +127,8 @@ class SellTicket extends React.Component {
                                     <td style={{width: 10 + '%'}}>{schedule.ticketPrice}</td>
                                     <td style={{width: 10 + '%'}}>{schedule.remainingTicket}/{schedule.remainingTicket}</td>
                                     <td>
-                                        <button type="button" class="btn btn-outline-success">Sell Ticket</button>
+                                    {/* <Link to="/PickSeat"><button type="button" class="btn btn-outline-success">Sell Ticket</button></Link> */}
+                                    <button type="button" onClick={this.displayPickSeat} className="btn btn-outline-success">Sell Ticket</button>
                                     </td>
                                 </tr>
                             </tbody>
