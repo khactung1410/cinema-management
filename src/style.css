@@ -325,3 +325,4 @@ border-radius: 0;
     position: relative;
     top: 2px;
 }
+.top-buffer { margin-bottom:30px; }

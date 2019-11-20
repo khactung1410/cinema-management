@@ -7,6 +7,7 @@ import { alert } from './alert.reducer';
 import { movies } from './movies.reducer';
 import { schedules } from './schedules.reducer';
 import { rooms } from './rooms.reducer';
+import { seatStatus } from './seatStatus.reducer';
 
 const rootReducer = combineReducers({
   authentication,
@@ -15,7 +16,8 @@ const rootReducer = combineReducers({
   alert,
   movies,
   schedules,
-  rooms
+  rooms,
+  seatStatus
 });
 
 export default rootReducer;
