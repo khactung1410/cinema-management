@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import _ from 'lodash'
 import {scheduleActions} from '../../_actions'
 import {roomActions} from '../../_actions'
+import {seatActions} from '../../_actions'
 import {movieActions} from '../../_actions'
 import {seatStatusActions} from '../../_actions'
 import { SearchSchedule } from './SearchSchedule';
@@ -36,6 +37,7 @@ class SellTicket extends React.Component {
     displayPickSeat = (schedule) => {
         return () => {
             this.props.getSeatStatus(schedule)
+            this.props.getSeatByRoom(schedule.idRoom)
             this.setState({
                 displayPickSeat: true,
                 sellingTicket: schedule
@@ -148,7 +150,8 @@ const actionCreators = {
     getMovies: movieActions.getAll,
     getSchedules: scheduleActions.getAll,
     getRooms: roomActions.getAll,
-    getSeatStatus: seatStatusActions.getBySchedule
+    getSeatStatus: seatStatusActions.getBySchedule,
+    getSeatByRoom: seatActions.getByRoom
 }
 
 const connectedSellTicket = connect(mapState, actionCreators)(SellTicket);

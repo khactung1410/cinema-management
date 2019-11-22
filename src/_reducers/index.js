@@ -8,6 +8,7 @@ import { movies } from './movies.reducer';
 import { schedules } from './schedules.reducer';
 import { rooms } from './rooms.reducer';
 import { seatStatus } from './seatStatus.reducer';
+import { seatByRoom } from './seatByRoom.reducer';
 
 const rootReducer = combineReducers({
   authentication,
@@ -17,7 +18,8 @@ const rootReducer = combineReducers({
   movies,
   schedules,
   rooms,
-  seatStatus
+  seatStatus,
+  seatByRoom
 });
 
 export default rootReducer;

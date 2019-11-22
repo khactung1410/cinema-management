@@ -1,16 +1,32 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import {movieActions} from '../../_actions'
 
 
 class PickSeat extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
+            listSeatbyRoom: null,
+            listSeatStatus: null,
             row: ['A', 'B', 'C', 'D'],
             column: 10,
             sellingTicket: null
         }
+    }
+
+    componentDidMount() {
+        setTimeout(()=>{
+            this.props.seatByRoom.items ? this.setState({
+                listSeatbyRoom: this.props.seatByRoom.items.seatByRoom
+            }) : null
+
+            console.log("aaaaaa", this.props.seatStatus)
+            this.props.seatStatus.items ? this.setState({
+                listSeatStatus: this.props.seatStatus.items.listSeatStatus
+            }) : null
+
+            
+        }, 500)
     }
 
     render() {
@@ -62,8 +78,8 @@ class PickSeat extends React.Component {
 }
 
 function mapState(state) {
-    const {movies}  = state;
-    return {movies};
+    const {seatStatus, seatByRoom}  = state;
+    return {seatStatus, seatByRoom};
 }
 
 const actionCreators = {

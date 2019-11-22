@@ -4,3 +4,4 @@ export * from './movie.actions';
 export * from './schedule.actions';
 export * from './room.actions';
 export * from './seatStatus.actions';
+export * from './seat.actions';
