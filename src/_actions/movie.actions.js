@@ -28,7 +28,6 @@ function add(movie) {
                     setTimeout(() => dispatch(alertActions.clear()),2000); //delete alert
                 }
             )
-        
     }
     function request(movie) { return { type: movieConstants.ADD_REQUEST, movie } }
     function success(movie) { return { type: movieConstants.ADD_SUCCESS, movie } }

@@ -2,7 +2,8 @@ import config from 'config';
 import { authHeader } from '../_helpers';
 
 export const seatStatusService = {
-    getBySchedule
+    getBySchedule,
+    changeStatus
 };
 
 function getBySchedule(schedule) {
@@ -11,6 +12,19 @@ function getBySchedule(schedule) {
         headers: authHeader(),
     };
     return fetch(`${config.apiUrl}/seatstatus?idSchedule=${schedule.id}`, requestOptions).then(handleResponse);
+}
+
+function changeStatus(arrIds) {
+    console.log(arrIds.toString())
+    var obj = {
+        ids: arrIds.toString()
+    }
+    const requestOptions = {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(obj)
+    };
+    return fetch(`${config.apiUrl}/seatstatus`, requestOptions).then(handleResponse);
 }
 
 function handleResponse(response) {

@@ -1,35 +1,90 @@
 import React from 'react';
 import { connect } from 'react-redux';
-
+import {seatStatusActions} from '../../_actions'
 
 class PickSeat extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
+            listSeatStatus: this.props.seatStatus.items ? this.props.seatStatus.items.listSeatStatus : null,
             listSeatbyRoom: null,
-            listSeatStatus: null,
-            row: ['A', 'B', 'C', 'D'],
             column: 10,
-            sellingTicket: null
+            sellingTicket: this.props.sellingTicket,
+            total: 0,
+            seats: null, //name of seats just have picked
+            seatsWillBeChangedStatus: null //list seats just have picked
         }
     }
 
     componentDidMount() {
-        setTimeout(()=>{
-            this.props.seatByRoom.items ? this.setState({
-                listSeatbyRoom: this.props.seatByRoom.items.seatByRoom
-            }) : null
+        // this.setState({
+        //     sellingTicket: this.props.sellingTicket
+        // })
+        // setTimeout(()=> {
+        //     this.setState({
+        //         listSeatbyRoom: this.props.seatByRoom.items.listSeatByRoom,
+        //         listSeatStatus: this.props.seatStatus.items.listSeatStatus
+        //     })
+        // },400)
+    }
+    chunkArray(myArray, chunk_size){
+        var results = [];
+        while (myArray.length) {
+            results.push(myArray.splice(0, chunk_size));
+        }
+        return results;
+    }
 
-            console.log("aaaaaa", this.props.seatStatus)
-            this.props.seatStatus.items ? this.setState({
-                listSeatStatus: this.props.seatStatus.items.listSeatStatus
-            }) : null
-
-            
-        }, 500)
+    pickSeat(pickedSeat) {
+        return () => {
+            console.log(pickedSeat)
+            var seats = this.state.seats ? this.state.seats : []
+            var seatsWillBeChangedStatus = this.state.seatsWillBeChangedStatus ? this.state.seatsWillBeChangedStatus : []
+            if(seats.includes(pickedSeat.name)) {
+                seats = seats.filter(seat => seat != pickedSeat.name)
+                seatsWillBeChangedStatus = seatsWillBeChangedStatus.filter(seatStatus => seatStatus.name != pickedSeat.name)
+                var total = this.state.total - Number(this.props.sellingTicket.ticketPrice)
+                this.setState({
+                    seats: seats,
+                    total: total,
+                    seatsWillBeChangedStatus: seatsWillBeChangedStatus
+                })
+            }
+            else {
+                seats.push(pickedSeat.name)
+                seatsWillBeChangedStatus.push(pickedSeat)
+                var total = this.state.total + Number(this.props.sellingTicket.ticketPrice)
+                this.setState({
+                    seats: seats,
+                    total: total,
+                    seatsWillBeChangedStatus: seatsWillBeChangedStatus
+                })
+            }
+            console.log(this.state.seats)
+            console.log(this.state.seatsWillBeChangedStatus)
+        }
+    }
+    changeStatus = () => {
+        var idsSeatStatus = this.state.seatsWillBeChangedStatus.map(seatStatus => {
+            return seatStatus.id
+        })
+        this.props.changeStatus(idsSeatStatus)
     }
 
     render() {
+        var listSeatStatus = this.props.seatStatus.items ? this.props.seatStatus.items.listSeatStatus : null
+        var listSeatbyRoom = this.props.seatByRoom.items ? this.props.seatByRoom.items.listSeatByRoom : null
+        var seats = this.state.seats ? this.state.seats : []
+
+        listSeatbyRoom ? listSeatbyRoom.map(seat => {
+            listSeatStatus? listSeatStatus.map(seatStatus => {
+                if(seat.id == seatStatus.idSeat) {
+                    seatStatus.name = seat.name
+                }
+            }): null
+        }):null
+
+        var seatMap = listSeatStatus ? this.chunkArray([...listSeatStatus], this.state.column) : null
         return (
             <div className="container">
                 <div className="row top-buffer">
@@ -45,31 +100,48 @@ class PickSeat extends React.Component {
                 <div className="row top-buffer">
                     <div className="col"></div>
                     <div className="col">
-                        <p>Seats : </p>
+                        <p>Seats :  
+                            <span>
+                                {
+                                    this.state.seats? ' '+this.state.seats+' ' : ''
+                                }
+                            </span>
+                        </p>
                     </div>
                     <div className="col">
-                        <p>Total : </p>
+                        <p>Total : <span>{this.state.total}</span></p>
                     </div>
                     <div className="col"></div>
                 </div>
                 <div>
+                    <div style={{margin: "50px 0px"}}>
+                        <button type="button" className="col btn btn-primary">SCREEN</button>
+                    </div>
                     {
-                        this.state.row.map((rowName, key) => (
+                        seatMap ? seatMap.map((arrSeatRow, key) => (
                             <div className="row top-buffer" key={key}>
                                 {
-                                    [...Array(this.state.column)].map((seat, key) => (
+                                    arrSeatRow.map((seatStatus, key) => (
                                         <div className="col-sm" key={key}>
-                                            <button type="button" className="btn btn-outline-info">{rowName}{key+1}</button>
+                                            {
+                                                (seatStatus.status=='EMPTY') ? (
+                                                    seats.includes(seatStatus.name) ? (<button type="button" onClick={this.pickSeat(seatStatus)} className="btn btn-info">{seatStatus.name}</button>) :
+                                                    <button type="button" onClick={this.pickSeat(seatStatus)} className="btn btn-outline-info">{seatStatus.name}</button>
+                                                ):
+                                                (
+                                                    <button type="button" className="btn btn-danger">{seatStatus.name}</button>
+                                                )
+                                            }
                                         </div>
                                     ))
                                 }
                             </div>
-                        ))
+                        )) : null
                     }
                     <div className="row">
                         <div className="col"></div>
                         <div className="col"></div>
-                        <button type="button" className="col btn btn-primary">Book Now</button>
+                        <button type="button" onClick={this.changeStatus} className="col btn btn-primary">Book Now</button>
                     </div>
                 </div>
             </div>
@@ -83,6 +155,7 @@ function mapState(state) {
 }
 
 const actionCreators = {
+    changeStatus: seatStatusActions.changeStatus
 }
 
 const connectedPickSeat = connect(mapState, actionCreators)(PickSeat);
