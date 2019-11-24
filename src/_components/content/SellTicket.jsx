@@ -42,7 +42,6 @@ class SellTicket extends React.Component {
                 displayPickSeat: true,
                 sellingTicket: schedule
             })
-
         }
     }
 
@@ -103,7 +102,7 @@ class SellTicket extends React.Component {
                             {
                                 schedules.items &&
                                 schedules.items.schedules.map((schedule,key) => (
-                                        <tbody key={key}>
+                                    <tbody key={key}>
                                         <tr>
                                             <td style={{width: 15 + '%'}}>{schedule.name}</td>
                                             <td style={{width: 10 + '%'}}>{schedule.room}</td>
@@ -111,10 +110,10 @@ class SellTicket extends React.Component {
                                             <td style={{width: 10 + '%'}}>{schedule.endAt}</td>
                                             <td style={{width: 10 + '%'}}>{schedule.date}</td>
                                             <td style={{width: 10 + '%'}}>{schedule.ticketPrice}</td>
-                                            <td style={{width: 10 + '%'}}>{schedule.remainingTicket}/{schedule.remainingTicket}</td>
+                                            <td style={{width: 10 + '%'}}>{schedule.remainingTicket}/{schedule.quantityTicket}</td>
                                             <td>
                                             {/* <Link to="/PickSeat"><button type="button" class="btn btn-outline-success">Sell Ticket</button></Link> */}
-                                            <button type="button" onClick={this.displayPickSeat(schedule)} className="btn btn-outline-success">Sell Ticket</button>
+                                            <button type="button"  onClick={this.displayPickSeat(schedule)} disabled={schedule.remainingTicket==0?true:false} className="btn btn-outline-success">Sell Ticket</button>
                                             </td>
                                         </tr>
                                     </tbody>

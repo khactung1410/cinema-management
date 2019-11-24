@@ -7,7 +7,8 @@ export const scheduleActions = {
     getAll,
     _delete,
     searchByName,
-    add
+    add,
+    updateRemainingTicket
 };
 
 function getAll(page) {
@@ -24,6 +25,28 @@ function getAll(page) {
     function request() { return { type: scheduleConstants.GETALL_REQUEST } }
     function success(data) { return { type: scheduleConstants.GETALL_SUCCESS, data } }
     function failure(error) { return { type: scheduleConstants.GETALL_FAILURE, error } }
+}
+
+function updateRemainingTicket(schedule) {
+    return dispatch => {
+        dispatch(request());
+
+        scheduleService.edit(schedule)
+            .then(
+                data => {
+                    dispatch(success(data))
+                },
+                error => {
+                    dispatch(failure(error.toString()));
+                    dispatch(alertActions.error(error.toString()));
+                    setTimeout(() => dispatch(alertActions.clear()),2000); //delete alert
+                }
+            );
+    };
+
+    function request() { return { type: scheduleConstants.EDIT_REQUEST } }
+    function success(data) { return { type: scheduleConstants.EDIT_SUCCESS, data } }
+    function failure(error) { return { type: scheduleConstants.EDIT_FAILURE, error } }
 }
 
 function add(schedule) {

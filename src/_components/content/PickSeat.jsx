@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import {seatStatusActions} from '../../_actions'
+import {seatStatusActions, scheduleActions} from '../../_actions'
 
 class PickSeat extends React.Component {
     constructor(props) {
@@ -69,6 +69,10 @@ class PickSeat extends React.Component {
             return seatStatus.id
         })
         this.props.changeStatus(idsSeatStatus)
+
+        var schedule = this.props.sellingTicket
+        schedule.remainingTicket = schedule.remainingTicket - this.state.seatsWillBeChangedStatus.length
+        this.props.updateRemainingTicketOfSchedule(schedule)
     }
 
     render() {
@@ -155,7 +159,8 @@ function mapState(state) {
 }
 
 const actionCreators = {
-    changeStatus: seatStatusActions.changeStatus
+    changeStatus: seatStatusActions.changeStatus,
+    updateRemainingTicketOfSchedule: scheduleActions.updateRemainingTicket
 }
 
 const connectedPickSeat = connect(mapState, actionCreators)(PickSeat);

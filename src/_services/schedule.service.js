@@ -5,7 +5,8 @@ export const scheduleService = {
     getAll,
     _delete,
     searchByName,
-    add
+    add,
+    edit
 };
 
 function getAll(page) {
@@ -32,6 +33,15 @@ function add(schedule) {
         body: JSON.stringify(schedule)
     };
     return fetch(`${config.apiUrl}/schedule/add`, requestOptions).then(handleResponse);
+}
+
+function edit(schedule) {
+    const requestOptions = {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(schedule)
+    };
+    return fetch(`${config.apiUrl}/schedule`, requestOptions).then(handleResponse);
 }
 
 function _delete(id) {
