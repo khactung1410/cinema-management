@@ -16,19 +16,15 @@ class LoginPage extends React.Component {
             password: '',
             submitted: false
         };
-
-        this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    handleChange(e) {
+    handleChange = e => {
         const { name, value } = e.target;
         this.setState({ [name]: value });
     }
 
-    handleSubmit(e) {
+    handleSubmit = e => {
         e.preventDefault();
-
         this.setState({ submitted: true });
         const { username, password } = this.state;
         if (username && password) {
@@ -41,10 +37,10 @@ class LoginPage extends React.Component {
         const { username, password, submitted } = this.state;
         return (
             <div className="col-md-4 col-md-offset-3 container">
-                <div>
-                    <h2>Cinema Management</h2>
+                <div className="container">
+                    <h2 style={{margin: "0 90px"}}>Cinema Management</h2>
                 </div>
-                <h3>Login</h3>
+                <h3 className="container" style={{margin: "0 200px"}}>Log in</h3>
                 <form name="form" onSubmit={this.handleSubmit}>
                     <div className={'form-group' + (submitted && !username ? ' has-error' : '')}>
                         <label htmlFor="username">Username</label>

@@ -44,7 +44,7 @@ class App extends React.Component {
                     <Switch>
                         <Route path="/login" component={LoginPage} />
                         <Route path="/register" component={RegisterPage} />
-                        <Route path="*" component={() => 
+                        <Route path="*" component={localStorage.getItem('user') ? () => 
                             <div className={"d-flex " + showMenu} id="wrapper">
                                 <LeftMenu/>
                                 <div id="page-content-wrapper">
@@ -60,7 +60,7 @@ class App extends React.Component {
                                     </div>
                                 </div>
                             </div>
-                        } />
+                        : LoginPage} />
                     </Switch>
                 </Router>
             </div>
