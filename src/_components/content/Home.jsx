@@ -1,10 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { userActions } from '../_actions';
-import '../style.css'
-import { LeftMenu } from '../_components/layout/LeftMenu';
-import { HeaderMenu } from '../_components/layout/HeaderMenu';
+import { userActions } from '../../_actions';
+import '../../style.css'
+import { LeftMenu } from '../layout/LeftMenu';
+import { HeaderMenu } from '../layout/HeaderMenu';
 
 class Home extends React.Component {
     constructor(props) {

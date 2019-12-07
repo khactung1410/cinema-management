@@ -29,6 +29,7 @@ class LeftMenu extends React.Component {
             <div className="bg-light border-right" id="sidebar-wrapper">
                 <div className="sidebar-heading">CINEMA MANAGEMENT</div>
                 <div className="list-group list-group-flush">
+                    <NavLink to="/UserManagement" className="list-group-item list-group-item-action">Users Management</NavLink>
                     <NavLink to="/MovieManagement" className="list-group-item list-group-item-action">Movie Management</NavLink>
                     <NavLink to="/MovieSchedule" className="list-group-item list-group-item-action">Movie Schedule</NavLink>
                     <NavLink to="/SellTicket" className="list-group-item list-group-item-action">Sell Ticket</NavLink>

@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import { userActions } from '../_actions';
+import { userActions } from '../../_actions';
 
 class RegisterPage extends React.Component {
     constructor(props) {
@@ -14,7 +14,8 @@ class RegisterPage extends React.Component {
                 address: '',
                 phone: '',
                 username: '',
-                password: ''
+                password: '',
+                role: 'Customer'
             },
             submitted: false
         };
@@ -50,36 +51,36 @@ class RegisterPage extends React.Component {
                 <h2 style={{margin: "0 160px"}}>Register</h2>
                 <form name="form" onSubmit={this.handleSubmit}>
                     <div className={'form-group' + (submitted && !user.fullname ? ' has-error' : '')}>
-                        <label htmlFor="fullname">Full Name</label>
-                        <input type="text" className="form-control" name="fullname" value={user.fullname} onChange={this.handleChange} />
+                        <label htmlFor="fullname">Full Name *</label>
+                        <input type="text" className="form-control" name="fullname" value={user.fullname} onChange={this.handleChange} required/>
                         {submitted && !user.fullname &&
                             <div className="help-block">Full Name is required</div>
                         }
                     </div>
                     <div className={'form-group' + (submitted && !user.address ? ' has-error' : '')}>
-                        <label htmlFor="address">Address</label>
-                        <input type="text" className="form-control" name="address" value={user.address} onChange={this.handleChange} />
+                        <label htmlFor="address">Address *</label>
+                        <input type="text" className="form-control" name="address" value={user.address} onChange={this.handleChange} required/>
                         {submitted && !user.address &&
                             <div className="help-block">Address is required</div>
                         }
                     </div>
                     <div className={'form-group' + (submitted && !user.phone ? ' has-error' : '')}>
-                        <label htmlFor="phone">Phone</label>
-                        <input type="text" className="form-control" name="phone" value={user.phone} onChange={this.handleChange} />
+                        <label htmlFor="phone">Phone *</label>
+                        <input type="text" className="form-control" name="phone" value={user.phone} onChange={this.handleChange} required/>
                         {submitted && !user.phone &&
                             <div className="help-block">Phone is required</div>
                         }
                     </div>
                     <div className={'form-group' + (submitted && !user.username ? ' has-error' : '')}>
-                        <label htmlFor="username">Username</label>
-                        <input type="text" className="form-control" name="username" value={user.username} onChange={this.handleChange} />
+                        <label htmlFor="username">Username *</label>
+                        <input type="text" className="form-control" name="username" value={user.username} onChange={this.handleChange} required/>
                         {submitted && !user.username &&
                             <div className="help-block">Username is required</div>
                         }
                     </div>
                     <div className={'form-group' + (submitted && !user.password ? ' has-error' : '')}>
-                        <label htmlFor="password">Password</label>
-                        <input type="password" className="form-control" name="password" value={user.password} onChange={this.handleChange} />
+                        <label htmlFor="password">Password *</label>
+                        <input type="password" className="form-control" name="password" value={user.password} onChange={this.handleChange} required/>
                         {submitted && !user.password &&
                             <div className="help-block">Password is required</div>
                         }

@@ -4,12 +4,11 @@ import { connect } from 'react-redux';
 
 import { history } from '../_helpers';
 import { alertActions } from '../_actions';
-import { ManageMovie, ScheduleMovie, SellTicket, PickSeat} from '../_components/content';
+import { ManageMovie, ManageUser, ScheduleMovie, SellTicket, PickSeat} from '../_components/content';
 import { PrivateRoute } from '../_components';
-import { HomePage } from '../HomePage';
-import { Home } from '../HomePage';
-import { LoginPage } from '../LoginPage';
-import { RegisterPage } from '../RegisterPage';
+import { Home } from '../_components/content';
+import { LoginPage } from '../_components/content';
+import { RegisterPage } from '../_components/content';
 import {LeftMenu} from '../_components/layout/LeftMenu'
 import {HeaderMenu} from '../_components/layout/HeaderMenu'
 
@@ -52,6 +51,7 @@ class App extends React.Component {
                                     <div className="container-fluid">
                                         <Switch>
                                             <PrivateRoute exact path="/" component={Home} />
+                                            <Route path="/UserManagement" component={ManageUser} />
                                             <Route path="/MovieManagement" component={ManageMovie} />
                                             <Route path="/MovieSchedule" component={ScheduleMovie} />
                                             <Route path="/SellTicket" component={SellTicket} />

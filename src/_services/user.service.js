@@ -33,13 +33,13 @@ function logout() {
     localStorage.removeItem('user');
 }
 
-function getAll() {
+function getAll(page) {
     const requestOptions = {
         method: 'GET',
         headers: authHeader()
     };
 
-    return fetch(`${config.apiUrl}/users`, requestOptions).then(handleResponse);
+    return fetch(`${config.apiUrl}/user?page=${page}`, requestOptions).then(handleResponse);
 }
 
 function getById(id) {

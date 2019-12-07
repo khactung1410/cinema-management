@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import { userActions } from '../_actions';
+import { userActions } from '../../_actions';
 
 class LoginPage extends React.Component {
     constructor(props) {
@@ -24,7 +24,6 @@ class LoginPage extends React.Component {
     }
 
     handleSubmit = e => {
-        console.log(111111111111)
         e.preventDefault();
         this.setState({ submitted: true });
         const { username, password } = this.state;
@@ -38,7 +37,7 @@ class LoginPage extends React.Component {
         const { username, password, submitted } = this.state;
         return (
             <div>
-            <div className="col-md-4 col-md-offset-3 container">
+            {/* <div className="col-md-4 col-md-offset-3 container">
                 <div className="container">
                     <h2 style={{margin: "0 90px"}}>Cinema Management</h2>
                 </div>
@@ -66,14 +65,17 @@ class LoginPage extends React.Component {
                         <Link to="/register" className="btn btn-link">Register</Link>
                     </div>
                 </form>
-            </div>
+            </div> */}
             <div>
+                <div className="container">
+                    <h2 style={{margin: "0 400px"}}>Cinema Management</h2>
+                </div>
                 <div className="container">
                     <div className="row">
                         <div className="col-sm-9 col-md-7 col-lg-5 mx-auto">
                             <div className="card card-signin my-5">
                                 <div className="card-body">
-                                    <h5 className="card-title text-center">Sign In</h5>
+                                    <h5 className="card-title text-center">LOG IN</h5>
                                     <form className="form-signin" onSubmit={this.handleSubmit}>
                                         <div className="form-label-group">
                                             <input type="text" id="inputEmail" className="form-control" name="username" value={username} placeholder="Username" required autoFocus onChange={this.handleChange}/>
@@ -90,6 +92,12 @@ class LoginPage extends React.Component {
                                             }
                                         </div>
                                         <button className="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Sign in</button>
+                                        <div>
+                                        {loggingIn &&
+                                            <img src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+                                        }
+                                        </div>
+                                        <Link to="/register" className="btn btn-link container">REGISTER</Link>
                                     </form>
                                 </div>
                             </div>

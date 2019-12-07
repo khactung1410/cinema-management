@@ -64,11 +64,11 @@ function register(user) {
     function failure(error) { return { type: userConstants.REGISTER_FAILURE, error } }
 }
 
-function getAll() {
+function getAll(page) {
     return dispatch => {
         dispatch(request());
 
-        userService.getAll()
+        userService.getAll(page)
             .then(
                 users => dispatch(success(users)),
                 error => dispatch(failure(error.toString()))
