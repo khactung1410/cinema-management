@@ -107,7 +107,7 @@ class ModalAdd extends React.Component {
                         <div className="form-group">
                             <label>Password</label>
                             <input 
-                                type="text" 
+                                type="password" 
                                 className="form-control" 
                                 required 
                                 onChange={this.handleChange}
