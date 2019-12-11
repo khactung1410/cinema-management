@@ -44,7 +44,11 @@ function _delete(id) {
                     dispatch(requestReload())
                     movieService.getAll(1)
                         .then(
-                            data => dispatch(successReload(data)),
+                            data => {
+                                dispatch(successReload(data))
+                                dispatch(alertActions.success('Delete Movie Successful!'));
+                                setTimeout(() => dispatch(alertActions.clear()),2000); //delete alert
+                            },
                             error => dispatch(failureReload(error.toString()))
                         );
                 },

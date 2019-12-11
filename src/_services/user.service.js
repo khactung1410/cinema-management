@@ -8,7 +8,8 @@ export const userService = {
     getAll,
     getById,
     update,
-    delete: _delete
+    _delete,
+    searchByName
 };
 
 function login(username, password) {
@@ -73,17 +74,24 @@ function update(user) {
 // prefixed function name with underscore because delete is a reserved word in javascript
 function _delete(id) {
     const requestOptions = {
-        method: 'DELETE',
+        method: 'GET',
         headers: authHeader()
     };
 
-    return fetch(`${config.apiUrl}/users/${id}`, requestOptions).then(handleResponse);
+    return fetch(`${config.apiUrl}/user/delete/${id}`, requestOptions).then(handleResponse);
+}
+
+function searchByName(name, page) {
+    const requestOptions = {
+        method: 'GET',
+        headers: authHeader(),
+    };
+
+    return fetch(`${config.apiUrl}/user/search?page=${page}&name=${name}`, requestOptions).then(handleResponse);
 }
 
 function handleResponse(response) {
-    console.log(response)
     return response.text().then(text => {
-        console.log("texttt: ",text)
         const data = text && JSON.parse(text);
         console.log('data: ',data)
         if (!response.ok) {

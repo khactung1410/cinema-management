@@ -99,7 +99,11 @@ function _delete(id) {
                     dispatch(requestReload())
                     scheduleService.getAll(1)
                         .then(
-                            data => dispatch(successReload(data)),
+                            data => {
+                                dispatch(successReload(data))
+                                dispatch(alertActions.success('Delete Schedule Successful!'));
+                                setTimeout(() => dispatch(alertActions.clear()),2000); //delete alert
+                            },
                             error => dispatch(failureReload(error.toString()))
                         );
                 },

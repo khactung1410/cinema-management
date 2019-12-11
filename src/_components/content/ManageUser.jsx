@@ -1,13 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { CommonModal } from '../modal/modal';
-import {ModalAdd} from '../modal/movie/ModalAdd'
+import {ModalAdd} from '../modal/user/ModalAdd'
 import {ModalEdit} from '../modal/movie/ModalEdit'
-import {ModalDeleteSingle} from '../modal/movie/ModalDeleteSingle'
+import {ModalDeleteSingle} from '../modal/user/ModalDeleteSingle'
 import {ModalDeleteMultiple} from '../modal/movie/ModalDeleteMultiple'
 import {userActions, movieActions} from '../../_actions'
 import _ from 'lodash'
-import { Search } from './SearchMovie';
+import { SearchUser } from './SearchUser';
 
 class ManageUser extends React.Component {
     constructor(props) {
@@ -76,7 +76,7 @@ class ManageUser extends React.Component {
                     <div className="table-title">
                     <div className="row">
                         <div className="col-sm-4">
-                            <Search />
+                            <SearchUser />
                         </div>
                         <div className="col-sm-8">
                             <a className="btn btn-success" onClick={this.handleShow(this.modalAdd)}><i className="material-icons"></i> <span>Add New User</span></a>

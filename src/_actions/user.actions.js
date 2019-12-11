@@ -8,7 +8,8 @@ export const userActions = {
     logout,
     register,
     getAll,
-    delete: _delete
+    _delete,
+    searchByName
 };
 
 function login(username, password) {
@@ -47,8 +48,13 @@ function register(user) {
             .then(
                 user => { 
                     dispatch(success());
-                    history.push('/login');
-                    dispatch(alertActions.success('Registration successful'));
+                    if(history.location.pathname === '/register') {
+                        history.push('/login');
+                        dispatch(alertActions.success('Registration successful'));
+                    }
+                    else {
+                        dispatch(alertActions.success('Add user successful'));
+                    }
                     setTimeout(() => dispatch(alertActions.clear()),2000); //delete alert
                 },
                 error => {
@@ -76,23 +82,54 @@ function getAll(page) {
     };
 
     function request() { return { type: userConstants.GETALL_REQUEST } }
-    function success(users) { return { type: userConstants.GETALL_SUCCESS, users } }
+    function success(data) { return { type: userConstants.GETALL_SUCCESS, data } }
     function failure(error) { return { type: userConstants.GETALL_FAILURE, error } }
 }
 
 // prefixed function name with underscore because delete is a reserved word in javascript
 function _delete(id) {
     return dispatch => {
-        dispatch(request(id));
-
-        userService.delete(id)
+        dispatch(request(id))
+        userService._delete(id)
             .then(
-                user => dispatch(success(id)),
+                data => {
+                    dispatch(success(id))
+                    dispatch(requestReload())
+                    userService.getAll(1)
+                        .then(
+                            data => {
+                                dispatch(successReload(data))
+                                dispatch(alertActions.success('Delete User Successful!'));
+                                setTimeout(() => dispatch(alertActions.clear()),2000); //delete alert
+                            },
+                            error => dispatch(failureReload(error.toString()))
+                        );
+                },
                 error => dispatch(failure(id, error.toString()))
+            )
+    }
+    
+    function request(id) { return { type: userConstants.DELETE_REQUEST, id } }
+    function success(id) { return { type: userConstants.DELETE_SUCCESS, id } }
+    function failure(id,error) { return { type: userConstants.DELETE_FAILURE, id, error } }
+
+    function requestReload() { return { type: userConstants.GETALL_REQUEST } }
+    function successReload(data) { return { type: userConstants.GETALL_SUCCESS, data } }
+    function failureReload(error) { return { type: userConstants.GETALL_FAILURE, error } }
+}
+
+function searchByName(name, page) {
+    return dispatch => {
+        dispatch(request());
+
+        userService.searchByName(name, page)
+            .then(
+                data => dispatch(success(data)),
+                error => dispatch(failure(error.toString()))
             );
     };
 
-    function request(id) { return { type: userConstants.DELETE_REQUEST, id } }
-    function success(id) { return { type: userConstants.DELETE_SUCCESS, id } }
-    function failure(id, error) { return { type: userConstants.DELETE_FAILURE, id, error } }
+    function request() { return { type: userConstants.SEARCHBYNAME_REQUEST } }
+    function success(data) { return { type: userConstants.SEARCHBYNAME_SUCCESS, data } }
+    function failure(error) { return { type: userConstants.SEARCHBYNAME_FAILURE, error } }
 }
