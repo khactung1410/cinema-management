@@ -2,10 +2,10 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { CommonModal } from '../modal/modal';
 import {ModalAdd} from '../modal/user/ModalAdd'
-import {ModalEdit} from '../modal/movie/ModalEdit'
+import {ModalEdit} from '../modal/user/ModalEdit'
 import {ModalDeleteSingle} from '../modal/user/ModalDeleteSingle'
 import {ModalDeleteMultiple} from '../modal/movie/ModalDeleteMultiple'
-import {userActions, movieActions} from '../../_actions'
+import {userActions} from '../../_actions'
 import _ from 'lodash'
 import { SearchUser } from './SearchUser';
 
@@ -35,9 +35,9 @@ class ManageUser extends React.Component {
         }
     }
 
-    handleShowEdit = (modal,id) => {
+    handleShowEdit = (modal, id) => {
         return () => {
-            this.props.getMovieById(id)
+            this.props.getUserById(id)
             setTimeout(() => this.setState({
                                 idEditting: id
                     }),300)
@@ -151,9 +151,9 @@ function mapState(state) {
 
 const actionCreators = {
     getUsers: userActions.getAll,
-    getMovies: movieActions.getAll,
-    getMovieById: movieActions.getById,
-    searchMovieByName: movieActions.searchByName
+    // getMovies: movieActions.getAll,
+    getUserById: userActions.getById,
+    // searchMovieByName: movieActions.searchByName
 }
 
 const connectedManageUser = connect(mapState, actionCreators)(ManageUser);

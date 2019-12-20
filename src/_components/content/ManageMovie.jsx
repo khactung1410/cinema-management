@@ -35,14 +35,15 @@ class ManageMovie extends React.Component {
         }
     }
 
-    handleShowEdit = (modal,id) => {
-        return () => {
-            this.props.getMovieById(id)
-            setTimeout(() => this.setState({
-                                idEditting: id
-                    }),300)
-            modal.current.handleShow()
-        }
+    handleShowEdit = (modal, id) => {
+        console.log("movie: ", modal)
+        // return () => {
+        //     this.props.getMovieById(id)
+        //     setTimeout(() => this.setState({
+        //                         idEditting: id
+        //             }),300)
+        //     modal.current.handleShow()
+        // }
     }
 
     handleClose = (modal) => {

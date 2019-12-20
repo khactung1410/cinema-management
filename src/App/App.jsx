@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Children } from 'react';
 import { Router, Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
 
@@ -56,6 +56,7 @@ class App extends React.Component {
                                             <Route path="/MovieSchedule" component={ScheduleMovie} />
                                             <Route path="/SellTicket" component={SellTicket} />
                                             <Route path="/PickSeat" component={PickSeat} />
+                                            <Route path="/ManageDataReact" component={ParentComponent} />
                                         </Switch>
                                     </div>
                                 </div>
@@ -68,6 +69,50 @@ class App extends React.Component {
     }
 }
 
+class ParentComponent extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            messageParent: ''
+        }
+    }
+    handleChange = (e) => {
+        this.setState({
+            messageParent: e.target.value
+        })
+    }
+    render() {
+        return (
+            <div>
+                <p>PARENT COMPONENT</p>
+                <div >
+                    <label>Message: </label>
+                    <input 
+                        type="text" 
+                        onChange={this.handleChange}
+                        name="message"
+                    />
+                </div>
+                <br/>
+                <ChildrenComponent message={this.state.messageParent}/>
+            </div>
+        );
+    }
+}
+class ChildrenComponent extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {}
+    }
+    render() {
+        return (
+            <div>
+                <p>CHILDREN COMPONENT</p>
+                <p>Message from Parent: <i>{this.props.message}</i></p>
+            </div>
+        );
+    }
+}
 function mapState(state) {
     const { alert } = state;
     return { alert };

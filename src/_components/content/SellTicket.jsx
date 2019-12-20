@@ -68,7 +68,7 @@ class SellTicket extends React.Component {
                     <PickSeat sellingTicket={this.state.sellingTicket}/>
                     :
                     <div>
-                        <div className="col-sm-3" >
+                        {/* <div className="col-sm-3" >
                             <p>Pick Date Time : </p>
                                     <Select
                                         name = "selectedStartTime"
@@ -77,7 +77,7 @@ class SellTicket extends React.Component {
                                         options={optionStartTime}
                                         // defaultInputValue={this.state.selectedRoom}
                                     />
-                                </div>
+                            </div> */}
                         <div className="table-wrapper">
                             <div className="table-title" style={{height: "65px"}}>
                             <div className="row">

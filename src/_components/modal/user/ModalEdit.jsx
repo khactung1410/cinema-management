@@ -7,7 +7,7 @@ import Select from 'react-select';
 import { connect } from 'react-redux';
 
 
-class ModalAdd extends React.Component {
+class ModalEdit extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -20,24 +20,64 @@ class ModalAdd extends React.Component {
             },
             role:''
         }
-        this.modalAdd = this.props.modalAdd
+        this.modalEdit = this.props.modalEdit
+    }
+
+    componentDidUpdate(prevProps) {
+        const id = this.props.idEditting
+        if ((id && (id !== prevProps.idEditting))) {
+            const user = this.props.users.user ? this.props.users.user[0] : null
+            if(user) {
+                this.setState({
+                    user: {
+                        fullname: user.fullname,
+                        address: user.address,
+                        phone: user.phone,
+                        username: user.username,
+                        password: user.password
+                    },
+                    role: user.role
+                })
+            }
+            setTimeout(()=>console.log(this.state), 200)
+
+        }
     }
 
     handleClose = (modal) => {
-        return () => modal.current.handleClose()
+        return () => {
+            const user = this.props.users.user ? this.props.users.user[0] : null
+            this.setState({
+                user: {
+                    fullname: user.fullname,
+                    address: user.address,
+                    phone: user.phone,
+                    username: user.username,
+                    password: user.password
+                },
+                role: user.role
+            })
+            modal.current.handleClose()
+        }
     }
 
-    addUser = (event) => {
+    editUser = (event) => {
         event.preventDefault();
-        const {user} = this.state
+        const id = this.props.idEditting
+        const {user} = this.state.user
         user.role = this.state.role.value
-        console.log("user cretate:",user)
-        this.props.addUser(user)
+        console.log("u editiing: ", user)
+        const edittingUser = {
+            ...user,
+            id
+        }
+        this.props.editUser(edittingUser)
     }
     handleSelectRole = (role) => {
         this.setState({
             role: role
         })
+        console.log(this.state.role)
     }
 
     handleChange = (e) => {
@@ -60,11 +100,11 @@ class ModalAdd extends React.Component {
             {value: 'Customer', label: 'Customer'}
         ]
         return (
-            <CommonModal ref={this.modalAdd}>
-                    <form onSubmit={this.addUser}>
+            <CommonModal ref={this.modalEdit}>
+                    <form onSubmit={this.editUser}>
                         <div className="modal-header">						
-                            <h4 className="modal-title">Add User</h4>
-                            <button type="button" className="close" onClick={this.handleClose(this.modalAdd)}>×</button>
+                            <h4 className="modal-title">Edit User</h4>
+                            <button type="button" className="close" onClick={this.handleClose(this.modalEdit)}>×</button>
                         </div>
                         <div className="modal-body">					
                         <div className="form-group">
@@ -75,6 +115,7 @@ class ModalAdd extends React.Component {
                                 required
                                 onChange={this.handleChange}
                                 name="fullname"
+                                value={this.state.user.fullname}
                             />
                         </div>
                         <div className="form-group">
@@ -85,6 +126,7 @@ class ModalAdd extends React.Component {
                                 required 
                                 onChange={this.handleChange}
                                 name="address"
+                                value={this.state.user.address}
                             />
                         </div>
                         <div className="form-group">
@@ -95,6 +137,7 @@ class ModalAdd extends React.Component {
                                 required 
                                 onChange={this.handleChange}
                                 name="phone"
+                                value={this.state.user.phone}
                             />
                         </div>
                         <div className="form-group">
@@ -105,6 +148,7 @@ class ModalAdd extends React.Component {
                                 required 
                                 onChange={this.handleChange}
                                 name="username"
+                                value={this.state.user.username}
                             />
                         </div>	
                         <div className="form-group">
@@ -115,6 +159,7 @@ class ModalAdd extends React.Component {
                                 required 
                                 onChange={this.handleChange}
                                 name="password"
+                                value={this.state.user.password}
                             />
                         </div>	
                         <div className="form-group">
@@ -129,8 +174,8 @@ class ModalAdd extends React.Component {
                         </div>
                         </div>
                         <div className="modal-footer">
-                            <input type="button" className="btn btn-default" defaultValue="Cancel" onClick={this.handleClose(this.modalAdd)} />
-                            <input type="submit" className="btn btn-success" value="Add"/>
+                            <input type="button" className="btn btn-default" defaultValue="Cancel" onClick={this.handleClose(this.modalEdit)} />
+                            <input type="submit" className="btn btn-success" value="Edit"/>
                         </div>
                     </form>
                 </CommonModal> 
@@ -139,11 +184,13 @@ class ModalAdd extends React.Component {
 }
 
 function mapState(state) {
-    return {}
+    const {users} = state
+    return {users}
 }
 const actionCreators = {
-    addUser: userActions.register
+    getUserById: userActions.getById,
+    editUser: userActions.edit
 }
 
-const connectedModalAdd = connect(mapState, actionCreators)(ModalAdd);
-export { connectedModalAdd as ModalAdd };
+const connectedModalEdit = connect(mapState, actionCreators)(ModalEdit);
+export { connectedModalEdit as ModalEdit };

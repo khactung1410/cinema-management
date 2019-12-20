@@ -49,7 +49,7 @@ function getById(id) {
         headers: authHeader()
     };
 
-    return fetch(`${config.apiUrl}/users/${id}`, requestOptions).then(handleResponse);
+    return fetch(`${config.apiUrl}/user/${id}`, requestOptions).then(handleResponse);
 }
 
 function register(user) {
