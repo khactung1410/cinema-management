@@ -24,7 +24,7 @@ class SellTicket extends React.Component {
     componentDidMount() {
         this.props.getSchedules(1)
         this.props.getMovies(1)
-        this.props.getRooms()
+        this.props.getRooms(1)
     };
 
     changePage = (page, searchingName) => {

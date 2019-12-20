@@ -2,16 +2,37 @@ import config from 'config';
 import { authHeader } from '../_helpers';
 
 export const roomService = {
-    getAll
+    add,
+    getAll,
+    searchByName,
+    _delete,
 };
 
-function getAll() {
+function add(room) {
+    const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(room)
+    };
+    return fetch(`${config.apiUrl}/room/add`, requestOptions).then(handleResponse);
+}
+
+function getAll(page) {
     const requestOptions = {
         method: 'GET',
         headers: authHeader()
     };
 
-    return fetch(`${config.apiUrl}/room`, requestOptions).then(handleResponse);
+    return fetch(`${config.apiUrl}/room?page=${page}`, requestOptions).then(handleResponse);
+}
+
+function searchByName(name, page) {
+    const requestOptions = {
+        method: 'GET',
+        headers: authHeader(),
+    };
+
+    return fetch(`${config.apiUrl}/room/search?page=${page}&name=${name}`, requestOptions).then(handleResponse);
 }
 
 function handleResponse(response) {
@@ -29,4 +50,13 @@ function handleResponse(response) {
         }
         return data;
     });
+}
+
+function _delete(id) {
+    const requestOptions = {
+        method: 'GET',
+        headers: authHeader()
+    };
+
+    return fetch(`${config.apiUrl}/room/delete/${id}`, requestOptions).then(handleResponse);
 }

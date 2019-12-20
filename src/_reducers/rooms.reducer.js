@@ -2,6 +2,12 @@ import { roomConstants } from '../_constants';
 
 export function rooms(state = {}, action) {
   switch (action.type) {
+    case roomConstants.ADD_REQUEST:
+        return { adding: true };
+    case roomConstants.ADD_SUCCESS:
+        return {};
+    case roomConstants.ADD_FAILURE:
+        return {};
     case roomConstants.GETALL_REQUEST:
         return {
             loading: true
@@ -12,6 +18,19 @@ export function rooms(state = {}, action) {
             items: action.data
         }
     case roomConstants.GETALL_FAILURE:
+        return { 
+            error: action.error
+        };
+    case roomConstants.SEARCHBYNAME_REQUEST:
+        return {
+            loading: true
+        };
+    case roomConstants.SEARCHBYNAME_SUCCESS:
+        return {
+            ...state,
+            items: action.data,
+        }
+    case roomConstants.SEARCHBYNAME_FAILURE:
         return { 
             error: action.error
         };
