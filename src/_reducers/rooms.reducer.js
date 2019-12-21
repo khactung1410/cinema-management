@@ -34,6 +34,20 @@ export function rooms(state = {}, action) {
         return { 
             error: action.error
         };
+    case roomConstants.GETBYID_REQUEST:
+        return {
+            ...state,
+            loading: true
+        };
+    case roomConstants.GETBYID_SUCCESS:
+        return {
+            ...state,
+            room: action.data
+        }
+    case roomConstants.GETBYID_FAILURE:
+        return { 
+            error: action.error
+        };
     default:
       return state
   }

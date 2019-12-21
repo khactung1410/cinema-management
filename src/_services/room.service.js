@@ -6,6 +6,8 @@ export const roomService = {
     getAll,
     searchByName,
     _delete,
+    getById,
+    edit
 };
 
 function add(room) {
@@ -26,6 +28,15 @@ function getAll(page) {
     return fetch(`${config.apiUrl}/room?page=${page}`, requestOptions).then(handleResponse);
 }
 
+function edit(room) {
+    const requestOptions = {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(room)
+    };
+    return fetch(`${config.apiUrl}/room/edit`, requestOptions).then(handleResponse);
+}
+
 function searchByName(name, page) {
     const requestOptions = {
         method: 'GET',
@@ -33,6 +44,15 @@ function searchByName(name, page) {
     };
 
     return fetch(`${config.apiUrl}/room/search?page=${page}&name=${name}`, requestOptions).then(handleResponse);
+}
+
+function getById(id) {
+    const requestOptions = {
+        method: 'GET',
+        headers: authHeader()
+    };
+
+    return fetch(`${config.apiUrl}/room/${id}`, requestOptions).then(handleResponse);
 }
 
 function handleResponse(response) {

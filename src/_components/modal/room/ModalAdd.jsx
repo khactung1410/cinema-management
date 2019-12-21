@@ -78,7 +78,7 @@ class ModalAdd extends React.Component {
                             />
                         </div>
                         <div className="form-group">
-                            <label>Square</label>
+                            <label>Square (m<sup>2</sup>)</label>
                             <input 
                                 type="text" 
                                 className="form-control" 

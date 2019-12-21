@@ -1,5 +1,6 @@
 import { roomConstants } from '../_constants';
 import { roomService } from '../_services';
+import { alertActions } from './';
 import { history } from '../_helpers';
 
 export const roomActions = {
@@ -7,6 +8,8 @@ export const roomActions = {
     getAll,
     searchByName,
     _delete,
+    getById,
+    edit
 };
 
 function add(room) {
@@ -18,7 +21,7 @@ function add(room) {
                     dispatch(success(room));
                     history.push('/RoomManagement');
                     dispatch(alertActions.success('add new room successful'));
-                    setTimeout(() => dispatch(alertActions.clear()),2000); //delete alert
+                    setTimeout(() => dispatch(alertActions.clear()),4000); //delete alert
                 },
                 error => {
                     dispatch(failure(error.toString()));
@@ -93,4 +96,45 @@ function _delete(id) {
     function requestReload() { return { type: roomConstants.GETALL_REQUEST } }
     function successReload(data) { return { type: roomConstants.GETALL_SUCCESS, data } }
     function failureReload(error) { return { type: roomConstants.GETALL_FAILURE, error } }
+}
+
+function getById(id) {
+    return dispatch => {
+        dispatch(request());
+
+        roomService.getById(id)
+            .then(
+                data => dispatch(success(data)),
+                error => dispatch(failure(error.toString()))
+            );
+    };
+
+    function request() { return { type: roomConstants.GETBYID_REQUEST } }
+    function success(data) { return { type: roomConstants.GETBYID_SUCCESS, data } }
+    function failure(error) { return { type: roomConstants.GETBYID_FAILURE, error } }
+}
+
+function edit(room) {
+    return dispatch => {
+        dispatch(request());
+
+        roomService.edit(room)
+            .then(
+                data => {
+                    dispatch(success(data)),
+                    history.push('/RoomManagement');
+                    dispatch(alertActions.success('Update room successful'));
+                    setTimeout(() => dispatch(alertActions.clear()),3000); //delete alert
+                },
+                error => {
+                    dispatch(failure(error.toString()));
+                    dispatch(alertActions.error(error.toString()));
+                    setTimeout(() => dispatch(alertActions.clear()),3000); //delete alert
+                }
+            );
+    };
+
+    function request() { return { type: roomConstants.EDIT_REQUEST } }
+    function success(data) { return { type: roomConstants.EDIT_SUCCESS, data } }
+    function failure(error) { return { type: roomConstants.EDIT_FAILURE, error } }
 }

@@ -1,7 +1,9 @@
 import React, { useState } from 'react'
 import { Modal } from 'react-bootstrap'
 import { CommonModal } from '../modal';
-import {movieActions} from '../../../_actions'
+import { timingSafeEqual } from 'crypto';
+import {roomActions} from '../../../_actions'
+import moment from 'moment';
 import { connect } from 'react-redux';
 
 
@@ -9,13 +11,15 @@ class ModalEdit extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            movie: {
+            room: {
                 name: '',
-                genre: '',
-                director: '',
-                publicYear: '',
-                description: ''
-            }
+                totalSeat: '',
+                square: '',
+                location: '',
+                typeRoom: '',
+            },
+            createAt: new Date(),
+            updateAt: new Date()
         }
         this.modalEdit = this.props.modalEdit
     }
@@ -23,15 +27,15 @@ class ModalEdit extends React.Component {
     componentDidUpdate(prevProps) {
         const id = this.props.idEditting
         if ((id && (id !== prevProps.idEditting))) {
-            const movie = this.props.movies.movie ? this.props.movies.movie[0] : null
-            if(movie) {
+            const room = this.props.rooms.room ? this.props.rooms.room[0] : null
+            if(room) {
                 this.setState({
-                    movie: {
-                        name: movie.name,
-                        genre: movie.genre,
-                        director: movie.director,
-                        publicYear: movie.publicYear,
-                        description: movie.description
+                    room: {
+                        name: room.name,
+                        totalSeat: room.totalSeat,
+                        square: room.square,
+                        location: room.location,
+                        typeRoom: room.typeRoom
                     }
                 })
             }
@@ -40,14 +44,14 @@ class ModalEdit extends React.Component {
 
     handleClose = (modal) => {
         return () => {
-            const movie = this.props.movies.movie ? this.props.movies.movie[0] : null
+            const room = this.props.rooms.room ? this.props.rooms.room[0] : null
             this.setState({
-                movie: {
-                    name: movie.name,
-                    genre: movie.genre,
-                    director: movie.director,
-                    publicYear: movie.publicYear,
-                    description: movie.description
+                room: {
+                    name: room.name,
+                    totalSeat: room.totalSeat,
+                    square: room.square,
+                    location: room.location,
+                    typeRoom: room.typeRoom
                 }
             })
             modal.current.handleClose()
@@ -56,33 +60,35 @@ class ModalEdit extends React.Component {
 
     handleChange = (e) => {
         const {name, value} = e.target;
-        const {movie} = this.state
+        const {room} = this.state
         this.setState({
-            movie: {
-                ...movie,
+            room: {
+                ...room,
                 [name]: value
             }
         })
-        setTimeout(()=>{console.log(this.state.movie)},500)
+        // setTimeout(()=>{console.log(this.state.room)},500)
     }
 
-    editMovie = (event) => {
+    editRoom = (event) => {
         event.preventDefault();
         const id = this.props.idEditting
-        const {movie} = this.state
-        const edittingMovie = {
-            ...movie,
-            id
+        const {room} = this.state
+        const edittingRoom = {
+            ...room,
+            id: id,
+            updateAt: moment(new Date()).format("YYYY-MM-DD HH:mm:ss")
         }
-        this.props.editMovie(edittingMovie)
+        console.log(edittingRoom)
+        this.props.editRoom(edittingRoom)
     }
   
     render() {
         return (
             <CommonModal ref={this.modalEdit}>
-                    <form onSubmit={this.editMovie}>
+                    <form onSubmit={this.editRoom}>
                         <div className="modal-header">						
-                            <h4 className="modal-title">Edit Movie</h4>
+                            <h4 className="modal-title">Edit Room</h4>
                             <button type="button" className="close" onClick={this.handleClose(this.modalEdit)}>×</button>
                         </div>
                         <div className="modal-body">					
@@ -90,60 +96,61 @@ class ModalEdit extends React.Component {
                             <label>Name</label>
                             <input
                                 type="text"
-                                className="form-control"
+                                className="form-control" 
                                 required
                                 onChange={this.handleChange}
                                 name="name"
-                                value={this.state.movie.name}
+                                value={this.state.room.name}
                             />
                         </div>
                         <div className="form-group">
-                            <label>Genre</label>
+                            <label>Total Seat</label>
                             <input 
                                 type="text" 
                                 className="form-control" 
                                 required 
                                 onChange={this.handleChange}
-                                name="genre"
-                                value={this.state.movie.genre}
+                                name="totalSeat"
+                                value={this.state.room.totalSeat}
                             />
                         </div>
                         <div className="form-group">
-                            <label>Director</label>
+                            <label>Square (m<sup>2</sup>)</label>
                             <input 
                                 type="text" 
                                 className="form-control" 
                                 required 
                                 onChange={this.handleChange}
-                                name="director"
-                                value={this.state.movie.director}
+                                name="square"
+                                value={this.state.room.square}
                             />
                         </div>
                         <div className="form-group">
-                            <label>Public Year</label>
+                            <label>Location</label>
                             <input 
-                                type="number" 
+                                type="text" 
                                 className="form-control" 
                                 required 
                                 onChange={this.handleChange}
-                                name= "publicYear"
-                                value={this.state.movie.publicYear}
+                                name= "location"
+                                value={this.state.room.location}
                             />
                         </div>
                         <div className="form-group">
-                            <label>Description</label>
-                            <textarea 
+                            <label>Type Room</label>
+                            <input 
+                                type="text" 
                                 className="form-control" 
                                 required 
                                 onChange={this.handleChange}
-                                name="description"
-                                value={this.state.movie.description}
+                                name= "typeRoom"
+                                value={this.state.room.typeRoom}
                             />
                         </div>				
                         </div>
                         <div className="modal-footer">
                             <input type="button" className="btn btn-default" defaultValue="Cancel" onClick={this.handleClose(this.modalEdit)} />
-                            <input type="submit" className="btn btn-success" value="Save" />
+                            <input type="submit" className="btn btn-success" value="Edit"/>
                         </div>
                     </form>
                 </CommonModal> 
@@ -152,11 +159,11 @@ class ModalEdit extends React.Component {
 }
 
 function mapState(state) {
-    const {movies} = state
-    return {movies}
+    const {rooms} = state
+    return {rooms}
 }
 const actionCreators = {
-    editMovie: movieActions.edit
+    editRoom: roomActions.edit
 }
 
 const connectedModalEdit = connect(mapState, actionCreators)(ModalEdit);

@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { CommonModal } from '../modal/modal';
 import {ModalAdd} from '../modal/room/ModalAdd'
-import {ModalEdit} from '../modal/movie/ModalEdit'
+import {ModalEdit} from '../modal/room/ModalEdit'
 import {ModalDeleteSingle} from '../modal/room/ModalDeleteSingle'
 import {ModalDeleteMultiple} from '../modal/movie/ModalDeleteMultiple'
 import {roomActions} from '../../_actions'
@@ -36,14 +36,13 @@ class ManageRoom extends React.Component {
     }
 
     handleShowEdit = (modal, id) => {
-        console.log("movie: ", modal)
-        // return () => {
-        //     this.props.getMovieById(id)
-        //     setTimeout(() => this.setState({
-        //                         idEditting: id
-        //             }),300)
-        //     modal.current.handleShow()
-        // }
+        return () => {
+            this.props.getRoomById(id)
+            setTimeout(() => this.setState({
+                                idEditting: id
+                    }),300)
+            modal.current.handleShow()
+        }
     }
 
     handleClose = (modal) => {
@@ -96,7 +95,7 @@ class ManageRoom extends React.Component {
                         </th>
                         <th style={{width: 8 + '%'}}>Name</th>
                         <th style={{width: 8 + '%'}}>Total Seat</th>
-                        <th style={{width: 8 + '%'}}>Square</th>
+                        <th style={{width: 8 + '%'}}>Square (m<sup>2</sup>)</th>
                         <th style={{width: 21 + '%'}}>Location</th>
                         <th style={{width: 10 + '%'}}>Type Room</th>
                         <th style={{width: 10 + '%'}}>Create At</th>
@@ -155,7 +154,8 @@ function mapState(state) {
 }
 
 const actionCreators = {
-    getRooms: roomActions.getAll
+    getRooms: roomActions.getAll,
+    getRoomById: roomActions.getById,
 }
 
 const connectedManageRoom = connect(mapState, actionCreators)(ManageRoom);
