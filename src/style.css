@@ -13,7 +13,7 @@
 
   #sidebar-wrapper .sidebar-heading {
     padding: 0.88rem 0.8rem;
-    font-size: 1.2rem;
+    font-size: 1.4rem;
   }
 
   #sidebar-wrapper .list-group {
@@ -58,7 +58,7 @@
         color: #566787;
 		background: #f5f5f5;
 		font-family: 'Varela Round', sans-serif;
-		font-size: 13px;
+		font-size: 14px;
 	}
 	table {
 		table-layout: fixed;
@@ -95,7 +95,7 @@
 	.table-title .btn {
 		color: #fff;
 		float: right;
-		font-size: 13px;
+		font-size: 14px;
 		border: none;
 		min-width: 50px;
 		border-radius: 2px;
@@ -130,7 +130,7 @@
 		background: #f5f5f5;
 	}
     table.table th i {
-        font-size: 13px;
+        font-size: 14px;
         margin: 0 5px;
         cursor: pointer;
     }
@@ -169,7 +169,7 @@
     }
     .pagination li a {
         border: none;
-        font-size: 13px;
+        font-size: 14px;
         min-width: 30px;
         min-height: 30px;
         color: #999;
@@ -198,7 +198,7 @@
     .hint-text {
         float: left;
         margin-top: 10px;
-        font-size: 13px;
+        font-size: 14px;
     }
 	/* Custom checkbox */
 	.custom-checkbox {

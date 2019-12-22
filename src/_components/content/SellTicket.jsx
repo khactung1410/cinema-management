@@ -68,16 +68,6 @@ class SellTicket extends React.Component {
                     <PickSeat sellingTicket={this.state.sellingTicket}/>
                     :
                     <div>
-                        {/* <div className="col-sm-3" >
-                            <p>Pick Date Time : </p>
-                                    <Select
-                                        name = "selectedStartTime"
-                                        // value={optionStartTime}
-                                        // onChange={this.handleSelectRoom}
-                                        options={optionStartTime}
-                                        // defaultInputValue={this.state.selectedRoom}
-                                    />
-                            </div> */}
                         <div className="table-wrapper">
                             <div className="table-title" style={{height: "65px"}}>
                             <div className="row">
@@ -103,19 +93,35 @@ class SellTicket extends React.Component {
                                 schedules.items &&
                                 schedules.items.schedules.map((schedule,key) => (
                                     <tbody key={key}>
-                                        <tr>
-                                            <td style={{width: 15 + '%'}}>{schedule.name}</td>
-                                            <td style={{width: 10 + '%'}}>{schedule.room}</td>
-                                            <td style={{width: 10 + '%'}}>{schedule.startAt}</td>
-                                            <td style={{width: 10 + '%'}}>{schedule.endAt}</td>
-                                            <td style={{width: 10 + '%'}}>{schedule.date}</td>
-                                            <td style={{width: 10 + '%'}}>{schedule.ticketPrice}</td>
-                                            <td style={{width: 10 + '%'}}>{schedule.remainingTicket}/{schedule.quantityTicket}</td>
-                                            <td>
-                                            {/* <Link to="/PickSeat"><button type="button" class="btn btn-outline-success">Sell Ticket</button></Link> */}
-                                            <button type="button"  onClick={this.displayPickSeat(schedule)} disabled={schedule.remainingTicket==0?true:false} className="btn btn-outline-success">Sell Ticket</button>
-                                            </td>
-                                        </tr>
+                                        {
+                                            new Date(schedule.date +' '+schedule.endAt) <= new Date() 
+                                            ?
+                                            <tr style={{backgroundColor: '#ffb3b3'}}>
+                                                <td style={{width: 15 + '%'}}>{schedule.name}</td>
+                                                <td style={{width: 10 + '%'}}>{schedule.room}</td>
+                                                <td style={{width: 10 + '%'}}>{schedule.startAt}</td>
+                                                <td style={{width: 10 + '%'}}>{schedule.endAt}</td>
+                                                <td style={{width: 10 + '%'}}>{schedule.date}</td>
+                                                <td style={{width: 10 + '%'}}>{schedule.ticketPrice}</td>
+                                                <td style={{width: 10 + '%'}}>{schedule.remainingTicket}/{schedule.quantityTicket}</td>
+                                                <td>
+                                                <button type="button"  onClick={this.displayPickSeat(schedule)} disabled={true} className="btn btn-outline-success">Sell Ticket</button>
+                                                </td>
+                                            </tr>
+                                            :
+                                            <tr>
+                                                <td style={{width: 15 + '%'}}>{schedule.name}</td>
+                                                <td style={{width: 10 + '%'}}>{schedule.room}</td>
+                                                <td style={{width: 10 + '%'}}>{schedule.startAt}</td>
+                                                <td style={{width: 10 + '%'}}>{schedule.endAt}</td>
+                                                <td style={{width: 10 + '%'}}>{schedule.date}</td>
+                                                <td style={{width: 10 + '%'}}>{schedule.ticketPrice}</td>
+                                                <td style={{width: 10 + '%'}}>{schedule.remainingTicket}/{schedule.quantityTicket}</td>
+                                                <td>
+                                                <button type="button"  onClick={this.displayPickSeat(schedule)} disabled={schedule.remainingTicket==0?true:false} className="btn btn-outline-success">Sell Ticket</button>
+                                                </td>
+                                            </tr>
+                                        }
                                     </tbody>
                                     ))
                             }

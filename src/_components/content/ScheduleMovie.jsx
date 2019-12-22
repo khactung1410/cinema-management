@@ -109,24 +109,46 @@ class ScheduleMovie extends React.Component {
                         schedules.items &&
                         schedules.items.schedules.map((schedule,key) => (
                                 <tbody key={key}>
-                                <tr>
-                                <td>
-                                    <span className="custom-checkbox">
-                                    <input type="checkbox" id="checkbox1" name="options[]" defaultValue={1} onClick={this.handleCheck}/>
-                                    <label htmlFor="checkbox1" />
-                                    </span>
-                                </td>
-                                <td style={{width: 20 + '%'}}>{schedule.name}</td>
-                                <td style={{width: 15 + '%'}}>{schedule.room}</td>
-                                <td style={{width: 15 + '%'}}>{schedule.startAt}</td>
-                                <td style={{width: 15 + '%'}}>{schedule.endAt}</td>
-                                <td style={{width: 15 + '%'}}>{schedule.date}</td>
-                                <td style={{width: 20 + '%'}}>{schedule.ticketPrice}</td>
-                                <td>
-                                    <a className="edit" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Edit" onClick={this.handleShowEdit(this.modalEdit, schedule.id)}></i></a>
-                                    <a className="delete" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Delete" onClick={this.handleShow(this.modalDeleteSingle, schedule.id)}></i></a>
-                                </td>
-                                </tr>
+                                    {
+                                        new Date(schedule.date + ' ' +schedule.endAt) <= new Date() ?
+                                        <tr style={{backgroundColor: '#ffb3b3'}}>
+                                            <td>
+                                                <span className="custom-checkbox">
+                                                <input type="checkbox" id="checkbox1" name="options[]" defaultValue={1} onClick={this.handleCheck}/>
+                                                <label htmlFor="checkbox1" />
+                                                </span>
+                                            </td>
+                                            <td style={{width: 20 + '%'}}>{schedule.name}</td>
+                                            <td style={{width: 15 + '%'}}>{schedule.room}</td>
+                                            <td style={{width: 15 + '%'}}>{schedule.startAt}</td>
+                                            <td style={{width: 15 + '%'}}>{schedule.endAt}</td>
+                                            <td style={{width: 15 + '%'}}>{schedule.date}</td>
+                                            <td style={{width: 20 + '%'}}>{schedule.ticketPrice}</td>
+                                            <td>
+                                                <a className="edit" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Edit"></i></a>
+                                                <a className="delete" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Delete" onClick={this.handleShow(this.modalDeleteSingle, schedule.id)}></i></a>
+                                            </td>
+                                        </tr>
+                                        :
+                                        <tr>
+                                            <td>
+                                                <span className="custom-checkbox">
+                                                <input type="checkbox" id="checkbox1" name="options[]" defaultValue={1} onClick={this.handleCheck}/>
+                                                <label htmlFor="checkbox1" />
+                                                </span>
+                                            </td>
+                                            <td style={{width: 20 + '%'}}>{schedule.name}</td>
+                                            <td style={{width: 15 + '%'}}>{schedule.room}</td>
+                                            <td style={{width: 15 + '%'}}>{schedule.startAt}</td>
+                                            <td style={{width: 15 + '%'}}>{schedule.endAt}</td>
+                                            <td style={{width: 15 + '%'}}>{schedule.date}</td>
+                                            <td style={{width: 20 + '%'}}>{schedule.ticketPrice}</td>
+                                            <td>
+                                                <a className="edit" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Edit" onClick={this.handleShowEdit(this.modalEdit, schedule.id)}></i></a>
+                                                <a className="delete" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Delete" onClick={this.handleShow(this.modalDeleteSingle, schedule.id)}></i></a>
+                                            </td>
+                                        </tr>
+                                    }
                             </tbody>
                             ))
                     }
