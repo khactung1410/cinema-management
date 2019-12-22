@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import {roomActions} from '../../_actions'
+import {genreActions} from '../../_actions'
 
-class SearchRoom extends React.Component {
+class SearchGenre extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -13,7 +13,7 @@ class SearchRoom extends React.Component {
     handleChange = (event) => {
         event.preventDefault()
         const {name, value} = event.target
-        this.props.searchRoomByName(value, 1)
+        this.props.searchGenreByName(value, 1)
     } 
 
     render() {
@@ -29,13 +29,13 @@ class SearchRoom extends React.Component {
 }
 
 function mapState(state) {
-    const {rooms}  = state;
-    return {rooms};
+    const {genres}  = state;
+    return {genres};
 }
 
 const actionCreators = {
-    searchRoomByName: roomActions.searchByName
+    searchGenreByName: genreActions.searchByName
 }
 
-const connectedSearchRoom = connect(mapState, actionCreators)(SearchRoom);
-export { connectedSearchRoom as SearchRoom };
+const connectedSearchGenre = connect(mapState, actionCreators)(SearchGenre);
+export { connectedSearchGenre as SearchGenre };

@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import {movieActions} from '../../_actions'
 
-class Search extends React.Component {
+class SearchMovie extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -40,5 +40,5 @@ const actionCreators = {
     searchMovieByName: movieActions.searchByName
 }
 
-const connectedSearch = connect(mapState, actionCreators)(Search);
-export { connectedSearch as Search };
+const connectedSearchMovie = connect(mapState, actionCreators)(SearchMovie);
+export { connectedSearchMovie as SearchMovie };

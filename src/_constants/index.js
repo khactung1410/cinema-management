@@ -5,3 +5,4 @@ export * from './schedule.constants';
 export * from './room.constants';
 export * from './seatStatus.constants';
 export * from './seat.constants';
+export * from './genre.constants';

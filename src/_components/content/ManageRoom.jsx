@@ -7,7 +7,7 @@ import {ModalDeleteSingle} from '../modal/room/ModalDeleteSingle'
 import {ModalDeleteMultiple} from '../modal/movie/ModalDeleteMultiple'
 import {roomActions} from '../../_actions'
 import _ from 'lodash'
-import { Search } from './SearchRoom';
+import { SearchRoom } from './SearchRoom';
 
 class ManageRoom extends React.Component {
     constructor(props) {
@@ -76,7 +76,7 @@ class ManageRoom extends React.Component {
                     <div className="table-title">
                     <div className="row">
                         <div className="col-sm-4">
-                            <Search />
+                            <SearchRoom />
                         </div>
                         <div className="col-sm-8">
                             <a className="btn btn-success" onClick={this.handleShow(this.modalAdd)}><i className="material-icons"></i> <span>Add New Room</span></a>

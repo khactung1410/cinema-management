@@ -7,7 +7,7 @@ import {ModalDeleteSingle} from '../modal/movie/ModalDeleteSingle'
 import {ModalDeleteMultiple} from '../modal/movie/ModalDeleteMultiple'
 import {movieActions} from '../../_actions'
 import _ from 'lodash'
-import { Search } from './SearchMovie';
+import { SearchMovie } from './SearchMovie';
 
 class ManageMovie extends React.Component {
     constructor(props) {
@@ -77,7 +77,7 @@ class ManageMovie extends React.Component {
                     <div className="table-title">
                     <div className="row">
                         <div className="col-sm-4">
-                            <Search />
+                            <SearchMovie />
                         </div>
                         <div className="col-sm-8">
                             <a className="btn btn-success" onClick={this.handleShow(this.modalAdd)}><i className="material-icons"></i> <span>Add New Movie</span></a>
