@@ -10,7 +10,8 @@ export const userActions = {
     getById,
     getAll,
     _delete,
-    searchByName
+    searchByName,
+    edit
 };
 
 function login(username, password) {
@@ -149,4 +150,29 @@ function searchByName(name, page) {
     function request() { return { type: userConstants.SEARCHBYNAME_REQUEST } }
     function success(data) { return { type: userConstants.SEARCHBYNAME_SUCCESS, data } }
     function failure(error) { return { type: userConstants.SEARCHBYNAME_FAILURE, error } }
+}
+
+function edit(user) {
+    return dispatch => {
+        dispatch(request());
+
+        userService.edit(user)
+            .then(
+                data => {
+                    dispatch(success(data)),
+                    history.push('/UserManagement');
+                    dispatch(alertActions.success('Update User successful'));
+                    setTimeout(() => dispatch(alertActions.clear()),2000); //delete alert
+                },
+                error => {
+                    dispatch(failure(error.toString()));
+                    dispatch(alertActions.error(error.toString()));
+                    setTimeout(() => dispatch(alertActions.clear()),4000); //delete alert
+                }
+            );
+    };
+
+    function request() { return { type: userConstants.EDIT_REQUEST } }
+    function success(data) { return { type: userConstants.EDIT_SUCCESS, data } }
+    function failure(error) { return { type: userConstants.EDIT_FAILURE, error } }
 }

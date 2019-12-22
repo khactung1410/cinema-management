@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { CommonModal } from '../modal/modal';
 import {ModalAdd} from '../modal/schedule/ModalAdd'
-import {ModalEdit} from '../modal/movie/ModalEdit'
+import {ModalEdit} from '../modal/schedule/ModalEdit'
 import {ModalDeleteSingle} from '../modal/schedule/ModalDeleteSingle'
 import {ModalDeleteMultiple} from '../modal/movie/ModalDeleteMultiple'
 import _ from 'lodash'
@@ -40,13 +40,13 @@ class ScheduleMovie extends React.Component {
     }
 
     handleShowEdit = (modal,id) => {
-        // return () => {
-        //     this.props.getMovieById(id)
-        //     setTimeout(() => this.setState({
-        //                         idEditting: id
-        //             }),300)
-        //     modal.current.handleShow()
-        // }
+        return () => {
+            this.props.getScheduleById(id)
+            setTimeout(() => this.setState({
+                                idEditting: id
+                    }),300)
+            modal.current.handleShow()
+        }
     }
 
     handleClose = (modal) => {
@@ -125,7 +125,7 @@ class ScheduleMovie extends React.Component {
                                             <td style={{width: 15 + '%'}}>{schedule.date}</td>
                                             <td style={{width: 20 + '%'}}>{schedule.ticketPrice}</td>
                                             <td>
-                                                <a className="edit" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Edit"></i></a>
+                                                <a className="edit" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Edit" onClick={this.handleShowEdit(this.modalEdit, schedule.id)}></i></a>
                                                 <a className="delete" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Delete" onClick={this.handleShow(this.modalDeleteSingle, schedule.id)}></i></a>
                                             </td>
                                         </tr>
@@ -180,7 +180,7 @@ const actionCreators = {
     getMovies: movieActions.getAll,
     getSchedules: scheduleActions.getAll,
     getRooms: roomActions.getAll,
-    getScheduleId: scheduleActions.getById,
+    getScheduleById: scheduleActions.getById,
     searchScheduleByName: scheduleActions.searchByName
 }
 

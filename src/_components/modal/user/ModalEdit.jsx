@@ -36,7 +36,7 @@ class ModalEdit extends React.Component {
                         username: user.username,
                         password: user.password
                     },
-                    role: user.role
+                    role: {value: user.role, label: user.role}
                 })
             }
             setTimeout(()=>console.log(this.state), 200)
@@ -64,12 +64,12 @@ class ModalEdit extends React.Component {
     editUser = (event) => {
         event.preventDefault();
         const id = this.props.idEditting
-        const {user} = this.state.user
-        user.role = this.state.role.value
+        const {user} = this.state
         console.log("u editiing: ", user)
         const edittingUser = {
             ...user,
-            id
+            id: id,
+            role: this.state.role.value
         }
         this.props.editUser(edittingUser)
     }
@@ -169,7 +169,7 @@ class ModalEdit extends React.Component {
                                 value={this.state.role}
                                 onChange={this.handleSelectRole}
                                 options={optionsRole}
-                                defaultInputValue={this.state.role}
+                                // defaultInputValue={this.state.role}
                             />
                         </div>
                         </div>

@@ -8,7 +8,9 @@ export const scheduleActions = {
     _delete,
     searchByName,
     add,
-    updateRemainingTicket
+    updateRemainingTicket,
+    getById,
+    edit
 };
 
 function getAll(page) {
@@ -118,4 +120,45 @@ function _delete(id) {
     function requestReload() { return { type: scheduleConstants.GETALL_REQUEST } }
     function successReload(data) { return { type: scheduleConstants.GETALL_SUCCESS, data } }
     function failureReload(error) { return { type: scheduleConstants.GETALL_FAILURE, error } }
+}
+
+function getById(id) {
+    return dispatch => {
+        dispatch(request());
+
+        scheduleService.getById(id)
+            .then(
+                data => dispatch(success(data)),
+                error => dispatch(failure(error.toString()))
+            );
+    };
+
+    function request() { return { type: scheduleConstants.GETBYID_REQUEST } }
+    function success(data) { return { type: scheduleConstants.GETBYID_SUCCESS, data } }
+    function failure(error) { return { type: scheduleConstants.GETBYID_FAILURE, error } }
+}
+
+function edit(schedule) {
+    return dispatch => {
+        dispatch(request());
+
+        scheduleService.edit(schedule)
+            .then(
+                data => {
+                    dispatch(success(data)),
+                    history.push('/MovieSchedule');
+                    dispatch(alertActions.success('Update Schedule Successful'));
+                    setTimeout(() => dispatch(alertActions.clear()),2000); //delete alert
+                },
+                error => {
+                    dispatch(failure(error.toString()));
+                    dispatch(alertActions.error(error.toString()));
+                    setTimeout(() => dispatch(alertActions.clear()),4000); //delete alert
+                }
+            );
+    };
+
+    function request() { return { type: scheduleConstants.EDIT_REQUEST } }
+    function success(data) { return { type: scheduleConstants.EDIT_SUCCESS, data } }
+    function failure(error) { return { type: scheduleConstants.EDIT_FAILURE, error } }
 }

@@ -9,7 +9,8 @@ export const userService = {
     getById,
     update,
     _delete,
-    searchByName
+    searchByName,
+    edit
 };
 
 function login(username, password) {
@@ -88,6 +89,15 @@ function searchByName(name, page) {
     };
 
     return fetch(`${config.apiUrl}/user/search?page=${page}&name=${name}`, requestOptions).then(handleResponse);
+}
+
+function edit(user) {
+    const requestOptions = {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(user)
+    };
+    return fetch(`${config.apiUrl}/user/edit`, requestOptions).then(handleResponse);
 }
 
 function handleResponse(response) {

@@ -6,7 +6,8 @@ export const scheduleService = {
     _delete,
     searchByName,
     add,
-    edit
+    edit,
+    getById
 };
 
 function getAll(page) {
@@ -17,6 +18,16 @@ function getAll(page) {
 
     return fetch(`${config.apiUrl}/schedule?page=${page}`, requestOptions).then(handleResponse);
 }
+
+function getById(id) {
+    const requestOptions = {
+        method: 'GET',
+        headers: authHeader()
+    };
+
+    return fetch(`${config.apiUrl}/schedule/${id}`, requestOptions).then(handleResponse);
+}
+
 function searchByName(name, page) {
     const requestOptions = {
         method: 'GET',
@@ -52,6 +63,8 @@ function _delete(id) {
 
     return fetch(`${config.apiUrl}/schedule/delete/${id}`, requestOptions).then(handleResponse);
 }
+
+
 function handleResponse(response) {
     return response.text().then(text => {
         const data = text && JSON.parse(text);
