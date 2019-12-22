@@ -19,7 +19,8 @@ class ModalEdit extends React.Component {
             date: '',
             selectedMovie: '',
             selectedRoom: '',
-            allMovies: []
+            quantityTicket: '',
+            remainingTicket: ''
         }
         this.modalEdit = this.props.modalEdit
     }
@@ -45,7 +46,8 @@ class ModalEdit extends React.Component {
                         value: schedule.idRoom, 
                         label: schedule.room
                     },
-                    allMovies: []
+                    quantityTicket: schedule.quantityTicket,
+                    remainingTicket: schedule.remainingTicket
                 })
             }
         }
@@ -63,7 +65,8 @@ class ModalEdit extends React.Component {
                 date: new Date(schedule.date+' '+schedule.endAt),
                 selectedMovie: {value: schedule.idMovie, label: schedule.name},
                 selectedRoom: {value: schedule.idRoom, label: schedule.room},
-                allMovies: []
+                quantityTicket: schedule.quantityTicket,
+                remainingTicket: schedule.remainingTicket
             })
             modal.current.handleClose()
         }
@@ -93,7 +96,9 @@ class ModalEdit extends React.Component {
             startAt: moment(this.state.startAt).format('HH:mm:ss'),
             endAt: moment(this.state.endAt).format('HH:mm:ss'),
             date: moment(this.state.date).format("YYYY-MM-DD"),
-            ticketPrice: this.state.schedule.ticketPrice
+            ticketPrice: this.state.schedule.ticketPrice,
+            quantityTicket: this.state.quantityTicket,
+            remainingTicket: this.state.remainingTicket
         }
         this.props.editSchedule(edittingSchedule)
     }
