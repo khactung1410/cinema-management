@@ -9,15 +9,7 @@ import { connect } from 'react-redux';
 class ModalAdd extends React.Component {
     constructor(props) {
         super(props)
-        this.state = {
-            movie: {
-                name: '',
-                genre: '',
-                director: '',
-                publicYear: '',
-                description: ''
-            }
-        }
+        this.preview = React.createRef();
         this.modalAdd = this.props.modalAdd
     }
 
@@ -27,21 +19,24 @@ class ModalAdd extends React.Component {
 
     addMovie = (event) => {
         event.preventDefault();
-        const {movie} = this.state
-        this.props.addMovie(movie)
+        const formData = new FormData(event.target)
+        this.props.addMovie(formData)
     }
 
-    handleChange = (e) => {
-        const {name, value} = e.target;
-        const {movie} = this.state
-        this.setState({
-            movie: {
-                ...movie,
-                [name]: value
+    uploadPoster = (event) => {
+        const target = event.target
+
+        if (target.files && target.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = (e) => {
+                this.preview.current.src = e.target.result;
             }
-        })
+
+            reader.readAsDataURL(target.files[0]);
+        }
     }
-  
+
     render() {
         return (
             <CommonModal ref={this.modalAdd}>
@@ -50,14 +45,14 @@ class ModalAdd extends React.Component {
                             <h4 className="modal-title">Add Movie</h4>
                             <button type="button" className="close" onClick={this.handleClose(this.modalAdd)}>×</button>
                         </div>
-                        <div className="modal-body">					
+                        <div className="modal-body">
+                        <div className="col">
                         <div className="form-group">
                             <label>Name</label>
                             <input
                                 type="text"
                                 className="form-control" 
                                 required
-                                onChange={this.handleChange}
                                 name="name"
                             />
                         </div>
@@ -67,7 +62,6 @@ class ModalAdd extends React.Component {
                                 type="text" 
                                 className="form-control" 
                                 required 
-                                onChange={this.handleChange}
                                 name="genre"
                             />
                         </div>
@@ -77,7 +71,6 @@ class ModalAdd extends React.Component {
                                 type="text" 
                                 className="form-control" 
                                 required 
-                                onChange={this.handleChange}
                                 name="director"
                             />
                         </div>
@@ -87,7 +80,6 @@ class ModalAdd extends React.Component {
                                 type="number" 
                                 className="form-control" 
                                 required 
-                                onChange={this.handleChange}
                                 name= "publicYear"
                             />
                         </div>
@@ -96,10 +88,33 @@ class ModalAdd extends React.Component {
                             <textarea 
                                 className="form-control" 
                                 required 
-                                onChange={this.handleChange}
                                 name="description"
                             />
-                        </div>				
+                        </div>
+                        <div className="form-group">
+                            <label>Trailer</label>
+                            <input 
+                                type="text" 
+                                className="form-control" 
+                                required 
+                                name="trailer"
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label>Poster</label>
+                            <input
+                                type="file"
+                                accept="image/*"
+                                className="form-control" 
+                                required 
+                                onChange={this.uploadPoster}
+                                name="poster"
+                            />
+                        </div>
+                        </div>
+                        <div className="col">
+                            <img ref={this.preview} />
+                        </div>
                         </div>
                         <div className="modal-footer">
                             <input type="button" className="btn btn-default" defaultValue="Cancel" onClick={this.handleClose(this.modalAdd)} />

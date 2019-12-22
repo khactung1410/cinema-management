@@ -13,8 +13,7 @@ export const movieService = {
 function add(movie) {
     const requestOptions = {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(movie)
+        body: movie
     };
     return fetch(`${config.apiUrl}/movie/add`, requestOptions).then(handleResponse);
 }

@@ -31,7 +31,8 @@ class ModalEdit extends React.Component {
                         genre: movie.genre,
                         director: movie.director,
                         publicYear: movie.publicYear,
-                        description: movie.description
+                        description: movie.description,
+                        trailer: movie.trailer
                     }
                 })
             }
@@ -47,7 +48,8 @@ class ModalEdit extends React.Component {
                     genre: movie.genre,
                     director: movie.director,
                     publicYear: movie.publicYear,
-                    description: movie.description
+                    description: movie.description,
+                    trailer: movie.trailer
                 }
             })
             modal.current.handleClose()
@@ -63,7 +65,6 @@ class ModalEdit extends React.Component {
                 [name]: value
             }
         })
-        setTimeout(()=>{console.log(this.state.movie)},500)
     }
 
     editMovie = (event) => {
@@ -140,6 +141,16 @@ class ModalEdit extends React.Component {
                                 value={this.state.movie.description}
                             />
                         </div>				
+                        <div className="form-group">
+                            <label>Trailer</label>
+                            <input 
+                                type="text" 
+                                className="form-control" 
+                                required 
+                                name="trailer"
+                                value={this.state.movie.trailer}
+                            />
+                        </div>
                         </div>
                         <div className="modal-footer">
                             <input type="button" className="btn btn-default" defaultValue="Cancel" onClick={this.handleClose(this.modalEdit)} />

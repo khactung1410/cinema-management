@@ -98,7 +98,8 @@ class ManageMovie extends React.Component {
                         <th style={{width: 10 + '%'}}>Genre</th>
                         <th style={{width: 10 + '%'}}>Director</th>
                         <th style={{width: 10 + '%'}}>Public Year</th>
-                        <th style={{width: 30 + '%'}}>Description</th>
+                        <th style={{width: 25 + '%'}}>Description</th>
+                        <th style={{width: 10 + '%'}}>Trailer</th>
                         <th >Actions</th>
                         </tr>
                     </thead>
@@ -117,7 +118,10 @@ class ManageMovie extends React.Component {
                                 <td style={{width: 10 + '%'}}>{movie.genre}</td>
                                 <td style={{width: 10 + '%'}}>{movie.director}</td>
                                 <td style={{width: 10 + '%'}}>{movie.publicYear}</td>
-                                <td style={{width: 30 + '%'}}>{movie.description}</td>
+                                <td style={{width: 25 + '%'}}>{movie.description}</td>
+                                <td style={{width: 10 + '%'}}>
+                                    <a href={movie.trailer} target="blank">Link</a>
+                                </td>
                                 <td>
                                     <a className="edit" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Edit" onClick={this.handleShowEdit(this.modalEdit, movie.id)}></i></a>
                                     <a className="delete" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Delete" onClick={this.handleShow(this.modalDeleteSingle, movie.id)}></i></a>
