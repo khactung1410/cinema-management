@@ -5,3 +5,4 @@ export * from './room.service';
 export * from './seatStatus.service';
 export * from './seat.service';
 export * from './genre.service';
+export * from './bill.service';

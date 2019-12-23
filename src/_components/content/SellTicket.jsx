@@ -46,7 +46,6 @@ class SellTicket extends React.Component {
     }
 
     render() {
-        console.log(this.state.displayPickSeat)
         const {schedules} = this.props
         var optionStartTime = []
         if(schedules.items) {

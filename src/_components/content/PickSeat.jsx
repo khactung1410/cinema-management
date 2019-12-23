@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import {seatStatusActions, scheduleActions} from '../../_actions'
+import {seatStatusActions, scheduleActions, billActions} from '../../_actions'
+import moment from 'moment';
 
 class PickSeat extends React.Component {
     constructor(props) {
@@ -12,7 +13,19 @@ class PickSeat extends React.Component {
             sellingTicket: this.props.sellingTicket,
             total: 0,
             seats: null, //name of seats just have picked
-            seatsWillBeChangedStatus: null //list seats just have picked
+            seatsWillBeChangedStatus: null, //list seats just have picked
+            bill: {
+                name: '',
+                room: '',
+                seats: '',
+                employee: '',
+                startAt: '',
+                endAt: '',
+                date: '',
+                price: '',
+                totalSeat: null,
+                buyAt: new Date()
+            }
         }
     }
 
@@ -60,22 +73,47 @@ class PickSeat extends React.Component {
                     seatsWillBeChangedStatus: seatsWillBeChangedStatus
                 })
             }
-            console.log(this.state.seats)
+            console.log("seats: ",this.state.seats)
             console.log(this.state.seatsWillBeChangedStatus)
         }
     }
     changeStatus = () => {
+        //changeStatus of seatStatus
         var idsSeatStatus = this.state.seatsWillBeChangedStatus.map(seatStatus => {
             return seatStatus.id
         })
         this.props.changeStatus(idsSeatStatus)
 
+        //update remaining ticket
         var schedule = this.props.sellingTicket
         schedule.remainingTicket = schedule.remainingTicket - this.state.seatsWillBeChangedStatus.length
         this.props.updateRemainingTicketOfSchedule(schedule)
+
+        //create Bill
+        this.setState({
+            bill: {
+                name: schedule.name,
+                room: schedule.room,
+                seats: this.state.seats.toString(),
+                employee: JSON.parse(localStorage.getItem('user')).text.fullname,
+                startAt: schedule.startAt,
+                endAt: schedule.endAt,
+                date: schedule.date,
+                price: this.state.total,
+                totalSeat: this.state.seats.length,
+                buyAt: moment(new Date()).format("YYYY-MM-DD HH:mm:ss"),
+            }
+        })
+        setTimeout(()=>{
+            console.log("Bill: ", this.state.bill)
+            var bill = this.state.bill
+            this.props.createBill(bill)
+        },100)
+        
     }
 
     render() {
+        console.log("sell Ticket: ", this.state.sellingTicket)
         var listSeatStatus = this.props.seatStatus.items ? this.props.seatStatus.items.listSeatStatus : null
         var listSeatbyRoom = this.props.seatByRoom.items ? this.props.seatByRoom.items.listSeatByRoom : null
         var seats = this.state.seats ? this.state.seats : []
@@ -160,7 +198,8 @@ function mapState(state) {
 
 const actionCreators = {
     changeStatus: seatStatusActions.changeStatus,
-    updateRemainingTicketOfSchedule: scheduleActions.updateRemainingTicket
+    updateRemainingTicketOfSchedule: scheduleActions.updateRemainingTicket,
+    createBill: billActions.add
 }
 
 const connectedPickSeat = connect(mapState, actionCreators)(PickSeat);
