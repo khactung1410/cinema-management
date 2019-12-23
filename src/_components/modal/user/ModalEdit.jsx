@@ -16,7 +16,7 @@ class ModalEdit extends React.Component {
                 address: '',
                 phone: '',
                 username: '',
-                password: ''
+                // password: ''
             },
             role:''
         }
@@ -34,7 +34,7 @@ class ModalEdit extends React.Component {
                         address: user.address,
                         phone: user.phone,
                         username: user.username,
-                        password: user.password
+                        // password: user.password
                     },
                     role: {value: user.role, label: user.role}
                 })
@@ -53,7 +53,7 @@ class ModalEdit extends React.Component {
                     address: user.address,
                     phone: user.phone,
                     username: user.username,
-                    password: user.password
+                    // password: user.password
                 },
                 role: user.role
             })
@@ -151,7 +151,7 @@ class ModalEdit extends React.Component {
                                 value={this.state.user.username}
                             />
                         </div>	
-                        <div className="form-group">
+                        {/* <div className="form-group">
                             <label>Password</label>
                             <input 
                                 type="password" 
@@ -161,7 +161,7 @@ class ModalEdit extends React.Component {
                                 name="password"
                                 value={this.state.user.password}
                             />
-                        </div>	
+                        </div>	 */}
                         <div className="form-group">
                             <label>Role of user</label>
                             <Select
