@@ -29,7 +29,8 @@ module.exports = {
     externals: {
         // global app config object
         config: JSON.stringify({
-            apiUrl: 'http://localhost:9000/api'
+            apiUrl: 'http://localhost:9000/api',
+            apiAssets: 'http://localhost:9000/assets'
         })
     }
 }
