@@ -52,7 +52,7 @@ class ManageUser extends React.Component {
     changePage = (page, searchingName) => {
         return (e) => {
             e.preventDefault()
-            searchingName ? this.props.searchMovieByName(searchingName,page) : this.props.getUsers(page)
+            searchingName ? this.props.searchUserByName(searchingName,page) : this.props.getUsers(page)
         }
     }
 
@@ -153,7 +153,7 @@ const actionCreators = {
     getUsers: userActions.getAll,
     // getMovies: movieActions.getAll,
     getUserById: userActions.getById,
-    // searchMovieByName: movieActions.searchByName
+    searchUserByName: userActions.searchByName
 }
 
 const connectedManageUser = connect(mapState, actionCreators)(ManageUser);

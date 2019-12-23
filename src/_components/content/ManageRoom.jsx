@@ -156,6 +156,7 @@ function mapState(state) {
 const actionCreators = {
     getRooms: roomActions.getAll,
     getRoomById: roomActions.getById,
+    searchRoomByName: roomActions.searchByName
 }
 
 const connectedManageRoom = connect(mapState, actionCreators)(ManageRoom);

@@ -21,7 +21,7 @@ function add(genre) {
                     dispatch(success(genre));
                     history.push('/GenreManagement');
                     dispatch(alertActions.success('Add new genre successful'));
-                    setTimeout(() => dispatch(alertActions.clear()),4000); //delete alert
+                    setTimeout(() => dispatch(alertActions.clear()),3000); //delete alert
                 },
                 error => {
                     dispatch(failure(error.toString()));

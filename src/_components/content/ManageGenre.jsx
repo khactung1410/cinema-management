@@ -148,6 +148,7 @@ function mapState(state) {
 const actionCreators = {
     getGenres: genreActions.getAll,
     getGenreById: genreActions.getById,
+    searchGenreByName: genreActions.searchByName
 }
 
 const connectedManageGenre = connect(mapState, actionCreators)(ManageGenre);
