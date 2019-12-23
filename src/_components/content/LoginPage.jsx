@@ -91,6 +91,14 @@ class LoginPage extends React.Component {
                                             <div className="help-block">Username is required</div>
                                             }
                                         </div>
+                                        <div className="form-group">
+                                            <label>Address</label>
+                                            <select className="form-control">
+                                                <option href="#">Hà Nội</option>
+                                                <option href="#">Đà Nẵng</option>
+                                                <option href="#">Hồ Chí Minh</option>
+                                            </select>
+                                        </div>
                                         <button className="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Sign in</button>
                                         <div>
                                         {loggingIn &&
