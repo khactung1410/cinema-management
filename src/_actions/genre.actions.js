@@ -20,7 +20,7 @@ function add(genre) {
                 genre => {
                     dispatch(success(genre));
                     history.push('/GenreManagement');
-                    dispatch(alertActions.success('Add new genre successful'));
+                    dispatch(alertActions.success('Add New Genre Successful'));
                     setTimeout(() => dispatch(alertActions.clear()),3000); //delete alert
                 },
                 error => {

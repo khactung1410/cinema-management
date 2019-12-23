@@ -10,6 +10,7 @@ import { SearchSchedule } from './SearchSchedule';
 import Select from 'react-select';
 import { Link, NavLink } from 'react-router-dom';
 import { PickSeat } from './PickSeat';
+import { history } from '../../_helpers';
 
 class SellTicket extends React.Component {
     constructor(props) {
@@ -22,9 +23,14 @@ class SellTicket extends React.Component {
     }
 
     componentDidMount() {
-        this.props.getSchedules(1)
-        this.props.getMovies(1)
-        this.props.getRooms(1)
+        if(history.location.search) {
+            this.props.searchScheduleByName(history.location.search.substring(6),1)
+        }
+        else {
+            this.props.getSchedules(1)
+            this.props.getMovies(1)
+            this.props.getRooms(1)
+        }
     };
 
     changePage = (page, searchingName) => {
@@ -103,9 +109,17 @@ class SellTicket extends React.Component {
                                                 <td style={{width: 10 + '%'}}>{schedule.date}</td>
                                                 <td style={{width: 10 + '%'}}>{schedule.ticketPrice}</td>
                                                 <td style={{width: 10 + '%'}}>{schedule.remainingTicket}/{schedule.quantityTicket}</td>
-                                                <td>
-                                                <button type="button"  onClick={this.displayPickSeat(schedule)} disabled={true} className="btn btn-outline-success">Sell Ticket</button>
-                                                </td>
+                                                {
+                                                    history.location.search != '' ? 
+                                                    <td>
+                                                        <button type="button"  onClick={this.displayPickSeat(schedule)} disabled={true} className="btn btn-outline-success">Buy Ticket</button>
+                                                    </td>
+                                                    :
+                                                    <td>
+                                                        <button type="button"  onClick={this.displayPickSeat(schedule)} disabled={true} className="btn btn-outline-success">Sell Ticket</button>
+                                                    </td>
+                                                }
+                                                
                                             </tr>
                                             :
                                             <tr>
@@ -116,9 +130,16 @@ class SellTicket extends React.Component {
                                                 <td style={{width: 10 + '%'}}>{schedule.date}</td>
                                                 <td style={{width: 10 + '%'}}>{schedule.ticketPrice}</td>
                                                 <td style={{width: 10 + '%'}}>{schedule.remainingTicket}/{schedule.quantityTicket}</td>
-                                                <td>
-                                                <button type="button"  onClick={this.displayPickSeat(schedule)} disabled={schedule.remainingTicket==0?true:false} className="btn btn-outline-success">Sell Ticket</button>
-                                                </td>
+                                                {
+                                                    history.location.search != '' ? 
+                                                    <td>
+                                                        <button type="button"  onClick={this.displayPickSeat(schedule)} disabled={schedule.remainingTicket==0?true:false} className="btn btn-outline-success">Buy Ticket</button>
+                                                    </td>
+                                                    :
+                                                    <td>
+                                                        <button type="button"  onClick={this.displayPickSeat(schedule)} disabled={schedule.remainingTicket==0?true:false} className="btn btn-outline-success">Sell Ticket</button>
+                                                    </td>
+                                                }
                                             </tr>
                                         }
                                     </tbody>
@@ -155,7 +176,8 @@ const actionCreators = {
     getSchedules: scheduleActions.getAll,
     getRooms: roomActions.getAll,
     getSeatStatus: seatStatusActions.getBySchedule,
-    getSeatByRoom: seatActions.getByRoom
+    getSeatByRoom: seatActions.getByRoom,
+    searchScheduleByName: scheduleActions.searchByName
 }
 
 const connectedSellTicket = connect(mapState, actionCreators)(SellTicket);

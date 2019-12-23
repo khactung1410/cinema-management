@@ -23,7 +23,7 @@ class SearchMovie extends React.Component {
         return (
             <div className="search-box">
                 <div className="input-group">								
-                    <input type="text" id="search" className="form-control" placeholder="Search by Name" name='name' onChange={this.handleChange}/>
+                    <input type="text" id="search" className="form-control" placeholder="Search by Name, Genre or Director" name='name' onChange={this.handleChange}/>
                     <span className="input-group-addon"><i className="material-icons"></i></span>
                 </div>
             </div>

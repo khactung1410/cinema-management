@@ -5,7 +5,7 @@ import {ModalAdd} from '../modal/movie/ModalAdd'
 import {ModalEdit} from '../modal/movie/ModalEdit'
 import {ModalDeleteSingle} from '../modal/movie/ModalDeleteSingle'
 import {ModalDeleteMultiple} from '../modal/movie/ModalDeleteMultiple'
-import {movieActions} from '../../_actions'
+import {movieActions, genreActions} from '../../_actions'
 import _ from 'lodash'
 import { SearchMovie } from './SearchMovie';
 
@@ -24,6 +24,7 @@ class ManageMovie extends React.Component {
 
     componentDidMount() {
         this.props.getMovies(1)
+        this.props.getGenres(1)
     };
 
     handleShow = (modal,id) => {
@@ -156,6 +157,7 @@ function mapState(state) {
 
 const actionCreators = {
     getMovies: movieActions.getAll,
+    getGenres: genreActions.getAll,
     getMovieById: movieActions.getById,
     searchMovieByName: movieActions.searchByName
 }

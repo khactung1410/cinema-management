@@ -1,20 +1,29 @@
 import React, { useState } from 'react'
 import { Modal } from 'react-bootstrap'
 import { CommonModal } from '../modal';
-import { timingSafeEqual } from 'crypto';
 import {movieActions} from '../../../_actions'
 import { connect } from 'react-redux';
+import Select from 'react-select';
 
 
 class ModalAdd extends React.Component {
     constructor(props) {
         super(props)
+        this.state = {
+            selectedGenre: ''
+        }
         this.preview = React.createRef();
         this.modalAdd = this.props.modalAdd
     }
 
     handleClose = (modal) => {
         return () => modal.current.handleClose()
+    }
+
+    handleSelectGenre = (genre) => {
+        this.setState({
+            selectedGenre: genre
+        })
     }
 
     addMovie = (event) => {
@@ -38,6 +47,13 @@ class ModalAdd extends React.Component {
     }
 
     render() {
+        var optionsGenre = []
+        this.props.genres.items?this.props.genres.items.allGenre.map(genre => {
+            optionsGenre.push({
+                value: genre.name,
+                label: genre.name
+            })
+        }):""
         return (
             <CommonModal ref={this.modalAdd}>
                     <form onSubmit={this.addMovie}>
@@ -58,11 +74,12 @@ class ModalAdd extends React.Component {
                         </div>
                         <div className="form-group">
                             <label>Genre</label>
-                            <input 
-                                type="text" 
-                                className="form-control" 
-                                required 
-                                name="genre"
+                            <Select
+                                name = "genre"
+                                value={this.state.selectedGenre}
+                                onChange={this.handleSelectGenre}
+                                options={optionsGenre}
+                                defaultInputValue={this.state.selectedGenre}
                             />
                         </div>
                         <div className="form-group">
@@ -127,8 +144,8 @@ class ModalAdd extends React.Component {
 }
 
 function mapState(state) {
-    const {movies} = state
-    return {movies}
+    const {movies, genres} = state
+    return {movies, genres}
 }
 const actionCreators = {
     addMovie: movieActions.add

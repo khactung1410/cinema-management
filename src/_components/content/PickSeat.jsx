@@ -183,7 +183,7 @@ class PickSeat extends React.Component {
                     <div className="row">
                         <div className="col"></div>
                         <div className="col"></div>
-                        <button type="button" onClick={this.changeStatus} className="col btn btn-primary">Book Now</button>
+                        <button type="button" onClick={this.changeStatus} className="col btn btn-primary">OK</button>
                     </div>
                 </div>
             </div>

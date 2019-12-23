@@ -59,13 +59,13 @@ function add(schedule) {
                 schedule => {
                     dispatch(success(schedule));
                     history.push('/MovieSchedule');
-                    dispatch(alertActions.success('add new schedule successful'));
+                    dispatch(alertActions.success('Add New Schedule Successful'));
                     setTimeout(() => dispatch(alertActions.clear()),2000); //delete alert
                 },
                 error => {
                     dispatch(failure(error.toString()));
                     dispatch(alertActions.error(error.toString()));
-                    setTimeout(() => dispatch(alertActions.clear()),5000); //delete alert
+                    setTimeout(() => dispatch(alertActions.clear()),4000); //delete alert
                 }
             )
         

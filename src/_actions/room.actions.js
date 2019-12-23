@@ -20,8 +20,8 @@ function add(room) {
                 room => {
                     dispatch(success(room));
                     history.push('/RoomManagement');
-                    dispatch(alertActions.success('add new room successful'));
-                    setTimeout(() => dispatch(alertActions.clear()),4000); //delete alert
+                    dispatch(alertActions.success('Add New Room Successful'));
+                    setTimeout(() => dispatch(alertActions.clear()),3000); //delete alert
                 },
                 error => {
                     dispatch(failure(error.toString()));

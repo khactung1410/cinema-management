@@ -19,7 +19,7 @@ function add(movie) {
                 movie => {
                     dispatch(success(movie));
                     history.push('/MovieManagement');
-                    dispatch(alertActions.success('add new movie successful'));
+                    dispatch(alertActions.success('Add New Movie Successful'));
                     setTimeout(() => dispatch(alertActions.clear()),2000); //delete alert
                 },
                 error => {
