@@ -35,7 +35,7 @@ class LeftMenu extends React.Component {
                     <NavLink to="/MovieManagement" className="list-group-item list-group-item-action">Movie Management</NavLink>
                     <NavLink to="/MovieSchedule" className="list-group-item list-group-item-action">Movie Schedule</NavLink>
                     <NavLink to="/SellTicket" className="list-group-item list-group-item-action">Sell Ticket</NavLink>
-                    <NavLink to="/Statics" className="list-group-item list-group-item-action">Statistics</NavLink>
+                    <NavLink to="/Statistics" className="list-group-item list-group-item-action">Statistics</NavLink>
                 </div>
             </div>
         );
