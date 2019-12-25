@@ -93,7 +93,7 @@ class ManageGenre extends React.Component {
                         </th> */}
                         <th style={{width: 30 + '%'}}>Name</th>
                         <th style={{width: 20 + '%'}}>Country</th>
-                        <th style={{width: 10 + '%'}}>Total movie has</th>
+                        {/* <th style={{width: 10 + '%'}}>Total movie has</th> */}
                         <th style={{width: 20 + '%'}}>Languge</th>
                         <th >Actions</th>
                         </tr>
@@ -111,7 +111,7 @@ class ManageGenre extends React.Component {
                                 </td> */}
                                 <td style={{width: 30 + '%'}}>{genre.name}</td>
                                 <td style={{width: 20 + '%'}}>{genre.country}</td>
-                                <td style={{width: 10 + '%'}}>{genre.totalMovieHas}</td>
+                                {/* <td style={{width: 10 + '%'}}>{genre.totalMovieHas}</td> */}
                                 <td style={{width: 20 + '%'}}>{genre.language}</td>
                                 <td>
                                     <a className="edit" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Edit" onClick={this.handleShowEdit(this.modalEdit, genre.id)}></i></a>
