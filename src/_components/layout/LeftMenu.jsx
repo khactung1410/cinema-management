@@ -25,18 +25,46 @@ class LeftMenu extends React.Component {
     }
 
     render() {
+        var role = JSON.parse(localStorage.getItem('user')).text.role
         return (
-            <div className="bg-light border-right" id="sidebar-wrapper">
-                <div className="sidebar-heading">CINEMA MANAGEMENT</div>
-                <div className="list-group list-group-flush">
-                    <NavLink to="/UserManagement" className="list-group-item list-group-item-action">Users Management</NavLink>
-                    <NavLink to="/RoomManagement" className="list-group-item list-group-item-action">Room Management</NavLink>
-                    <NavLink to="/GenreManagement" className="list-group-item list-group-item-action">Genre Management</NavLink>
-                    <NavLink to="/MovieManagement" className="list-group-item list-group-item-action">Movie Management</NavLink>
-                    <NavLink to="/MovieSchedule" className="list-group-item list-group-item-action">Movie Schedule</NavLink>
-                    <NavLink to="/SellTicket" className="list-group-item list-group-item-action">Sell Ticket</NavLink>
-                    <NavLink to="/Statics" className="list-group-item list-group-item-action">Statistics</NavLink>
-                </div>
+            <div>
+                {
+                    role !== 'Customer'?
+                    <div>
+                        <div className="bg-light border-right" id="sidebar-wrapper">
+                            <div className="sidebar-heading">CINEMA MANAGEMENT</div>
+                            <div className="list-group list-group-flush">
+                                {
+                                    (role == 'Admin'||role == 'Room Management Employee')?
+                                    <div>
+                                        <NavLink to="/RoomManagement" className="list-group-item list-group-item-action">Room Management</NavLink>
+                                    </div>
+                                    :null
+                                }
+                                {
+                                    (role=='Admin'||role=='Movie Management Employee')?
+                                    <div>
+                                        <NavLink to="/MovieManagement" className="list-group-item list-group-item-action">Movie Management</NavLink>
+                                        <NavLink to="/GenreManagement" className="list-group-item list-group-item-action">Genre Management</NavLink>
+                                    </div>
+                                    :
+                                    null
+                                }
+                                {
+                                    (role=='Admin'||role=='Schedule Management Employee')?<NavLink to="/MovieSchedule" className="list-group-item list-group-item-action">Movie Schedule</NavLink>:null
+                                }
+                                {
+                                    (role=='Admin'||role=='Ticket Management Employee')?<NavLink to="/SellTicket" className="list-group-item list-group-item-action">Sell Ticket</NavLink>:null
+                                }
+                                {
+                                    role=='Admin'?<NavLink to="/Statics" className="list-group-item list-group-item-action">Statistics</NavLink>:null
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    :
+                    null
+                }
             </div>
         );
     }

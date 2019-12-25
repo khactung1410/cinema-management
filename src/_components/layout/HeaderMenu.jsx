@@ -9,11 +9,18 @@ class HeaderMenu extends React.Component {
     }
 
     render() {
+        var role = JSON.parse(localStorage.getItem('user')).text.role
         return (
             <nav className="navbar navbar-expand-lg navbar-light bg-light border-bottom">
-                <button className="btn btn-primary" id="menu-toggle" onClick={this.props.handleToggleMenu}>
-                    <span className="navbar-toggler-icon"></span>
-                </button>
+                {
+                    role !== 'Customer'?
+                    <button className="btn btn-primary" id="menu-toggle" onClick={this.props.handleToggleMenu}>
+                        <span className="navbar-toggler-icon"></span>
+                    </button>
+                    :
+                    <div className="sidebar-heading">CINEMA</div>
+                }
+                
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul className="navbar-nav ml-auto mt-2 mt-lg-0">
                     <li className="nav-item active">
