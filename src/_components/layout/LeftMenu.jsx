@@ -35,6 +35,13 @@ class LeftMenu extends React.Component {
                             <div className="sidebar-heading">CINEMA MANAGEMENT</div>
                             <div className="list-group list-group-flush">
                                 {
+                                    (role == 'Admin')?
+                                    <div>
+                                        <NavLink to="/UserManagement" className="list-group-item list-group-item-action">User Management</NavLink>
+                                    </div>
+                                    :null
+                                }
+                                {
                                     (role == 'Admin'||role == 'Room Management Employee')?
                                     <div>
                                         <NavLink to="/RoomManagement" className="list-group-item list-group-item-action">Room Management</NavLink>
